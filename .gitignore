@@ -1,3 +1,7 @@
+papers/
+api_keys/
+answers/
+.conda
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

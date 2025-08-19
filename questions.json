@@ -1,0 +1,12 @@
+{
+    "questions": [
+        {
+            "id": "Q1",
+            "text": "Which predictive models are used in this study? Name all that are used."
+        },
+        {
+            "id": "Q2",
+            "text": "Which evaluation metrics are used in this study to assess the predictive models? Name all that are used."
+        }
+    ]
+}

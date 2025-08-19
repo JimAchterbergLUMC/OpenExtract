@@ -1,0 +1,6 @@
+# PDF text extraction (script uses PyMuPDF if available, else pdfminer.six)
+PyMuPDF
+# pdfminer.six
+
+# HTTP for OpenRouter
+requests
