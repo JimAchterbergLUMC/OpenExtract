@@ -1,6 +1,8 @@
 papers/
 api_keys/
 answers/
+answers_free_text/
+answers_labeled/
 .conda
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,6 +1,6 @@
-# PDF text extraction (script uses PyMuPDF if available, else pdfminer.six)
-PyMuPDF
-# pdfminer.six
-
-# HTTP for OpenRouter
+pypdf
+scikit-learn
+tiktoken
 requests
+pandas
+sentence-transformers
