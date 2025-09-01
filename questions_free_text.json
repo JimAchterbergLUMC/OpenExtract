@@ -42,14 +42,10 @@
         },
         {
             "id": "Q11",
-            "text": "Predictive models can be used for various purposes, e.g., accurate prediction, causal inference, survival analysis, or others. What is the main purpose of the predictive models used in this study?"
-        },
-        {
-            "id": "Q12",
             "text": "Which type of explainability techniques are used?"
         },
         {
-            "id": "Q13",
+            "id": "Q12",
             "text": "Which evaluation metrics are used to assess the predictive models?"
         }
     ]
