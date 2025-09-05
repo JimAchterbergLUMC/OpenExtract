@@ -1,0 +1,52 @@
+{
+    "questions": [
+        {
+            "id": "Q1",
+            "text": "What methods are used to describe the data before any predictive modeling is performed?"
+        },
+        {
+            "id": "Q2",
+            "text": "How are numerical features preprocessed?"
+        },
+        {
+            "id": "Q3",
+            "text": "How are categorical features preprocessed?"
+        },
+        {
+            "id": "Q4",
+            "text": "How is missing data handled?"
+        },
+        {
+            "id": "Q5",
+            "text": "How are outliers handled?"
+        },
+        {
+            "id": "Q6",
+            "text": "Which privacy-preserving techniques are used?"
+        },
+        {
+            "id": "Q7",
+            "text": "Which data modality-specific preprocessing techniques are used?"
+        },
+        {
+            "id": "Q8",
+            "text": "Which feature engineering techniques are used?"
+        },
+        {
+            "id": "Q9",
+            "text": "Which type of data augmentation and/or generation is used?"
+        },
+        {
+            "id": "Q10",
+            "text": "Which predictive models are used?"
+        },
+        {
+            "id": "Q11",
+            "text": "Which type of explainability techniques are used?"
+        },
+        {
+            "id": "Q12",
+            "text": "Which evaluation metrics are used to assess the predictive models?"
+        }
+    ]
+}

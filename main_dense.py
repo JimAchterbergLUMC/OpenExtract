@@ -36,6 +36,7 @@ import json
 import os
 import time
 import re
+import random
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Tuple, Any, Dict, Union
@@ -302,6 +303,100 @@ def extract_choice_id(ans: str, valid_ids: List[str]) -> Optional[str]:
 # ------------------ OpenRouter call ------------------
 
 
+# def call_openrouter(
+#     model: str,
+#     question: str,
+#     paper_title: str,
+#     context_chunks: List[str],
+#     api_key: str,
+#     referer: Optional[str] = None,
+#     x_title: Optional[str] = "Paper QA",
+#     choice_ids: Optional[List[str]] = None,
+#     id_to_label: Optional[Dict[str, str]] = None,
+# ) -> str:
+#     context = "\n\n---\n\n".join(context_chunks)
+
+#     base_rules = (
+#         "You are a meticulous research assistant. Answer strictly from the provided paper excerpts (context). "
+#         "If the answer is not present in the context, reply exactly: 'Unknown from this paper'."
+#     )
+
+#     if choice_ids:
+#         if id_to_label:
+#             listed = "\n".join(
+#                 f"- {cid} → {id_to_label.get(cid, cid)}" for cid in choice_ids
+#             )
+#             listing_block = f"Choices (id → label):\n{listed}"
+#         else:
+#             listing_block = "Choices (ids): " + ", ".join(choice_ids)
+
+#         classification_rules = (
+#             "\nYou must output exactly one of the listed IDs, with no extra text. "
+#             "If the answer is not present in the context, output exactly: Unknown from this paper."
+#         )
+#         system_prompt = base_rules + classification_rules
+#         user_suffix = "Return only the ID string. Do not include explanations."
+#         extra_content = f"\n\n{listing_block}\n"
+#     else:
+#         system_prompt = base_rules
+#         user_suffix = "Return only the answer (max ~12 words). Be concise."
+#         extra_content = ""
+
+#     user_prompt = (
+#         f"Paper: {paper_title}\n\n"
+#         f"Question: {question}\n\n"
+#         f"Context (selected excerpts):\n{context}\n"
+#         f"{extra_content}\n"
+#         f"{user_suffix}"
+#     )
+
+#     headers = {
+#         "Authorization": f"Bearer {api_key}",
+#         "Content-Type": "application/json",
+#     }
+#     if referer:
+#         headers["HTTP-Referer"] = referer
+#     if x_title:
+#         headers["X-Title"] = x_title
+
+#     messages = [
+#         {"role": "system", "content": system_prompt},
+#         {"role": "user", "content": user_prompt},
+#     ]
+
+#     payload: Dict[str, Any] = {
+#         "model": model,
+#         "messages": messages,
+#         # No temperature/max_tokens per your constraints.
+#     }
+
+#     # JSON schema (many models on OpenRouter honor; safe to include, otherwise ignored)
+#     if choice_ids:
+#         payload["response_format"] = {
+#             "type": "json_schema",
+#             "json_schema": {
+#                 "name": "single_choice",
+#                 "schema": {
+#                     "type": "object",
+#                     "properties": {"id": {"type": "string", "enum": choice_ids}},
+#                     "required": ["id"],
+#                     "additionalProperties": False,
+#                 },
+#                 "strict": True,
+#             },
+#         }
+
+#     for attempt in range(3):
+#         resp = requests.post(OPENROUTER_URL, headers=headers, json=payload, timeout=60)
+#         if resp.status_code == 200:
+#             data = resp.json()
+#             try:
+#                 return data["choices"][0]["message"]["content"].strip()
+#             except Exception:
+#                 return "Unknown from this paper"
+#         time.sleep(1.5 * (attempt + 1))
+#     return "Unknown from this paper"
+
 def call_openrouter(
     model: str,
     question: str,
@@ -313,88 +408,64 @@ def call_openrouter(
     choice_ids: Optional[List[str]] = None,
     id_to_label: Optional[Dict[str, str]] = None,
 ) -> str:
-    context = "\n\n---\n\n".join(context_chunks)
+    
+    context = "\n\n\n".join([f"CHUNK {i+1}: {chunk}" for i, chunk in enumerate(context_chunks)]) 
 
     base_rules = (
-        "You are a meticulous research assistant. Answer strictly from the provided paper excerpts (context). "
-        "If the answer is not present in the context, reply exactly: 'Unknown from this paper'."
+        "You are a helpful and meticulous research assistant, that answers questions about study details carefully and adequately from context chunks of provided research papers."
     )
 
     if choice_ids:
-        if id_to_label:
-            listed = "\n".join(
-                f"- {cid} → {id_to_label.get(cid, cid)}" for cid in choice_ids
-            )
-            listing_block = f"Choices (id → label):\n{listed}"
-        else:
-            listing_block = "Choices (ids): " + ", ".join(choice_ids)
-
-        classification_rules = (
-            "\nYou must output exactly one of the listed IDs, with no extra text. "
-            "If the answer is not present in the context, output exactly: Unknown from this paper."
-        )
-        system_prompt = base_rules + classification_rules
-        user_suffix = "Return only the ID string. Do not include explanations."
-        extra_content = f"\n\n{listing_block}\n"
+        user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer only and exactly with the correct option from the list of answers. Never provide explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
+        
+        user_prompt = (
+        f"INSTRUCTIONS: {user_suffix}\n\n"
+        f"QUESTION: {question}\n\n"
+        f"PAPER: {paper_title}\n\n"
+        f"ANSWERS: {choice_ids}\n\n"
+        f"CONTEXT: \n\n{context}\n\n"
+    )
+    
     else:
-        system_prompt = base_rules
-        user_suffix = "Return only the answer (max ~12 words). Be concise."
-        extra_content = ""
-
-    user_prompt = (
-        f"Paper: {paper_title}\n\n"
-        f"Question: {question}\n\n"
-        f"Context (selected excerpts):\n{context}\n"
-        f"{extra_content}\n"
-        f"{user_suffix}"
+        user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer in no more than 12 words and be concise. Never include explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
+        
+        user_prompt = (
+        f"INSTRUCTIONS: {user_suffix}\n\n"
+        f"QUESTION: {question}\n\n"
+        f"PAPER: {paper_title}\n\n"
+        f"CONTEXT: \n\n{context}\n\n"
     )
 
     headers = {
         "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json",
     }
+
     if referer:
         headers["HTTP-Referer"] = referer
     if x_title:
         headers["X-Title"] = x_title
 
     messages = [
-        {"role": "system", "content": system_prompt},
+        {"role": "system", "content": base_rules},
         {"role": "user", "content": user_prompt},
     ]
 
     payload: Dict[str, Any] = {
         "model": model,
         "messages": messages,
-        # No temperature/max_tokens per your constraints.
     }
-
-    # JSON schema (many models on OpenRouter honor; safe to include, otherwise ignored)
-    if choice_ids:
-        payload["response_format"] = {
-            "type": "json_schema",
-            "json_schema": {
-                "name": "single_choice",
-                "schema": {
-                    "type": "object",
-                    "properties": {"id": {"type": "string", "enum": choice_ids}},
-                    "required": ["id"],
-                    "additionalProperties": False,
-                },
-                "strict": True,
-            },
-        }
 
     for attempt in range(3):
         resp = requests.post(OPENROUTER_URL, headers=headers, json=payload, timeout=60)
         if resp.status_code == 200:
             data = resp.json()
             try:
-                return data["choices"][0]["message"]["content"].strip()
+                return data["choices"][0]["message"]["content"].strip(), data # logs
             except Exception:
-                return "Unknown from this paper"
+                return "Unknown from this paper", data # logs
         time.sleep(1.5 * (attempt + 1))
-    return "Unknown from this paper"
+
+    return "Unknown from this paper", None
 
 
 # ------------------ Orchestration ------------------
@@ -446,7 +517,7 @@ def answer_questions_for_paper(
                 q_choice_ids = ids
                 q_id_to_label = id_to_label
 
-        raw_answer = call_openrouter(
+        raw_answer, logs = call_openrouter(
             model=model,
             question=q.text,
             paper_title=title,
@@ -468,13 +539,26 @@ def answer_questions_for_paper(
             "id": q.id,
             "question": q.text,
             "answer": final_answer,
-            "chunks_used": [idx for idx, _ in idx_scores],
+            "raw_answer": raw_answer if q_choice_ids else None,
+            "choices_ids": q_choice_ids if q_choice_ids else None,
+            "answer_label": q_id_to_label[final_answer] if q_id_to_label and final_answer in q_id_to_label else None,
+            "chunks_id": [idx for idx, _ in idx_scores],
+            "chunks_str": [chunks[idx] for idx, _ in idx_scores],
+            "sent_transformer": dense_model,
+
         }
-        if q_choice_ids:
-            record["raw_answer"] = raw_answer  # auditing
-            record["choices_ids"] = q_choice_ids
-            if q_id_to_label and final_answer in q_id_to_label:
-                record["answer_label"] = q_id_to_label[final_answer]
+
+        if logs:
+            record["LLM"] = logs['model']
+            record["finish_reason"] = logs['choices'][0]['finish_reason']
+            record["total_len"] = logs['usage']['total_tokens']
+        
+        # if q_choice_ids:
+        #     record["raw_answer"] = raw_answer  # auditing
+        #     record["choices_ids"] = q_choice_ids
+        #     if q_id_to_label and final_answer in q_id_to_label:
+        #         record["answer_label"] = q_id_to_label[final_answer]
+        
         answers.append(record)
 
     return answers
@@ -495,7 +579,7 @@ def main():
     )
     parser.add_argument(
         "--model",
-        default="qwen/qwen2.5-vl-32b-instruct:free",
+        default="deepseek/deepseek-chat-v3.1:free", #"deepseek/deepseek-chat-v3.1:free"
         help="OpenRouter model id.",
     )
     parser.add_argument(
@@ -522,7 +606,7 @@ def main():
     # Dense retrieval params
     parser.add_argument(
         "--dense-model",
-        default="thenlper/gte-small",
+        default="kamalkraj/BioSimCSE-BioLinkBERT-BASE", # "kamalkraj/BioSimCSE-BioLinkBERT-BASE", "thenlper/gte-small"
         help="SentenceTransformers embedding model.",
     )
     parser.add_argument(
@@ -535,6 +619,19 @@ def main():
         type=int,
         default=8,
         help="Batch size for encoding chunks.",
+    )
+    # Random selection params
+    parser.add_argument(
+        "--random-subset",
+        type=int,
+        default=None,
+        help="Randomly select this many papers from the papers directory. If not specified, use all papers.",
+    )
+    parser.add_argument(
+        "--random-seed",
+        type=int,
+        default=42,
+        help="Random seed for reproducible paper selection (default: 42).",
     )
 
     args = parser.parse_args()
@@ -556,11 +653,25 @@ def main():
     questions = load_questions(args.questions_file)
 
     # Papers
-    papers = sorted(
+    all_papers = sorted(
         [p for p in args.papers_dir.iterdir() if p.suffix.lower() == ".pdf"]
     )
-    if not papers:
+    if not all_papers:
         raise RuntimeError(f"No PDFs found in {args.papers_dir}")
+    
+    # Random selection if specified
+    if args.random_subset is not None:
+        if args.random_subset <= 0:
+            raise RuntimeError("--random-subset must be a positive integer")
+        if args.random_subset >= len(all_papers):
+            print(f"Warning: Requested {args.random_subset} papers but only {len(all_papers)} available. Using all papers.")
+            papers = all_papers
+        else:
+            random.seed(args.random_seed)
+            papers = sorted(random.sample(all_papers, args.random_subset))
+            print(f"Randomly selected {len(papers)} papers out of {len(all_papers)} (seed: {args.random_seed})")
+    else:
+        papers = all_papers
 
     for pdf in papers:
         print(f"Processing: {pdf.name}")

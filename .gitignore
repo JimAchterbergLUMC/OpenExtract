@@ -1,8 +1,8 @@
 papers/
 api_keys/
 answers/
-answers_free_text/
-answers_labeled/
+#answers_free_text/
+#answers_labeled/
 .conda
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -211,3 +211,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+.DS_Store
+key.txt
+debugging.ipynb
