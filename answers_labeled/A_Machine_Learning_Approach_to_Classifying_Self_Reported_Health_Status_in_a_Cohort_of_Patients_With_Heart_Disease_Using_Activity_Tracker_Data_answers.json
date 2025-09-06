@@ -33,8 +33,8 @@
     {
       "id": "Q2",
       "question": "Which type of digital health application is considered in this study?",
-      "answer": "Digital Medicine",
-      "raw_answer": "Digital Medicine",
+      "answer": "Unknown from this paper",
+      "raw_answer": "Unknown from this paper.",
       "choices_ids": [
         "Precision Medicine",
         "Health IT",
@@ -42,7 +42,7 @@
         "Telehealth",
         "Wellness"
       ],
-      "answer_label": "Digital Medicine",
+      "answer_label": null,
       "chunks_id": [
         11,
         6,
@@ -56,13 +56,13 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2580
+      "total_len": 2583
     },
     {
       "id": "Q3",
       "question": "To which ICD-10 code group does the digital health application in this study pertain?",
-      "answer": "Unknown from this paper",
-      "raw_answer": "Unknown from this paper.",
+      "answer": "I00-I99",
+      "raw_answer": "I00-I99",
       "choices_ids": [
         "A00-B99",
         "C00-D48",
@@ -87,7 +87,7 @@
         "V01-Y98",
         "Z00-Z99"
       ],
-      "answer_label": null,
+      "answer_label": "I00-I99",
       "chunks_id": [
         14,
         4,
@@ -101,7 +101,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2700
+      "total_len": 2699
     },
     {
       "id": "Q4",

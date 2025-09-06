@@ -61,8 +61,8 @@
     {
       "id": "Q3",
       "question": "To which ICD-10 code group does the digital health application in this study pertain?",
-      "answer": "Unknown from this paper",
-      "raw_answer": "Unknown from this paper.",
+      "answer": "E00-E90",
+      "raw_answer": "E00-E90",
       "choices_ids": [
         "A00-B99",
         "C00-D48",
@@ -87,7 +87,7 @@
         "V01-Y98",
         "Z00-Z99"
       ],
-      "answer_label": null,
+      "answer_label": "E00-E90",
       "chunks_id": [
         6,
         5,
@@ -101,7 +101,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2668
+      "total_len": 2667
     },
     {
       "id": "Q4",

@@ -4,7 +4,7 @@
     {
       "id": "Q1",
       "question": "Is the aim of this study to predict future events (prognostic) or current disease status (diagnostic)?",
-      "answer": "Diagnostic",
+      "answer": "diagnostic",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -25,25 +25,25 @@
     },
     {
       "id": "Q2",
-      "question": "On what basis were eligible participants included in this study (symptons, previous tests, registry, etc.)?",
+      "question": "On what basis were eligible participants included in this study (symptoms, previous tests, registry, etc.)?",
       "answer": "Unknown from this paper.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
       "chunks_id": [
         4,
-        5,
-        7
+        7,
+        5
       ],
       "chunks_str": [
         " of participants (ie, names, contact in-\nformation, etc). They have all signed processing agreements.\nSecond, the Google servers storing the data are only located\nwithin the Netherlands; hence the data does not leave the\ncountry, therefore conforming to Dutch law. This is done\nto have a clear data infrastructure both legally and technically\nto explain to participants.\nData characteristics and preparation\nThe dataﬁrst undergoes a process involving resampling and\nartifact removal. In our experience with Fitbit smartwatches,\nthe heart rate is nonuniformly sampled, with a prevalent rate\nof 0.2 Hz. Therefore, the heart rate is resampled to once per 5\nseconds. The step counter is sampled once per minute.\nArtifacts involving samples with numerous consecutive\nconstant values are removed, if more than 12 consecutive\nconstant values (equivalent to 1 minute of heart rate samples)\nare detected. This 1-minute threshold was chosen based on\nvisual inspection, which revealed that heart rate patterns typi-\ncally occur in the order of minutes, often spanning 10–20 mi-\nnutes. For sequences with fewer than 12 consecutive missing\nvalues, linear interpolation is applied. From the cleaned time\nseries, smaller segments, denoted as windows, are extracted\nand employed as input for a machine learning model. This\nprocess involves a sliding window and windows containing\ntime gaps are excluded. Windows have 2 design consider-\nations: the window size, which determines the number of\nsamples within a window and deﬁnes its dimensionality,\nand the stride, which establishes the step size dictating the\nshift between windows.\nAlthough the cardiovascular condition of each subject is\nknown, it is unknown in which speciﬁc windows these con-\nditions manifest themselves. This is owing to the paroxysmal\nnature of atrialﬁbrillation and the variable symptoms of heart\nfailure, which can be inﬂuenced by factors like medication\nadjustments, dietary changes, and the disease’s progressive\ncourse. In other words, the subject label is known, but the in-\ndividual window labels are unknown. This is visually repre-\nsented inFigure 2a, where the subject label is depicted by the\nblue/red colors and the unknown window labels are indicated\nby black dotted lines.\nPlanned machine learning approach\nOur planned machine learning approach is tailored to operate\nin this setting through a 2-stage process. To learn informative\npatterns/features directly from the input data, despite the lack\nof labeled windows, the ﬁrst stage involves using self-\nsupervised learning. A commonly used self-supervised\nlearning technique involves compressing the input windows\nto a lower-dimensional representation and then reconstruct-\ning the original input from this compact representation, as de-\npicted in Figure 2b.\n7,8 Instead of reconstruction, another\ntechnique is to forecast future time points of the input\ndata.9 The second stage involves multiple-instance learning\n(MIL). MIL, depicted inFigure 3and more elaborately ex-\nplained inBox 1, is suitable for data where a single prediction\nis made collectively on a group of samples (known as a\n“bag”) instead of predicting on individual samples (known\nas “instances”). MIL techniques align well with our time se-\nries data, where during the training phase only 1 label related\nto the subject (bag label) is known while the individual labels\nof the compressed windows (instance labels) remain un-\nknown. In the testing phase the primary objective is to predict\n1 clinical outcome for each subject. The key concept in MIL\nNaseri et al ME-TIME: CVD Detection Using Smartwatches and AI 167\n\nis that each bag of instances is labeled as positive (heart dis-\nease) if it contains a certain amount of positive instances and\nnegative (healthy) if it contains",
-        " single prediction\nis made collectively on a group of samples (known as a\n“bag”) instead of predicting on individual samples (known\nas “instances”). MIL techniques align well with our time se-\nries data, where during the training phase only 1 label related\nto the subject (bag label) is known while the individual labels\nof the compressed windows (instance labels) remain un-\nknown. In the testing phase the primary objective is to predict\n1 clinical outcome for each subject. The key concept in MIL\nNaseri et al ME-TIME: CVD Detection Using Smartwatches and AI 167\n\nis that each bag of instances is labeled as positive (heart dis-\nease) if it contains a certain amount of positive instances and\nnegative (healthy) if it contains no positive instances (only\nnegative instances). Although traditional MIL approaches\noften classify a bag as positive even with just 1 positive\ninstance, we aim to minimize false-positives by setting a\nthreshold on the number of positive instances required to la-\nbel a bag as positive. This threshold will be determined\nthrough hyperparameter tuning. Thus, instead of learning a\nmodel that predicts the cardiovascular outcome of individual\ninstances, we are learning a model that predicts the outcome\nof a bag of instances.\nAlgorithm validation\nIn our speciﬁc setting where the model encounters data from\npreviously unseen subjects without any prior knowledge, we\nuse leave-p-subjects-out cross-validation (LPSOCV). This\napproach, shown inFigure 4, ensures a more accurate reﬂec-\ntion of real-world situations. LPSOCV involves multiple iter-\nations, or folds, during which data from distinct subjects are\nused for training and validation purposes (ie, the model is\nvalidated on data from subjects that the model is not trained\non), mitigating observation bias.\nMachine learning models are sensitive to the distribution\nof classes. To mitigate potential bias owing to different class\ndistributions in each fold, we incorporate stratiﬁcation during\nthe cross-validation process. This ensures that the ratio of\nnonarrhythmic, atrial ﬁbrillation, and heart failure subjects\nremains approximately consistent and that the inﬂuence of\ninconsistent class distribution across different folds is mini-\nmized.\nHowever, Fitbit time series data exhibit inter-subject vari-\nability resulting from individuals’ distinct physical attri-\nbutes,\n10 making the development of a universally effective\nmodel for “new” subjects challenging. In order to examine\nthe effect of inter-subject variability, we will assess the model\non 2 distinct test sets. Theﬁrst is an external test set that con-\nsists of subjects not previously encountered, randomly\nselected to make up 20% of the total subjects, with an equal\nnumber from each class. This allows us to evaluate the\nmodel’s generalization capabilities. The second test set is\nan internal one, encompassing theﬁnal 20% of data from\nFigure 3 Illustration of multiple-instance learning. The red and blue lines\nindicate bags of heart disease patients and reference subjects. Even though\nthe labels for each instance are not known, for the sake of this example,\nthe plus and minus signs depict time windows where heart disease is present\nor absent, respectively. The decision boundary is depicted by a dotted circle,\nwhere instances within the circle are classiﬁed as heart disease, and instances\noutside the circle are classiﬁed as healthy.\nBox 1. A simple multiple-instance learning\nexample\nMIL is elaborated with an example in 3 steps.\nInitial setup Under traditional supervised learning,\neach window must be annotated to train a machine\nlearning model. However, in our MIL setting (Figure 3),\nonly the bag label is known for the entire set of windows\nrelated to a subject. A bag label is considered negative if",
-        ", is chosen for theﬁnal model; a process\nknown as hyperparameter tuning.\nResults\nPreliminary ﬁndings are discussed in the following sections.\nStudy characteristics\nSo far, 62 of the 200 envisioned subjects have been included\nand data from 22 subjects (15 healthy, 7 AF) have been ex-\ntracted successfully from the data platform for preliminary\nanalysis (Table 1).\nData show large inter-subject variability\nNonoverlapping 1-hour windows are used to segment heart\nrate and step counter time series data from 6 subjects. To\nvisualize this high-dimensional data, UMAP\n11 is employed\nInternal test\nExternal test\n1 123\n12 23\n123 3\n1\n2\n3\n4\nCross-validation\n(train/validation loop)\nFigure 4 Our leave-p-subjects-out cross-validation strategy consists of the following: On the left, cross-validation folds are illustrated using 3 subjects with\ncorresponding subject number. Green and blue represent training and validation subjects, respectively. On the right, a single fold is expanded and additionally\nillustrates the internal and external test sets. Each row corresponds to a subject, and the dotted squares within each row represent windows. The yellow external test\nblock encompasses entire subjects and their corresponding data points that have not been encountered by the model. Meanwhile, the dark yellow internal test\nblock consists of unobserved data points, representing theﬁnal 20% measurements of the time series from subjects already encountered during model develop-\nment.\nTable 1 Characteristics of preliminary study participants as of\nMay 2022\nCharacteristic Ref HF AF\nParticipants, n 25 15 22\nAge, y\n18–39 16 1 0\n40–54 3 3 2\n55–64 5 5 3\n651 16 1 7\nSex\nMale 12 12 15\nFemale 13 3 7\nBMI\n18.5–24.9 14 3 7\n25–29.9 6 6 8\n301 56 7\nDiabetes\nYes 0 5 4\nNo 25 10 18\nSmoking\nYes 0 6 5\nNo 25 9 17\nHypertension\nYes 2 8 15\nNo 23 7 7\nDevice\nCharge 5 23 8 12\nInspire 2 2 7 10\nAF 5atrial ﬁbrillation group; BMI5body mass index; HF5heart failure\ngroup; Ref5 reference group.\nNaseri et al ME-TIME: CVD Detection Using Smartwatches and AI 169\n\nto reduce the data to 2 dimensions while maintaining as much\nstructure as possible. The resulting embedding is displayed in\nFigure 5, where the distribution of the 2-dimensional UMAP\nsamples are illustrated per subject.\nWhen there is little overlap between subjects,ﬁnding a\nshared pattern among them becomes challenging, making it\ndifﬁcult for a model to learn. As a result, the performance\nof a machine learning model could be impacted as, during\nFigure 5 Visualization of heart rate windows (upper image) and step windows (lower image) of 6 subjects. Each window has data of 1 hour (720 time points for\nheart rate, 60 for steps, respectively). Each high-dimensional window is mapped to a 2-dimensional (2D) location using UMAP.11 The contour curves illustrate the\ndistribution of the 2D UMAP samples for each subject, with each color representing 1 of the 6 subjects.\nFigure 6 Acceleration-deceleration curves during light activity. Red and blue represent data from subjects with persistent atrialﬁbrillation (n57) and no heart\nd"
+        ", is chosen for theﬁnal model; a process\nknown as hyperparameter tuning.\nResults\nPreliminary ﬁndings are discussed in the following sections.\nStudy characteristics\nSo far, 62 of the 200 envisioned subjects have been included\nand data from 22 subjects (15 healthy, 7 AF) have been ex-\ntracted successfully from the data platform for preliminary\nanalysis (Table 1).\nData show large inter-subject variability\nNonoverlapping 1-hour windows are used to segment heart\nrate and step counter time series data from 6 subjects. To\nvisualize this high-dimensional data, UMAP\n11 is employed\nInternal test\nExternal test\n1 123\n12 23\n123 3\n1\n2\n3\n4\nCross-validation\n(train/validation loop)\nFigure 4 Our leave-p-subjects-out cross-validation strategy consists of the following: On the left, cross-validation folds are illustrated using 3 subjects with\ncorresponding subject number. Green and blue represent training and validation subjects, respectively. On the right, a single fold is expanded and additionally\nillustrates the internal and external test sets. Each row corresponds to a subject, and the dotted squares within each row represent windows. The yellow external test\nblock encompasses entire subjects and their corresponding data points that have not been encountered by the model. Meanwhile, the dark yellow internal test\nblock consists of unobserved data points, representing theﬁnal 20% measurements of the time series from subjects already encountered during model develop-\nment.\nTable 1 Characteristics of preliminary study participants as of\nMay 2022\nCharacteristic Ref HF AF\nParticipants, n 25 15 22\nAge, y\n18–39 16 1 0\n40–54 3 3 2\n55–64 5 5 3\n651 16 1 7\nSex\nMale 12 12 15\nFemale 13 3 7\nBMI\n18.5–24.9 14 3 7\n25–29.9 6 6 8\n301 56 7\nDiabetes\nYes 0 5 4\nNo 25 10 18\nSmoking\nYes 0 6 5\nNo 25 9 17\nHypertension\nYes 2 8 15\nNo 23 7 7\nDevice\nCharge 5 23 8 12\nInspire 2 2 7 10\nAF 5atrial ﬁbrillation group; BMI5body mass index; HF5heart failure\ngroup; Ref5 reference group.\nNaseri et al ME-TIME: CVD Detection Using Smartwatches and AI 169\n\nto reduce the data to 2 dimensions while maintaining as much\nstructure as possible. The resulting embedding is displayed in\nFigure 5, where the distribution of the 2-dimensional UMAP\nsamples are illustrated per subject.\nWhen there is little overlap between subjects,ﬁnding a\nshared pattern among them becomes challenging, making it\ndifﬁcult for a model to learn. As a result, the performance\nof a machine learning model could be impacted as, during\nFigure 5 Visualization of heart rate windows (upper image) and step windows (lower image) of 6 subjects. Each window has data of 1 hour (720 time points for\nheart rate, 60 for steps, respectively). Each high-dimensional window is mapped to a 2-dimensional (2D) location using UMAP.11 The contour curves illustrate the\ndistribution of the 2D UMAP samples for each subject, with each color representing 1 of the 6 subjects.\nFigure 6 Acceleration-deceleration curves during light activity. Red and blue represent data from subjects with persistent atrialﬁbrillation (n57) and no heart\nd",
+        " single prediction\nis made collectively on a group of samples (known as a\n“bag”) instead of predicting on individual samples (known\nas “instances”). MIL techniques align well with our time se-\nries data, where during the training phase only 1 label related\nto the subject (bag label) is known while the individual labels\nof the compressed windows (instance labels) remain un-\nknown. In the testing phase the primary objective is to predict\n1 clinical outcome for each subject. The key concept in MIL\nNaseri et al ME-TIME: CVD Detection Using Smartwatches and AI 167\n\nis that each bag of instances is labeled as positive (heart dis-\nease) if it contains a certain amount of positive instances and\nnegative (healthy) if it contains no positive instances (only\nnegative instances). Although traditional MIL approaches\noften classify a bag as positive even with just 1 positive\ninstance, we aim to minimize false-positives by setting a\nthreshold on the number of positive instances required to la-\nbel a bag as positive. This threshold will be determined\nthrough hyperparameter tuning. Thus, instead of learning a\nmodel that predicts the cardiovascular outcome of individual\ninstances, we are learning a model that predicts the outcome\nof a bag of instances.\nAlgorithm validation\nIn our speciﬁc setting where the model encounters data from\npreviously unseen subjects without any prior knowledge, we\nuse leave-p-subjects-out cross-validation (LPSOCV). This\napproach, shown inFigure 4, ensures a more accurate reﬂec-\ntion of real-world situations. LPSOCV involves multiple iter-\nations, or folds, during which data from distinct subjects are\nused for training and validation purposes (ie, the model is\nvalidated on data from subjects that the model is not trained\non), mitigating observation bias.\nMachine learning models are sensitive to the distribution\nof classes. To mitigate potential bias owing to different class\ndistributions in each fold, we incorporate stratiﬁcation during\nthe cross-validation process. This ensures that the ratio of\nnonarrhythmic, atrial ﬁbrillation, and heart failure subjects\nremains approximately consistent and that the inﬂuence of\ninconsistent class distribution across different folds is mini-\nmized.\nHowever, Fitbit time series data exhibit inter-subject vari-\nability resulting from individuals’ distinct physical attri-\nbutes,\n10 making the development of a universally effective\nmodel for “new” subjects challenging. In order to examine\nthe effect of inter-subject variability, we will assess the model\non 2 distinct test sets. Theﬁrst is an external test set that con-\nsists of subjects not previously encountered, randomly\nselected to make up 20% of the total subjects, with an equal\nnumber from each class. This allows us to evaluate the\nmodel’s generalization capabilities. The second test set is\nan internal one, encompassing theﬁnal 20% of data from\nFigure 3 Illustration of multiple-instance learning. The red and blue lines\nindicate bags of heart disease patients and reference subjects. Even though\nthe labels for each instance are not known, for the sake of this example,\nthe plus and minus signs depict time windows where heart disease is present\nor absent, respectively. The decision boundary is depicted by a dotted circle,\nwhere instances within the circle are classiﬁed as heart disease, and instances\noutside the circle are classiﬁed as healthy.\nBox 1. A simple multiple-instance learning\nexample\nMIL is elaborated with an example in 3 steps.\nInitial setup Under traditional supervised learning,\neach window must be annotated to train a machine\nlearning model. However, in our MIL setting (Figure 3),\nonly the bag label is known for the entire set of windows\nrelated to a subject. A bag label is considered negative if"
       ],
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2555
+      "total_len": 2554
     },
     {
       "id": "Q3",
@@ -70,7 +70,7 @@
     {
       "id": "Q4",
       "question": "How was the dataset described in this study before predictive modeling was performed?",
-      "answer": "Data from 22 subjects with heart rate and step counters.",
+      "answer": "Data from 22 subjects with large inter-subject variability.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -92,7 +92,7 @@
     {
       "id": "Q5",
       "question": "What was the proedure for splitting the dataset into training, validation, and test sets in this study?",
-      "answer": "Leave-p-subjects-out cross-validation, internal and external test sets.",
+      "answer": "20% external test set, internal test from final 20% data.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -109,7 +109,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2560
+      "total_len": 2561
     },
     {
       "id": "Q6",
@@ -158,7 +158,7 @@
     {
       "id": "Q8",
       "question": "How are outliers handled in this study?",
-      "answer": "Unknown from this paper.",
+      "answer": "Artifacts removed, linear interpolation applied.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -175,7 +175,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2540
+      "total_len": 2544
     },
     {
       "id": "Q9",
@@ -202,7 +202,7 @@
     {
       "id": "Q10",
       "question": "What considerations were given to model selection and hyperparameter tuning in this study?",
-      "answer": "Hyperparameter tuning and leave-p-subjects-out cross-validation.",
+      "answer": "Hyperparameter tuning for threshold determination.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -219,10 +219,32 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2545
+      "total_len": 2540
     },
     {
       "id": "Q11",
+      "question": "How was data augmentation or generation used in this study?",
+      "answer": "Unknown from this paper.",
+      "raw_answer": null,
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        3,
+        7,
+        5
+      ],
+      "chunks_str": [
+        "\nsmaller (2-dimensional for illustrative purposes) representation.c: The compressed representation is used to train a multiple-instance classiﬁer that can distinguish\nbetween healthy, atrialﬁbrillation, or heart failure). AF5 atrial ﬁbrillation.\n166 Cardiovascular Digital Health Journal, Vol 4, No 6, December 2023\n\nany of the following criteria will be excluded from participa-\ntion in this study: age,18 years, age.85 years, recent pul-\nmonary venous antrum isolation (,1 year), kidney or liver\nfailure, known systemic active in ﬂammatory disease,\nimpaired mental state, inability to use aﬁtness tracker or mo-\nbile phone, impaired cognition, and inability to understand\nthe study protocol.\nPatients will be asked by their treating physician if they\nmay be approached by an investigator to inform them about\nthe study and potential participation. Healthy participants are\nrecruited through local advertising. Anyone that is interested\nwill then receive an information brochure and informed con-\nsent form. At least 2 days after the patient’s receipt of the\nbrochure, the research team will call the patient to schedule\nan appointment. During this visit, the patient submits the\nsigned consent form and will undergo an ECG and blood\npressure measurement that will be analyzed by an experi-\nenced cardiologist (I.B.). Participants can use their own Fitbit\nand are otherwise provided with a Fitbit Inspire 2 or Fitbit\nCharge 5 smartwatch. The device type is assigned to a partic-\nipant at random to prevent device sampling bias. This will\nalso help to investigate the effect of device type on the perfor-\nmance of theﬁnal model. A Fitbit account will be created for\nall participants which will be connected to a custom-built\ndata platform using the Google Cloud Platform. Our platform\nfeatures a data portal for research staff to easily register or de-\nregister participants by authorizing a connection to their Fit-\nbit data. Data are extracted daily from Fitbits until the\nobservation period ends and can be analyzed either in the\ncloud or locally.\nAll participants will be asked toﬁll out a survey regarding\ntheir health. All participants are monitored for a period of 3\nmonths. After written consent from the 200 subjects, heart\nrate, step counter, and sleep time series data are extracted\nfrom the data platform. Clinical metadata such as age, height,\nweight, blood pressure at baseline, health survey, and medi-\ncation use are saved in the Castor (Ciwit BV, Amsterdam,\nThe Netherlands) electronic database.\nData privacy\nAfter performing a thorough data protection impact assess-\nment, the local hospital security information and privacy of-\nﬁcers granted permission to perform the study. This was also\nvalidated by the ethics review board. The data protection\nimpact assessment describes a data management plan con-\nforming to the European General Data Protection Regulation.\nTo protect the data privacy of the participants, all data are\npseudonymized. Only the researchers have access to the\nsensor data, and only the Principal Investigator has access\nto personal information of participants (ie, names, contact in-\nformation, etc). They have all signed processing agreements.\nSecond, the Google servers storing the data are only located\nwithin the Netherlands; hence the data does not leave the\ncountry, therefore conforming to Dutch law. This is done\nto have a clear data infrastructure both legally and technically\nto explain to participants.\nData characteristics and preparation\nThe dataﬁrst undergoes a process involving resampling and\nartifact removal. In our experience with Fitbit smartwatches,\nthe heart rate is nonuniformly sampled, with a prevalent rate\nof 0.2 Hz. Therefore, the heart rate is resampled to once per 5\nseconds. The step counter is sampled once per minute.\nArtifacts involving samples with numerous consecutive\nconstant values are",
+        ", is chosen for theﬁnal model; a process\nknown as hyperparameter tuning.\nResults\nPreliminary ﬁndings are discussed in the following sections.\nStudy characteristics\nSo far, 62 of the 200 envisioned subjects have been included\nand data from 22 subjects (15 healthy, 7 AF) have been ex-\ntracted successfully from the data platform for preliminary\nanalysis (Table 1).\nData show large inter-subject variability\nNonoverlapping 1-hour windows are used to segment heart\nrate and step counter time series data from 6 subjects. To\nvisualize this high-dimensional data, UMAP\n11 is employed\nInternal test\nExternal test\n1 123\n12 23\n123 3\n1\n2\n3\n4\nCross-validation\n(train/validation loop)\nFigure 4 Our leave-p-subjects-out cross-validation strategy consists of the following: On the left, cross-validation folds are illustrated using 3 subjects with\ncorresponding subject number. Green and blue represent training and validation subjects, respectively. On the right, a single fold is expanded and additionally\nillustrates the internal and external test sets. Each row corresponds to a subject, and the dotted squares within each row represent windows. The yellow external test\nblock encompasses entire subjects and their corresponding data points that have not been encountered by the model. Meanwhile, the dark yellow internal test\nblock consists of unobserved data points, representing theﬁnal 20% measurements of the time series from subjects already encountered during model develop-\nment.\nTable 1 Characteristics of preliminary study participants as of\nMay 2022\nCharacteristic Ref HF AF\nParticipants, n 25 15 22\nAge, y\n18–39 16 1 0\n40–54 3 3 2\n55–64 5 5 3\n651 16 1 7\nSex\nMale 12 12 15\nFemale 13 3 7\nBMI\n18.5–24.9 14 3 7\n25–29.9 6 6 8\n301 56 7\nDiabetes\nYes 0 5 4\nNo 25 10 18\nSmoking\nYes 0 6 5\nNo 25 9 17\nHypertension\nYes 2 8 15\nNo 23 7 7\nDevice\nCharge 5 23 8 12\nInspire 2 2 7 10\nAF 5atrial ﬁbrillation group; BMI5body mass index; HF5heart failure\ngroup; Ref5 reference group.\nNaseri et al ME-TIME: CVD Detection Using Smartwatches and AI 169\n\nto reduce the data to 2 dimensions while maintaining as much\nstructure as possible. The resulting embedding is displayed in\nFigure 5, where the distribution of the 2-dimensional UMAP\nsamples are illustrated per subject.\nWhen there is little overlap between subjects,ﬁnding a\nshared pattern among them becomes challenging, making it\ndifﬁcult for a model to learn. As a result, the performance\nof a machine learning model could be impacted as, during\nFigure 5 Visualization of heart rate windows (upper image) and step windows (lower image) of 6 subjects. Each window has data of 1 hour (720 time points for\nheart rate, 60 for steps, respectively). Each high-dimensional window is mapped to a 2-dimensional (2D) location using UMAP.11 The contour curves illustrate the\ndistribution of the 2D UMAP samples for each subject, with each color representing 1 of the 6 subjects.\nFigure 6 Acceleration-deceleration curves during light activity. Red and blue represent data from subjects with persistent atrialﬁbrillation (n57) and no heart\nd",
+        " single prediction\nis made collectively on a group of samples (known as a\n“bag”) instead of predicting on individual samples (known\nas “instances”). MIL techniques align well with our time se-\nries data, where during the training phase only 1 label related\nto the subject (bag label) is known while the individual labels\nof the compressed windows (instance labels) remain un-\nknown. In the testing phase the primary objective is to predict\n1 clinical outcome for each subject. The key concept in MIL\nNaseri et al ME-TIME: CVD Detection Using Smartwatches and AI 167\n\nis that each bag of instances is labeled as positive (heart dis-\nease) if it contains a certain amount of positive instances and\nnegative (healthy) if it contains no positive instances (only\nnegative instances). Although traditional MIL approaches\noften classify a bag as positive even with just 1 positive\ninstance, we aim to minimize false-positives by setting a\nthreshold on the number of positive instances required to la-\nbel a bag as positive. This threshold will be determined\nthrough hyperparameter tuning. Thus, instead of learning a\nmodel that predicts the cardiovascular outcome of individual\ninstances, we are learning a model that predicts the outcome\nof a bag of instances.\nAlgorithm validation\nIn our speciﬁc setting where the model encounters data from\npreviously unseen subjects without any prior knowledge, we\nuse leave-p-subjects-out cross-validation (LPSOCV). This\napproach, shown inFigure 4, ensures a more accurate reﬂec-\ntion of real-world situations. LPSOCV involves multiple iter-\nations, or folds, during which data from distinct subjects are\nused for training and validation purposes (ie, the model is\nvalidated on data from subjects that the model is not trained\non), mitigating observation bias.\nMachine learning models are sensitive to the distribution\nof classes. To mitigate potential bias owing to different class\ndistributions in each fold, we incorporate stratiﬁcation during\nthe cross-validation process. This ensures that the ratio of\nnonarrhythmic, atrial ﬁbrillation, and heart failure subjects\nremains approximately consistent and that the inﬂuence of\ninconsistent class distribution across different folds is mini-\nmized.\nHowever, Fitbit time series data exhibit inter-subject vari-\nability resulting from individuals’ distinct physical attri-\nbutes,\n10 making the development of a universally effective\nmodel for “new” subjects challenging. In order to examine\nthe effect of inter-subject variability, we will assess the model\non 2 distinct test sets. Theﬁrst is an external test set that con-\nsists of subjects not previously encountered, randomly\nselected to make up 20% of the total subjects, with an equal\nnumber from each class. This allows us to evaluate the\nmodel’s generalization capabilities. The second test set is\nan internal one, encompassing theﬁnal 20% of data from\nFigure 3 Illustration of multiple-instance learning. The red and blue lines\nindicate bags of heart disease patients and reference subjects. Even though\nthe labels for each instance are not known, for the sake of this example,\nthe plus and minus signs depict time windows where heart disease is present\nor absent, respectively. The decision boundary is depicted by a dotted circle,\nwhere instances within the circle are classiﬁed as heart disease, and instances\noutside the circle are classiﬁed as healthy.\nBox 1. A simple multiple-instance learning\nexample\nMIL is elaborated with an example in 3 steps.\nInitial setup Under traditional supervised learning,\neach window must be annotated to train a machine\nlearning model. However, in our MIL setting (Figure 3),\nonly the bag label is known for the entire set of windows\nrelated to a subject. A bag label is considered negative if"
+      ],
+      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
+      "LLM": "deepseek/deepseek-chat-v3.1:free",
+      "finish_reason": "stop",
+      "total_len": 2549
+    },
+    {
+      "id": "Q12",
       "question": "Is the performance of the predictive models benchmarked or compared to a baseline?",
       "answer": "Yes, compared to baseline.",
       "raw_answer": null,
@@ -244,9 +266,9 @@
       "total_len": 2545
     },
     {
-      "id": "Q12",
+      "id": "Q13",
       "question": "Which type of explainability techniques are used?",
-      "answer": "Self-supervised learning and multiple-instance learning.",
+      "answer": "Unknown from this paper.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -263,10 +285,10 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2528
+      "total_len": 2523
     },
     {
-      "id": "Q13",
+      "id": "Q14",
       "question": "Which evaluation metrics or outcome measures are used to assess the predictive models?",
       "answer": "Unknown from this paper.",
       "raw_answer": null,
@@ -288,7 +310,7 @@
       "total_len": 2554
     },
     {
-      "id": "Q14",
+      "id": "Q15",
       "question": "What considerations were given to selected evaluation metrics or outcome measures in this study?",
       "answer": "Unknown from this paper.",
       "raw_answer": null,
@@ -310,7 +332,7 @@
       "total_len": 2553
     },
     {
-      "id": "Q15",
+      "id": "Q16",
       "question": "How were robustness, confidence or statistical significance of the results assessed in this study?",
       "answer": "Leave-p-subjects-out cross-validation with stratification.",
       "raw_answer": null,
@@ -332,7 +354,7 @@
       "total_len": 2538
     },
     {
-      "id": "Q16",
+      "id": "Q17",
       "question": "What limitations of the study were discussed?",
       "answer": "Unknown from this paper.",
       "raw_answer": null,

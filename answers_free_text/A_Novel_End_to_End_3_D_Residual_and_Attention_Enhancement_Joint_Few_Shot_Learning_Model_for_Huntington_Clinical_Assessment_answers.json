@@ -25,25 +25,25 @@
     },
     {
       "id": "Q2",
-      "question": "On what basis were eligible participants included in this study (symptons, previous tests, registry, etc.)?",
-      "answer": "Recruited from neurology department with informed consent.",
+      "question": "On what basis were eligible participants included in this study (symptoms, previous tests, registry, etc.)?",
+      "answer": "HD patients and controls from neurology department.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
       "chunks_id": [
         10,
-        5,
-        22
+        22,
+        5
       ],
       "chunks_str": [
         "follows:\nFt+6 = Softmax(FC(Multi(Ft+5))) (7)\nwhere Softmax represents a softmax function and multi rep-\nresents multihead attention. As shown in (7), we adopt cross\nentropy as the loss function of our model to better fit the\nsample distribution.\nIV. C ASE STUDY\nA. Data and Evaluation\n1) Data Description: HD patients were recruited from the\nDepartment of Neurology, The First Affiliated Hospital, Sun\nYat-sen University, between December 2020 and December\n2022. Among HD patients, there are 27 males and 21 females.\nThe mean age of HD was 42.33 ± 10.85 years old. The median\nCAG repeat numbers were 45, ranging from 39 to 61. The\nmedian values of the total UHDRS and of the maximal chorea\nscores were 42.91 ± 22.57 and 11.30 ± 6.49, respectively.\nThe median scores of CAP and total functional score (TFC)\nwere 490 ± 115.00 and 10.05 ± 2.62, respectively. All\nfilming and usage in this project have been approved by\nthe ethics committees of The First Affiliated Hospital, Sun\nYat-sen University. Patients and their family provided their\ninformed consent and full attention has been paid to the\npatient’s privacy. The clinical data of patients, including the\ndemographic information and clinical assessment scale scores\n(UHDRS), have been saved in their medical records.\nHCs participants were recruited from the Department of\nNeurology, The First Affiliated Hospital, Sun Yat-sen Uni-\nversity, from December 2020 to December 2022, including\n25 males and 23 females. The mean age of participants\nwas 41.98 ± 9.47 years old. HC were recruited from three\npopulation groups: 1) family members of patients (such as\nasymptomatic partners or gene-negative family members); 2)\nvolunteers recruited through the “one-stop medical service”\nWeChat public account platform; and 3) volunteers recruited\nthrough the online platform of the Department of Neurology,\nThe First Affiliated Hospital, Sun Yat-sen University.\nWe obtained 1511 video data sets from patients and controls\nby using mobile phones 30 frames/s. The videos were mainly\ntaken by family members after appropriate instructions and by\nstaff from the First Affiliated Hospital, Sun Yat-sen University.\nEach participant provided 6–50 videos, including in standing\nposture, from front, side, and back; and sitting posture, walk-\ning, and from the face.\n2) Data Processing: First of all, due to interference in the\nshooting process, it was necessary to manually filter out higher\nquality video samples with clear shooting and less background\ninterference. After the screening, the total number of video\ndata per patient was reduced to approximately six segments,\nthe average length of these videos was 60–80 s.\nNext, the video data were then converted into image matri-\nces for processing. We frame sample the video at a rate of one\nimage every second. Afterward, the image was converted into\na grayscale image to remove unnecessary color information\nand reduce the learning burden of the 3D-CNN network. After\ndata enhancement, the image matrix was saved with 20 images\nin one 3-D matrix. During network training, the dataset was\ndivided into a training set and a test set at a ratio of 7:3.\n3) Data Enhancement: In the context of the small number\nof participants in this rare disease, a need arose to improve\nthe model during training performance. This data enhance-\nment was performed using frame difference and image-cut",
-        " for classifier training to\ndetermine the progression of ND diseases such as Parkinson’s\ndisease (PD) [30], HD [13], and other hereditary disorders\n(HA) [31], [32]. For example, machine learning classification\nmodels have been applied to analyze gait datasets from wear-\nable devices in PD [16], [33], including neural network (NN),\nsupport vector machine (SVM), k-nearest neighbors (kNNs),\ndecision tree (DT), random forest (RF), and logistic regres-\nsion (LR) [34]. These models were further optimized through\nthe comparison with the Movement Disorder Society Unified\nPD Rating Scale (MDS-UPDRS) III [35]. As a result, these\nmodels can assess the severity of ND diseases through gait\nanalysis [36], thereby showing great potential as a clinical\ntool for movement disorders.\nC. Machine Learning-Based Model\nArtificial intelligence models are used in the clinical\nassessment of ND diseases [37], [38], [39]. In addition to\nthe above-mentioned biomarker-based models and gait-based\nmodels that use artificial intelligence models, audio and\nvideo-based diagnostic models have recently emerged. Given\nthat these audio and video data are often easier and more direct\nto obtain, audio-based and video-based diagnostic models can\ngenerate higher diagnostic accuracy.\nFor example, in a recent study, researchers first extracted\n60 speech features from voice samples of in-affected and\npresymptomatic gene carriers. After training the model in a\nsample 51, they could predict the clinical HD characteristics in\nthe independent set [19]. These variables were associated with\nthe standard grades for training according to the rating scale.\nBy doing so, an accurate prediction model can be obtained.\nSimilarly, a video-based machine learning model has been\ndeveloped to analyze the relationship between hand motion\nand MDS-UPDRS III score [40]. This study analyzed 272 PD\nand non-PD hand movement videos with DeepLabCut was\nused to identify joint points of the joints in the 2-D images\nof the video. HandGraphCNN was then applied to predict\nthe 2-D and 3-D point positions of points. Finally, linear\nregression (LR) and DT were used to analyze finger tapping\nand hand movements, and pronation-supination movements of\nthe hands to get a highly significant correlation of the result\nwith the MDS-UPDRS scores. A clinical assessment model\nbased on facial landmark [41] has used face feature extractors\nto get key points of a facial landmark of 176 video recordings\nfrom 33 PD patients and 31 HCs. Machine learning algorithms,\nsuch as LR, SVM, DT, RF, and LSTM, were used to analyze\nthe variation of the relative coordinates variation to distinguish\nbetween patients and HCs.\nIII. O UR SOLUTION\nThis section describes our 3-D residual and attention\nenhancement joint network (RAJNet) in detail. Unlike large\ndataset available in [42] and [43], the scarcity of medical data\nsignificantly limits the performance of deep learning models.\nTo extract HD features from limited data, our model integrates\nmore effective attention modules [44], allowing it to perform\nbetter on HD evaluation tasks.\nAs shown in Fig. 2, our solution includes three steps. First,\nwe design an upstream feature extraction module, where input\nvideo samples receive data enhancement and feature extraction\n(Fi ) using the frame difference method and convolutional\nnetwork module, respectively. Subsequently, multihead atten-\ntion, including channel and spatial attention, is leveraged to\nimprove the model’s generalization and robustness. Second,\nwe used a 3-D ResNet-based backbone network module to\ninitially collaboratively learn spatial–temporal characteristics\nand then capture the correspondence between the features\nof the two modalities at the pixel",
-        " al., “Comparison of walking protocols and gait\nassessment systems for machine learning-based classification of Parkin-\nson’s disease,” Sensors, vol. 19, no. 24, p. 5363, Dec. 2019.\n[37] R. Li et al., “Fine-grained intoxicated gait classification using a bilinear\nCNN,” IEEE Sensors J., vol. 23, no. 23, pp. 29733–29748, Dec. 2023.\n[38] A. Mühlbäck et al., “Establishing normative data for the evaluation of\ncognitive performance in Huntington’s disease considering the impact\nof gender, age, language, and education,” J. Neurol., vol. 270, no. 10,\npp. 4903–4913, Oct. 2023.\n[39] R. Alkhatib, M. O. Diab, C. Corbier, and M. E. Badaoui, “Machine\nlearning algorithm for gait analysis and classification on early detection\nof Parkinson,” IEEE Sensors Lett., vol. 4, no. 6, pp. 1–4, Jun. 2020.\n[40] G. Vignoud et al., “Video-based automated assessment of movement\nparameters consistent with MDS-UPDRS III in Parkinson’s disease,”\nJ. Parkinson’s Disease, vol. 12, no. 7, pp. 2211–2222, 2022.\n[41] B. Jin, Y . Qu, L. Zhang, and Z. Gao, “Diagnosing Parkinson disease\nthrough facial expression recognition: Video analysis,” J. Med. Internet\nRes., vol. 22, no. 7, Jul. 2020, Art. no. e18697.\n[42] I. C. Duta, L. Liu, F. Zhu, and L. Shao, “Improved residual networks for\nimage and video recognition,” in Proc. 25th Int. Conf. Pattern Recognit.\n(ICPR), Jan. 2021, pp. 9415–9422.\n[43] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for\nimage recognition,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit.\n(CVPR), Jun. 2016, pp. 770–778.\n[44] D. Tran, H. Wang, M. Feiszli, and L. Torresani, “Video classification\nwith channel-separated convolutional networks,” in Proc. IEEE/CVF Int.\nConf. Comput. Vis. (ICCV), Oct. 2019, pp. 5551–5560.\n[45] N. Singla, “Motion detection based on frame difference method,” Int.\nJ. Inf. Comput. Technol., vol. 4, no. 15, pp. 1559–1565, 2014.\n[46] A. Neubeck and L. Van Gool, “Efficient non-maximum suppression,” in\nProc. 18th Int. Conf. Pattern Recognit. (ICPR), 2006, pp. 850–855.\n[47] A. Tharwat, “Classification assessment methods,” Appl. Comput. Infor-\nmat., vol. 17, no. 1, pp. 168–192, Jan. 2021.\n[48] Y . L. Chang, C. S. Chan, and P. Remagnino, “Action recognition on\ncontinuous video,” Neural Comput. Appl., vol. 33, no. 4, pp. 1233–1243,\nFeb. 2021.\n[49] C. Li, Q. Zhong, D. X"
+        " al., “Comparison of walking protocols and gait\nassessment systems for machine learning-based classification of Parkin-\nson’s disease,” Sensors, vol. 19, no. 24, p. 5363, Dec. 2019.\n[37] R. Li et al., “Fine-grained intoxicated gait classification using a bilinear\nCNN,” IEEE Sensors J., vol. 23, no. 23, pp. 29733–29748, Dec. 2023.\n[38] A. Mühlbäck et al., “Establishing normative data for the evaluation of\ncognitive performance in Huntington’s disease considering the impact\nof gender, age, language, and education,” J. Neurol., vol. 270, no. 10,\npp. 4903–4913, Oct. 2023.\n[39] R. Alkhatib, M. O. Diab, C. Corbier, and M. E. Badaoui, “Machine\nlearning algorithm for gait analysis and classification on early detection\nof Parkinson,” IEEE Sensors Lett., vol. 4, no. 6, pp. 1–4, Jun. 2020.\n[40] G. Vignoud et al., “Video-based automated assessment of movement\nparameters consistent with MDS-UPDRS III in Parkinson’s disease,”\nJ. Parkinson’s Disease, vol. 12, no. 7, pp. 2211–2222, 2022.\n[41] B. Jin, Y . Qu, L. Zhang, and Z. Gao, “Diagnosing Parkinson disease\nthrough facial expression recognition: Video analysis,” J. Med. Internet\nRes., vol. 22, no. 7, Jul. 2020, Art. no. e18697.\n[42] I. C. Duta, L. Liu, F. Zhu, and L. Shao, “Improved residual networks for\nimage and video recognition,” in Proc. 25th Int. Conf. Pattern Recognit.\n(ICPR), Jan. 2021, pp. 9415–9422.\n[43] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for\nimage recognition,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit.\n(CVPR), Jun. 2016, pp. 770–778.\n[44] D. Tran, H. Wang, M. Feiszli, and L. Torresani, “Video classification\nwith channel-separated convolutional networks,” in Proc. IEEE/CVF Int.\nConf. Comput. Vis. (ICCV), Oct. 2019, pp. 5551–5560.\n[45] N. Singla, “Motion detection based on frame difference method,” Int.\nJ. Inf. Comput. Technol., vol. 4, no. 15, pp. 1559–1565, 2014.\n[46] A. Neubeck and L. Van Gool, “Efficient non-maximum suppression,” in\nProc. 18th Int. Conf. Pattern Recognit. (ICPR), 2006, pp. 850–855.\n[47] A. Tharwat, “Classification assessment methods,” Appl. Comput. Infor-\nmat., vol. 17, no. 1, pp. 168–192, Jan. 2021.\n[48] Y . L. Chang, C. S. Chan, and P. Remagnino, “Action recognition on\ncontinuous video,” Neural Comput. Appl., vol. 33, no. 4, pp. 1233–1243,\nFeb. 2021.\n[49] C. Li, Q. Zhong, D. X",
+        " for classifier training to\ndetermine the progression of ND diseases such as Parkinson’s\ndisease (PD) [30], HD [13], and other hereditary disorders\n(HA) [31], [32]. For example, machine learning classification\nmodels have been applied to analyze gait datasets from wear-\nable devices in PD [16], [33], including neural network (NN),\nsupport vector machine (SVM), k-nearest neighbors (kNNs),\ndecision tree (DT), random forest (RF), and logistic regres-\nsion (LR) [34]. These models were further optimized through\nthe comparison with the Movement Disorder Society Unified\nPD Rating Scale (MDS-UPDRS) III [35]. As a result, these\nmodels can assess the severity of ND diseases through gait\nanalysis [36], thereby showing great potential as a clinical\ntool for movement disorders.\nC. Machine Learning-Based Model\nArtificial intelligence models are used in the clinical\nassessment of ND diseases [37], [38], [39]. In addition to\nthe above-mentioned biomarker-based models and gait-based\nmodels that use artificial intelligence models, audio and\nvideo-based diagnostic models have recently emerged. Given\nthat these audio and video data are often easier and more direct\nto obtain, audio-based and video-based diagnostic models can\ngenerate higher diagnostic accuracy.\nFor example, in a recent study, researchers first extracted\n60 speech features from voice samples of in-affected and\npresymptomatic gene carriers. After training the model in a\nsample 51, they could predict the clinical HD characteristics in\nthe independent set [19]. These variables were associated with\nthe standard grades for training according to the rating scale.\nBy doing so, an accurate prediction model can be obtained.\nSimilarly, a video-based machine learning model has been\ndeveloped to analyze the relationship between hand motion\nand MDS-UPDRS III score [40]. This study analyzed 272 PD\nand non-PD hand movement videos with DeepLabCut was\nused to identify joint points of the joints in the 2-D images\nof the video. HandGraphCNN was then applied to predict\nthe 2-D and 3-D point positions of points. Finally, linear\nregression (LR) and DT were used to analyze finger tapping\nand hand movements, and pronation-supination movements of\nthe hands to get a highly significant correlation of the result\nwith the MDS-UPDRS scores. A clinical assessment model\nbased on facial landmark [41] has used face feature extractors\nto get key points of a facial landmark of 176 video recordings\nfrom 33 PD patients and 31 HCs. Machine learning algorithms,\nsuch as LR, SVM, DT, RF, and LSTM, were used to analyze\nthe variation of the relative coordinates variation to distinguish\nbetween patients and HCs.\nIII. O UR SOLUTION\nThis section describes our 3-D residual and attention\nenhancement joint network (RAJNet) in detail. Unlike large\ndataset available in [42] and [43], the scarcity of medical data\nsignificantly limits the performance of deep learning models.\nTo extract HD features from limited data, our model integrates\nmore effective attention modules [44], allowing it to perform\nbetter on HD evaluation tasks.\nAs shown in Fig. 2, our solution includes three steps. First,\nwe design an upstream feature extraction module, where input\nvideo samples receive data enhancement and feature extraction\n(Fi ) using the frame difference method and convolutional\nnetwork module, respectively. Subsequently, multihead atten-\ntion, including channel and spatial attention, is leveraged to\nimprove the model’s generalization and robustness. Second,\nwe used a 3-D ResNet-based backbone network module to\ninitially collaboratively learn spatial–temporal characteristics\nand then capture the correspondence between the features\nof the two modalities at the pixel"
       ],
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2576
+      "total_len": 2573
     },
     {
       "id": "Q3",
@@ -70,7 +70,7 @@
     {
       "id": "Q4",
       "question": "How was the dataset described in this study before predictive modeling was performed?",
-      "answer": "Multiframe image data with T=10, H=512, W=512.",
+      "answer": "Multiframe image data before enhancement processing.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -87,7 +87,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2575
+      "total_len": 2566
     },
     {
       "id": "Q5",
@@ -114,7 +114,7 @@
     {
       "id": "Q6",
       "question": "What preprocessing techniques on the included variables/features were applied in this study?",
-      "answer": "Frame difference method and convolutional network module.",
+      "answer": "Frame difference method and data enhancement.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -131,7 +131,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2557
+      "total_len": 2556
     },
     {
       "id": "Q7",
@@ -202,7 +202,7 @@
     {
       "id": "Q10",
       "question": "What considerations were given to model selection and hyperparameter tuning in this study?",
-      "answer": "Motion selection box threshold, attention modules comparison.",
+      "answer": "Motion selection box threshold and attention modules.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -219,10 +219,32 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2560
+      "total_len": 2559
     },
     {
       "id": "Q11",
+      "question": "How was data augmentation or generation used in this study?",
+      "answer": "Frame difference and image-cutting methods.",
+      "raw_answer": null,
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        11,
+        8,
+        7
+      ],
+      "chunks_str": [
+        " s.\nNext, the video data were then converted into image matri-\nces for processing. We frame sample the video at a rate of one\nimage every second. Afterward, the image was converted into\na grayscale image to remove unnecessary color information\nand reduce the learning burden of the 3D-CNN network. After\ndata enhancement, the image matrix was saved with 20 images\nin one 3-D matrix. During network training, the dataset was\ndivided into a training set and a test set at a ratio of 7:3.\n3) Data Enhancement: In the context of the small number\nof participants in this rare disease, a need arose to improve\nthe model during training performance. This data enhance-\nment was performed using frame difference and image-cutting\nmethods.\na) Frame difference method: the frame difference\nmethod was used [45] for data augmentation, by adding images\nwith significant differences between consecutive frames to the\ndataset. Therefore, high-quality images could be more effec-\ntively used by the model. Specifically, the frame difference\nmethod is a method of obtaining the contour of a mov-\ning object by performing differential operations on adjacent\nframes in a video image sequence. When there is abnor-\nmal object movement in the video, there will be significant\ndifferences between frames. Subtract two frames [I (x, y, t)\nand I (x, y, t − 1)] to obtain the absolute value of the pixel\ndifference [D(x, y, t)] between the two images and determine\nwhether it is greater than the threshold to determine whether\nthere is object motion in the image sequence, as shown in the\nfollowing formula:\nD(x, y, t) = |I (x, y, t) − I (x, y, t − 1)|. (8)\nFirst, we performed median filtering, binarization, and dila-\ntion corrosion on the grayscale image to extract the contour of\nthe object. Second, a motion selection frame was performed\nby comparing the difference D(x, y, t) between the front\nand back frames, the area with a motion difference value\nis greater than the set motion threshold was selected. As\nshown in Fig. 5, using the frame difference method allows\nnot only to distinguish the characters from the background\nbut also to extract the parts of the human body that have\nundergone obvious changes. It should be noted that the motion\nselection boxes will have a large number of overlapping areas.\nIn this study, the representative motion selection boxes were\nselected according to the nonmaximum-suppression (NMS)\nalgorithm [46]. The principle of the NMS algorithm is to retain\nthe detection box with the highest confidence score for the\nsame object among multiple detection boxes while suppressing\nother boxes with lower confidence scores. Finally, according to\nthe relationship between the number of motion-selected boxes\nin the image and the set threshold k, it is determined whether\nthe frame image needs to be copied. According to the ablation\nexperimental results, we determine the value of k to be 1,\nwhich can maximize the gain of model performance.\nb) Image cutting method: After processing by using the\nframe difference method, we could obtain a large amount\nof effective image data, and then, these data were subjected\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 22,2025 at 09:09:51 UTC from IEEE Xplore.  Restrictions apply. \n\nHUANG et al.: NOVEL END-TO-END 3-D-RESIDUAL AND ATTENTION ENHANCEMENT JOINT FEW-SHOT LEARNING MODEL 2509211\nFig. 5. Pixel intensity changes in a screenshot of an HD patient’s video with\na 1-s interval between the front and back. The",
+        "  Restrictions apply. \n\nHUANG et al.: NOVEL END-TO-END 3-D-RESIDUAL AND ATTENTION ENHANCEMENT JOINT FEW-SHOT LEARNING MODEL 2509211\nFig. 3. Illustration of spatial–channel attention module. The channel attention\nmodule focuses on important semantic classes, while the spatial attention\nmodule models context dependencies.\nwhere Conv3\nS represents the 3-D convolutional layer with two\ninputs and one output channel and ⊕ represents the operation\nof concatenating.\nB. Backbone Model\nFor the backbone model, we used the 3-D ResNet module,\nwhich consisted of four stacked layers with 3, 4, 23, and 3 bot-\ntleneck layers. In the ResNet module, the network changes the\nlearning objective. Rather learning a complete output H(x),\nit only learns the difference between output H(x) and input\nx (the residual).\nTo extract deep information from few-shot data, we used\nan extended basic residual module as the basic block of the\nbackbone (bottleneck). As shown in (5), the basic residual\nmodule first receives the input information into two layers of\n3-D convolution Conv3\nB with a kernel size of three to process\nthe feature map Ft+1 and then adds the output value with the\noriginal input elementwise\nFt+4 = ReLU\n(\nConv3\nB\n(\nConv3\nB (Ft+3) ⊕ Ft+3\n))\n. (5)\nCompared with the basic residual module, the improved bot-\ntleneck prioritizes refined feature extraction. This is achieved\nby adding two further 3-D convolutions, each featuring a\none-unit convolutional kernel. This approach facilitates the\nextraction of more detailed information and expands the\nfeature space during the small sample learning processes.\nMoreover, we utilized the SE-block and STE-block modules\nto enhance the attention and increase the robustness of the\nbottleneck module. The intricate structure of the attention\nmodule is presented in Section III-C.\nC. Attention-Based Optimization Modules\nFor pose recognition and classification of HD patients,\nwe use attention mechanisms to focus on local features.\nAlthough traditional ResNet networks can obtain promising\nresults by stacking multilayer network structures, they rarely\nconsider how to determine the subtle differences in body\nmovements between patients and person without Huntington’s\ndisease. Their models are not suitable for image classifica-\ntion of this scene. Therefore, focusing on important feature\ninformation and preventing deep learning from overfitting are\nFig. 4. (a) SE module learns channel importance via global feature\naggregation. (b) STE module incorporates spatial–temporal information with\na channel average operation.\ncritical for HD severity assessment tasks. To achieve a better\nperformance, the spatiotemporal and channel characteristics of\nthe data should be extracted and analyzed comprehensively. In\nthis study, we designed two different ResNet bottlenecks by\ncombining attention to spatial–temporal and channel features\nand stacked them in the layers in rotation, which could\neffectively guarantee the robustness and stability of our model.\n1) SE Block: As shown in Fig. 4(a), as a kind of channel\nexcitation, the SE block can explicitly model the interde-\npendencies between feature channels. It can access global\ninformation and determine the importance of each feature\nchannel in two steps. This allows the network to promote\nuseful features and suppress irrelevant ones, enhancing its\nsensitivity to informative features.\nThe squeeze operation performs feature compression along\nthe spatial dimension, turning each 2-D feature channel into a\nreal number that somehow has a global perceptual field. The\noutput dimension matches the number of input feature chan-\nnels. It characterizes the global distribution of the response\nover the feature channels and makes the",
+        " larger batch size. Here, IM ∈ RT ∗C∗H∗W represents\nthe multiframe image data before data enhancement process-\ning. T denotes the data time dimension, H ∗ W denote the\ndata height and width, C is the number of channels, and 4 C\nrepresents the stacked cut images in the channel dimension. In\nour experiment, T was set to 10, and both H and W were 512.\nWe then leverage the frame difference method to initially\nextract action features, which are presented in Section IV.\nAfter data enhancement processing, we first used a layer\nof the 3-D convolution module to perform preliminary feature\nextraction on the data, as shown in the following equation:\nFt = N\n(\nConv64\nF (IM )\n)\n(1)\nwhere Conv 64\nF represents a convolutional layer with three\ninputs and 64 output channels, N() represents a standardized\noperation, and Ft represents the 3-D feature map in each tth\nstate of model processing. After a layer of 3-D convolution,\na layer of activation (ReLU) and normalization (batch normal-\nization) are also applied as follows:\nFt = (BN(Relu(Ft ))). (2)\n2) Multihead Attention Enhancement: Subsequently, we\nleverage on multihead attention to extract nonredundant infor-\nmation in feature maps Ft more efficiently. Specifically,\nwe built two types of attention-learning modules: channel and\nspatial attention.\na) Channel attention mechanism: As shown in Fig. 3,\nchannel attention focuses on the interactions between different\nchannels. First, we extract the background information from\nFt+1 through the average pooling layer. We then leveraged\non a channel-compressed convolutional layer and an ReLU\nfunction for scaling. Finally, a channel-expanded convolutional\nlayer was used to restore the original number of channels.\nThe output of the channel-expanded convolutional layer is\nrepresented as the average pooled channel-attention-weighted\nWC\nA .\nThe channel attention based on max pooling replaces only\nthe first layer with max pooling to obtain weight WC\nM . As a\nresult, the processing of our channel attention module can be\nsummarized as follows:\nFt+2 =\n(\nWC\nA + WC\nM\n)\n∗ Ft+1. (3)\nb) Spatial attention mechanism: Unlike channel atten-\ntion, spatial attention focuses on the most effective feature\nmap information. The feature maps Ft+3 first pass through\nthe average-pooling and max-pooling layers and are then\nconcatenated to obtain the fused features. Finally, a convo-\nlutional operation was leveraged to generate the final spatial\nattention feature weights. This process can be summarized as\nfollows:\nFt+3 = Conv3\nS((Max(Ft+2) ⊕ Mean(Ft+2))) ∗ Ft+2 (4)\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 22,2025 at 09:09:51 UTC from IEEE Xplore.  Restrictions apply. \n\nHUANG et al.: NOVEL END-TO-END 3-D-RESIDUAL AND ATTENTION ENHANCEMENT JOINT FEW-SHOT LEARNING MODEL 2509211\nFig. 3. Illustration of spatial–channel attention module. The channel attention\nmodule focuses on important semantic classes, while the spatial attention\nmodule models context dependencies.\nwhere Conv3\nS represents the 3-D convolutional layer with two\ninputs and one output channel and ⊕ represents the operation\nof concatenating.\nB. Backbone Model\nFor the backbone model, we used the 3-D ResNet module,\nwhich consisted of four stacked layers with 3, 4, 23, and 3 bot-\ntleneck layers. In the Res"
+      ],
+      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
+      "LLM": "deepseek/deepseek-chat-v3.1:free",
+      "finish_reason": "stop",
+      "total_len": 2548
+    },
+    {
+      "id": "Q12",
       "question": "Is the performance of the predictive models benchmarked or compared to a baseline?",
       "answer": "Yes, compared to baseline and other models.",
       "raw_answer": null,
@@ -244,7 +266,7 @@
       "total_len": 2573
     },
     {
-      "id": "Q12",
+      "id": "Q13",
       "question": "Which type of explainability techniques are used?",
       "answer": "SE and STE attention modules",
       "raw_answer": null,
@@ -266,9 +288,9 @@
       "total_len": 2539
     },
     {
-      "id": "Q13",
+      "id": "Q14",
       "question": "Which evaluation metrics or outcome measures are used to assess the predictive models?",
-      "answer": "accuracy, recall, ROC, AUC, loss value",
+      "answer": "Accuracy, recall, ROC curves, AUC.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -285,12 +307,12 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2566
+      "total_len": 2565
     },
     {
-      "id": "Q14",
+      "id": "Q15",
       "question": "What considerations were given to selected evaluation metrics or outcome measures in this study?",
-      "answer": "Accuracy, recall, precision, loss, AUC.",
+      "answer": "Accuracy, recall, precision, loss, AUC, ROC curves.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -307,12 +329,12 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2573
+      "total_len": 2576
     },
     {
-      "id": "Q15",
+      "id": "Q16",
       "question": "How were robustness, confidence or statistical significance of the results assessed in this study?",
-      "answer": "Confidence intervals and performance metrics comparison.",
+      "answer": "Confidence intervals and model performance comparisons.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -332,7 +354,7 @@
       "total_len": 2569
     },
     {
-      "id": "Q16",
+      "id": "Q17",
       "question": "What limitations of the study were discussed?",
       "answer": "Unknown from this paper.",
       "raw_answer": null,

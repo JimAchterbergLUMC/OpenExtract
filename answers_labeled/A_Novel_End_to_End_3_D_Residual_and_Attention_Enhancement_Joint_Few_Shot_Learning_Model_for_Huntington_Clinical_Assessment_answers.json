@@ -34,7 +34,7 @@
       "id": "Q2",
       "question": "Which type of digital health application is considered in this study?",
       "answer": "Unknown from this paper",
-      "raw_answer": "Unknown from this paper.",
+      "raw_answer": "Unknown from this paper",
       "choices_ids": [
         "Precision Medicine",
         "Health IT",
@@ -56,7 +56,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2576
+      "total_len": 2575
     },
     {
       "id": "Q3",

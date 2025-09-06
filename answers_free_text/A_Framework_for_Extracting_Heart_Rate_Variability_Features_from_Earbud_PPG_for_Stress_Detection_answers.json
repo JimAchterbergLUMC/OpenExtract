@@ -25,25 +25,25 @@
     },
     {
       "id": "Q2",
-      "question": "On what basis were eligible participants included in this study (symptons, previous tests, registry, etc.)?",
+      "question": "On what basis were eligible participants included in this study (symptoms, previous tests, registry, etc.)?",
       "answer": "Unknown from this paper.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
       "chunks_id": [
-        8,
+        2,
         7,
-        2
+        8
       ],
       "chunks_str": [
-        " object\nparts for semantic segmentation. In Proceedings of the IEEE/CVF\nConference on Computer Vision and Pattern Recognition (pp. 14502-\n14511).\n[14] Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). Bert: Pre-\ntraining of deep bidirectional transformers for language understanding.\narXiv preprint arXiv:1810.04805\n[15] Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal,\nP., ... & Amodei, D. (2020). Language models are few-shot learners.\nAdvances in neural information processing systems, 33, 1877-1901.\n[16] Rahman, M. M., Xu, X., Nathan, V ., Ahmed, T., Ahmed, M. Y ., McCaf-\nfrey, D., ... & Gao, J. A. (2022, July). Detecting Physiological Responses\nUsing Multimodal Earbud Sensors. In 2022 44th Annual International\nConference of the IEEE Engineering in Medicine & Biology Society\n(EMBC) (pp. 01-05). IEEE.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. ",
+        " device placed\non the finger that sampled PPG at 1000Hz. For our current\nwork, we will only focus on the PPG signal.\nThe study involved each subject completing a set of validated\ntasks that induced stress, interspersed with tasks that help them\nrelax. The study started with a baseline-recording for 5 min-\nutes where the subject sat idle. The subject then performed a\nmultiple object tracking task for 3 minutes (cognitive stressor),\nfollowed by 3 minutes of progressive muscle relaxation. The\nsubject then underwent a “Speech” task; a research assistant,\nplaying the role of an interviewer, asked the subject to speak\non a challenging and personal topic (social stressor). The\nsubject was then given 3 minute time to prepare for the speech,\nafter which they entered a room consisting of evaluators. The\nresearch assistant purposefully delayed the start of the speech\nto increase the stress. After a 2-minute delay, the subject was\nasked to leave without completing the task. Subsequently, the\nsubject listened to relaxing music for 4 minutes, followed\nby exciting music. Finally, the subject was asked to rest and\nrecover. Between each task, the subject was given at least a\n2-minute break to offset the effect of the previous task and\nprepare for the next task. In Figure 1, we show the timeline\nof the tasks and how the heart rate varies during these tasks\nfor a sample subject.\nB. PPG signal-denoising\nThe raw PPG signals captured from the Earbud and Biopac\nwere first filtered by a third-order Butterworth bandpass filter\nwith cut-off frequencies set to 0.6-4 Hz. The filtered PPG\nsignal was then sliced into 30-second sliding windows with a\n20-second overlap for the prediction of HRV parameters and\nstress detection. Even after passing the PPG signal through a\nbandpass filter, the signal still contained motion artifacts, shifts\nin baseline wandering, and other high-frequency noises. To\naddress this, we estimated the quality of the PPG signal using\nthe PQR signal quality index [8]. In this method, we calculated\nP/Q/R indexes representing the signal quality for each window\nof PPG signal. The “P” index indicated the degree of high-\nfrequency noise in the signal, calculated using the change in\nthe number of extremum points after bandpass filtering. The\n“Q” index indicated the amount of baseline wandering, cal-\nculated using the signal’s maximum and minimum amplitude.\nThe ”R” index represented the frequency of motion artifacts\nby calculating the dispersion of peak and valley points. Using\nthese three indexes, the method calculated rSQI (relative signal\nquality index) to compare the quality of the PPG signal against\na clean reference signal. In our case, we used the signal\ncollected from the baseline-recording as a reference signal.\nThe PPG-windowed signals whose rSQI ≥ 0, indicating the\nsignal was comparable or better in quality than the reference\nsignal, were considered for subsequent analysis. The PPG-\nwindowed signals with rSQI < 0 are removed. Finally, we\nstandardized the PPG signals of each subject to remove any\nsubject-dependent information. Due to poor contact on one\nor more of the earbuds or Biopac finger sensor resulting in\nsignals too noisy to be usable, we excluded PPG data from\nfour subjects.\nIII. T RANSFER LEARNING BASED FRAMEWORK FOR\nEXTRACTING HRV FEATURES\nTo extract HRV based features from the denoised earbud\nPPG signal, we design a framework based on transfer learning\nand using Temporal convolution network (TCN) [9]. The\nframework consists of two steps: In the first step we pre-train\na TCN",
         " detection in\ndaily life scenarios using smart phones and wearable sensors: A survey.”\nJournal of biomedical informatics 92 (2019): 103139.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. \n\n[4] Sano, Akane, and Rosalind W. Picard. ”Stress recognition using wear-\nable sensors and mobile phones.” 2013 Humaine association conference\non affective computing and intelligent interaction. IEEE, 2013.\n[5] Sarker, Hillol, et al. ”Finding significant stress episodes in a discontin-\nuous time series of rapidly varying mobile sensor data.” Proceedings of\nthe 2016 CHI conference on human factors in computing systems. 2016.\n[6] Mishra, Varun, et al. ”Continuous detection of physiological stress with\ncommodity hardware.” ACM transactions on computing for healthcare\n1.2 (2020): 1-30.\n[7] Lee, Joong Hoon, et al. ”Stress monitoring using multimodal bio-sensing\nheadset.” Extended Abstracts of the 2020 CHI Conference on Human\nFactors in Computing Systems. 2020.\n[8] Song, J., Li, D., Ma, X., Teng, G. and Wei, J., 2019. PQR signal quality\nindexes: A method for real-time photoplethysmogram signal quality\nestimation based on noise interferences. Biomedical Signal Processing\nand Control, 47, pp.88-95.\n[9] Lea, C., Vidal, R., Reiter, A., & Hager, G. D. (2016). Temporal convolu-\ntional networks: A unified approach to action segmentation. In Computer\nVision–ECCV 2016 Workshops: Amsterdam, The Netherlands, October\n8-10 and 15-16, 2016, Proceedings, Part III 14 (pp. 47-54). Springer\nInternational Publishing.\n[10] Van Gent, P., Farah, H., Van Nes, N., & Van Arem, B. (2019).\nHeartPy: A novel heart rate algorithm for the analysis of noisy signals.\nTransportation research part F: traffic psychology and behaviour, 66,\n368-378.\n[11] van Gent, P., Farah, H., van Nes, N., & van Arem, B. (2019). Analysing\nnoisy driver physiology real-time using off-the-shelf sensors: Heart rate\nanalysis software from the taking the fast lane project. Journal of Open\nResearch Software, 7(1).\n[12] Jing, L., & Tian, Y . (2020). Self-supervised visual feature learning with\ndeep neural networks: A survey. IEEE transactions on pattern analysis\nand machine intelligence, 43(11), 4037-4058\n[13] Ziegler, A., & Asano, Y . M. (2022). Self-supervised learning of object\nparts for semantic segmentation. In Proceedings of the IEEE/CVF\nConference on Computer Vision and Pattern Recognition (pp. 14502-\n14511).\n[14] Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). Bert: Pre-\ntraining of deep bidirectional transformers for language understanding.\narXiv preprint arXiv:1810.04805\n[15] Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal,\nP., ... & Amodei, D. (2020). Language models are few-shot learners.\nAdvances in neural information processing systems, 33, 1877-1901.\n[",
-        " device placed\non the finger that sampled PPG at 1000Hz. For our current\nwork, we will only focus on the PPG signal.\nThe study involved each subject completing a set of validated\ntasks that induced stress, interspersed with tasks that help them\nrelax. The study started with a baseline-recording for 5 min-\nutes where the subject sat idle. The subject then performed a\nmultiple object tracking task for 3 minutes (cognitive stressor),\nfollowed by 3 minutes of progressive muscle relaxation. The\nsubject then underwent a “Speech” task; a research assistant,\nplaying the role of an interviewer, asked the subject to speak\non a challenging and personal topic (social stressor). The\nsubject was then given 3 minute time to prepare for the speech,\nafter which they entered a room consisting of evaluators. The\nresearch assistant purposefully delayed the start of the speech\nto increase the stress. After a 2-minute delay, the subject was\nasked to leave without completing the task. Subsequently, the\nsubject listened to relaxing music for 4 minutes, followed\nby exciting music. Finally, the subject was asked to rest and\nrecover. Between each task, the subject was given at least a\n2-minute break to offset the effect of the previous task and\nprepare for the next task. In Figure 1, we show the timeline\nof the tasks and how the heart rate varies during these tasks\nfor a sample subject.\nB. PPG signal-denoising\nThe raw PPG signals captured from the Earbud and Biopac\nwere first filtered by a third-order Butterworth bandpass filter\nwith cut-off frequencies set to 0.6-4 Hz. The filtered PPG\nsignal was then sliced into 30-second sliding windows with a\n20-second overlap for the prediction of HRV parameters and\nstress detection. Even after passing the PPG signal through a\nbandpass filter, the signal still contained motion artifacts, shifts\nin baseline wandering, and other high-frequency noises. To\naddress this, we estimated the quality of the PPG signal using\nthe PQR signal quality index [8]. In this method, we calculated\nP/Q/R indexes representing the signal quality for each window\nof PPG signal. The “P” index indicated the degree of high-\nfrequency noise in the signal, calculated using the change in\nthe number of extremum points after bandpass filtering. The\n“Q” index indicated the amount of baseline wandering, cal-\nculated using the signal’s maximum and minimum amplitude.\nThe ”R” index represented the frequency of motion artifacts\nby calculating the dispersion of peak and valley points. Using\nthese three indexes, the method calculated rSQI (relative signal\nquality index) to compare the quality of the PPG signal against\na clean reference signal. In our case, we used the signal\ncollected from the baseline-recording as a reference signal.\nThe PPG-windowed signals whose rSQI ≥ 0, indicating the\nsignal was comparable or better in quality than the reference\nsignal, were considered for subsequent analysis. The PPG-\nwindowed signals with rSQI < 0 are removed. Finally, we\nstandardized the PPG signals of each subject to remove any\nsubject-dependent information. Due to poor contact on one\nor more of the earbuds or Biopac finger sensor resulting in\nsignals too noisy to be usable, we excluded PPG data from\nfour subjects.\nIII. T RANSFER LEARNING BASED FRAMEWORK FOR\nEXTRACTING HRV FEATURES\nTo extract HRV based features from the denoised earbud\nPPG signal, we design a framework based on transfer learning\nand using Temporal convolution network (TCN) [9]. The\nframework consists of two steps: In the first step we pre-train\na TCN"
+        " object\nparts for semantic segmentation. In Proceedings of the IEEE/CVF\nConference on Computer Vision and Pattern Recognition (pp. 14502-\n14511).\n[14] Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). Bert: Pre-\ntraining of deep bidirectional transformers for language understanding.\narXiv preprint arXiv:1810.04805\n[15] Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal,\nP., ... & Amodei, D. (2020). Language models are few-shot learners.\nAdvances in neural information processing systems, 33, 1877-1901.\n[16] Rahman, M. M., Xu, X., Nathan, V ., Ahmed, T., Ahmed, M. Y ., McCaf-\nfrey, D., ... & Gao, J. A. (2022, July). Detecting Physiological Responses\nUsing Multimodal Earbud Sensors. In 2022 44th Annual International\nConference of the IEEE Engineering in Medicine & Biology Society\n(EMBC) (pp. 01-05). IEEE.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. "
       ],
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2045
+      "total_len": 2044
     },
     {
       "id": "Q3",
@@ -92,7 +92,7 @@
     {
       "id": "Q5",
       "question": "What was the proedure for splitting the dataset into training, validation, and test sets in this study?",
-      "answer": "Unknown from this paper",
+      "answer": "Unknown from this paper.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -106,12 +106,15 @@
         " object\nparts for semantic segmentation. In Proceedings of the IEEE/CVF\nConference on Computer Vision and Pattern Recognition (pp. 14502-\n14511).\n[14] Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). Bert: Pre-\ntraining of deep bidirectional transformers for language understanding.\narXiv preprint arXiv:1810.04805\n[15] Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal,\nP., ... & Amodei, D. (2020). Language models are few-shot learners.\nAdvances in neural information processing systems, 33, 1877-1901.\n[16] Rahman, M. M., Xu, X., Nathan, V ., Ahmed, T., Ahmed, M. Y ., McCaf-\nfrey, D., ... & Gao, J. A. (2022, July). Detecting Physiological Responses\nUsing Multimodal Earbud Sensors. In 2022 44th Annual International\nConference of the IEEE Engineering in Medicine & Biology Society\n(EMBC) (pp. 01-05). IEEE.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. ",
         " for more\ndetails), PPG windows from the remaining tasks are labeled\nHeartPy feature\nreplaced Accuracy Sensitivity Specificity\n- 0.81 0.74 0.83\nRMSSD 0.86 0.80 0.87\npNN50 0.86 0.80 0.88\nSDNN 0.86 0.79 0.87\nHFnorm 0.87 0.81 0.88\nTABLE II: Stress detection results when one of the HeartPy\nHRV features is replaced with our model predictions\nas no-stress. As a first step, we classify stress using all the\nHRV features that the HeartPy library outputs from a window\nof PPG signal, using a random forest classifier developed\nin our previous work. In the next step, we replace one of\nthe HeartPy’s RMSSD, pNN50, SDNN, HFnorm with our\nmodel predictions and repeat the stress classification task.\nThe increase/decrease in the performance of stress detection\nby replacing HeartPy predictions with our model predictions\ngives us a better understanding of how to evaluate these\nparameters. The results of this experiment are shown in Table\nII. We also experimented with stress detection by using all\nthe features as predicted by our framework. However, given\nthe prominent role of HR in estimating stress, this model’s\nperformance was relatively lower compared to ones reported\nhere. We evaluate the performance of stress detection using\nAccuracy, Specificity, and Sensitivity. From this table, we can\nsee that using the HRV parameter predicted by our framework,\ninstead of the HeartPy prediction, has resulted in at least a 5%\nimprovement in all evaluation metrics for all HRV features.\nThis demonstrates the impact of our proposed framework on\nfeature extraction in stress classification.\nV. C ONCLUSION\nEstimating HRV features using wearable sensors is critical\nfor stress management solutions. In our current work, we take\nan initial step toward using earbud PPG signals to estimate\nHRV features, employing a framework based on transfer\nlearning and TCN architecture. We have demonstrated that\nour framework estimates these features more accurately than\nthe existing open-source library, HeartPy. Subsequently, we\nobserved that using our model’s predicted HRV features in\nplace of HeartPy for stress detection results in improved\nperformance. Encouraged by these initial results, we plan to\nconduct our study on a larger and more diverse set of subjects\nto corroborate our findings.\nREFERENCES\n[1] Stress in America, American Psychological Association,\nhttps://www.apa.org/news/press/releases/stress\n[2] Garcia-Ceja, Enrique, Venet Osmani, and Oscar Mayora. ”Automatic\nstress detection in working environments from smartphones’ accelerom-\neter data: a first step.” IEEE journal of biomedical and health informatics\n20.4 (2015): 1053-1060.\n[3] Can, Yekta Said, Bert Arnrich, and Cem Ersoy. ”Stress detection in\ndaily life scenarios using smart phones and wearable sensors: A survey.”\nJournal of biomedical informatics 92 (2019): 103139.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. \n\n[4] Sano, Akane, and Rosalind W. Picard. ”Stress recognition using wear-\nable sensors and mobile phones.” 2013 Humaine association conference\non affective computing and intelligent interaction. IEEE, 2013.\n[5] Sarker, Hillol, et al. ”Finding significant stress episodes in a discontin-\nuous time series of rapidly varying mobile sensor data.” Proceedings of\nthe 2016 CHI"
       ],
-      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE"
+      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
+      "LLM": "deepseek/deepseek-chat-v3.1:free",
+      "finish_reason": "stop",
+      "total_len": 2055
     },
     {
       "id": "Q6",
       "question": "What preprocessing techniques on the included variables/features were applied in this study?",
-      "answer": "Bandpass filtering, signal quality indexing, standardization.",
+      "answer": "Bandpass filtering, windowing, rSQI removal, standardization.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -128,7 +131,7 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2561
+      "total_len": 2565
     },
     {
       "id": "Q7",
@@ -155,7 +158,7 @@
     {
       "id": "Q8",
       "question": "How are outliers handled in this study?",
-      "answer": "Using PQR signal quality index and removing low-quality windows.",
+      "answer": "Unknown from this paper.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -172,12 +175,12 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2037
+      "total_len": 2030
     },
     {
       "id": "Q9",
       "question": "Which prediction models were used in this study?",
-      "answer": "Random forest classifier and TCN-based framework.",
+      "answer": "random forest classifier",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -194,12 +197,12 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2560
+      "total_len": 2554
     },
     {
       "id": "Q10",
       "question": "What considerations were given to model selection and hyperparameter tuning in this study?",
-      "answer": "Temporal convolution network with transfer learning.",
+      "answer": "Temporal convolution network chosen; fine-tuned for HRV parameters.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -216,10 +219,32 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2557
+      "total_len": 2563
     },
     {
       "id": "Q11",
+      "question": "How was data augmentation or generation used in this study?",
+      "answer": "Unknown from this paper.",
+      "raw_answer": null,
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        4,
+        6,
+        0
+      ],
+      "chunks_str": [
+        "Speech-PrepSpeech\nFig. 1: Plot showing the duration and sequence of tasks that are in the study. Tasks that induce stress are marked in red, while\nthe blue ones represent non-stressful tasks. We removed breaks in-between tasks for the sake of visualization. We also show\nhow heart rate varies over the study for a sample individual subject.\nUnlabeled \nBiopac-PPG Peak Detection\nEarbud-PPG\nHeart Rate Variability (HRV) \nFeature\nFig. 2: Transfer learning framework to predict HRV features\ninstead of standard convolutions and using a receptive field\nthat is exponential in network depth.\nB. Downstream HRV parameters estimation\nThe pre-trained TCN model from the previous step is fine-\ntuned to predict different HRV-based features from the earbud\nPPG signal. The trained TCN network is transferred here, with\nonly the final layer changed to predict various HRV parameters\ninstead of peaks. In our current work, we considered five\ndifferent features, including the mean heart rate (HR) and\nthe following HRV features: root mean square of successive\ndifferences between normal heartbeats (RMSSD), proportion\nof the number of pairs of successive NN (R-R) intervals\nthat differ by more than 50 ms (pNN50), standard deviation\nof normal to normal R-R intervals (SDNN), and normalized\nhigh frequency power (HFnorm). We fine-tuned the pre-trained\nmodel separately for each of these HRV parameters. As we\nconsidered features that are continuous values, this required\nchanging only the loss function from the pre-trained model.\nWhile our framework can be extended to predict any HRV-\nbased parameter, we chose these five as they were the most\npredictive of stress in our prior empirical analysis [16]. An\noverview of our framework is shown in Figure 2.\nIV. R ESULTS\nUsing the framework described in the previous section, we\ninitially trained the upstream model to predict the peaks of the\ninput Biopac signal. This upstream model was subsequently\nfine-tuned on earbud PPG signal to predict different features\nseparately: HR, RMSSD, pNN50, SDNN, and HFnorm. Ul-\ntimately, using these features, we predict whether the subject\nis feeling stress or not for each PPG signal window. We con-\nducted all our analysis using Leave-One-Subject-Out Cross-\nValidation (LOSOXV), where the data from a single subject\nwas held out for testing while the model was trained on the\nremaining subjects. This process was repeated until all subjects\nhad been tested.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. \n\nHeartPy Our\nframework\nOur framework\nwithout pre-training\nHRV\nfeature MAE MAE MAE\nHR 5.9 ± 2.6 10.8 ± 3 10 ± 3.28\nRMSSD 16.7 ± 2.4 11.2 ± 2.9 14.74 ± 7.9\npNN50 0.17 ± 0.03 0.14 ± 0.02 0.15 ± 0.03\nSDNN 27.2 ± 8.1 17.3 ± 3.5 20.7 ± 7.9\nHFnorm 28.4 ± 5.8 23.2 ± 2.6 24.5 ± 4.3\nTABLE I: Comparison of HRV feature estimation\nA. Feature Estimation\nThe feature values predicted by our model are compared\nagainst HeartPy predictions. To the best of our",
+        " for more\ndetails), PPG windows from the remaining tasks are labeled\nHeartPy feature\nreplaced Accuracy Sensitivity Specificity\n- 0.81 0.74 0.83\nRMSSD 0.86 0.80 0.87\npNN50 0.86 0.80 0.88\nSDNN 0.86 0.79 0.87\nHFnorm 0.87 0.81 0.88\nTABLE II: Stress detection results when one of the HeartPy\nHRV features is replaced with our model predictions\nas no-stress. As a first step, we classify stress using all the\nHRV features that the HeartPy library outputs from a window\nof PPG signal, using a random forest classifier developed\nin our previous work. In the next step, we replace one of\nthe HeartPy’s RMSSD, pNN50, SDNN, HFnorm with our\nmodel predictions and repeat the stress classification task.\nThe increase/decrease in the performance of stress detection\nby replacing HeartPy predictions with our model predictions\ngives us a better understanding of how to evaluate these\nparameters. The results of this experiment are shown in Table\nII. We also experimented with stress detection by using all\nthe features as predicted by our framework. However, given\nthe prominent role of HR in estimating stress, this model’s\nperformance was relatively lower compared to ones reported\nhere. We evaluate the performance of stress detection using\nAccuracy, Specificity, and Sensitivity. From this table, we can\nsee that using the HRV parameter predicted by our framework,\ninstead of the HeartPy prediction, has resulted in at least a 5%\nimprovement in all evaluation metrics for all HRV features.\nThis demonstrates the impact of our proposed framework on\nfeature extraction in stress classification.\nV. C ONCLUSION\nEstimating HRV features using wearable sensors is critical\nfor stress management solutions. In our current work, we take\nan initial step toward using earbud PPG signals to estimate\nHRV features, employing a framework based on transfer\nlearning and TCN architecture. We have demonstrated that\nour framework estimates these features more accurately than\nthe existing open-source library, HeartPy. Subsequently, we\nobserved that using our model’s predicted HRV features in\nplace of HeartPy for stress detection results in improved\nperformance. Encouraged by these initial results, we plan to\nconduct our study on a larger and more diverse set of subjects\nto corroborate our findings.\nREFERENCES\n[1] Stress in America, American Psychological Association,\nhttps://www.apa.org/news/press/releases/stress\n[2] Garcia-Ceja, Enrique, Venet Osmani, and Oscar Mayora. ”Automatic\nstress detection in working environments from smartphones’ accelerom-\neter data: a first step.” IEEE journal of biomedical and health informatics\n20.4 (2015): 1053-1060.\n[3] Can, Yekta Said, Bert Arnrich, and Cem Ersoy. ”Stress detection in\ndaily life scenarios using smart phones and wearable sensors: A survey.”\nJournal of biomedical informatics 92 (2019): 103139.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. \n\n[4] Sano, Akane, and Rosalind W. Picard. ”Stress recognition using wear-\nable sensors and mobile phones.” 2013 Humaine association conference\non affective computing and intelligent interaction. IEEE, 2013.\n[5] Sarker, Hillol, et al. ”Finding significant stress episodes in a discontin-\nuous time series of rapidly varying mobile sensor data.” Proceedings of\nthe 2016 CHI",
+        "A Framework for Extracting Heart Rate Variability\nFeatures from Earbud-PPG for Stress Detection\nBhanu Teja Gullapalli\nUniversity of California San Diego\nSan Diego, USA\nbgullapalli@ucsd.edu\nViswam Nathan\nDigital Health Lab\nSamsung Research America\nMountain View, USA\nviswam.nathan@samsung.com\nMd Mahbubur Rahman\nDigital Health Lab\nSamsung Research America\nMountain View, USA\nm.rahman2@samsung.com\nJilong Kuang\nDigital Health Lab\nSamsung Research America\nMountain View, USA\njilong.kuang@samsung.com\nJun Alex Gao\nDigital Health Lab\nSamsung Research America\nMountain View, USA\nalex.gao@samsung.com\nAbstract—Unmanaged stress can lead to serious physiological\nand mental health issues, making it important to monitor stress\ncontinuously using wearable sensors. In this work, we investigate\nthe use of photoplethysmography (PPG) sensors in consumer-\ngrade earbud devices to classify periods of stress. We propose a\nframework that initially employs deep learning to predict heart\nrate variability (HRV) features from the relatively noisy earbud\nPPG signal. Subsequently, we transfer this knowledge and use\nthese features for the downstream task of stress classification.\nThe proposed framework outperforms an existing state-of-the-\nart library on HRV feature extraction, resulting in at least 5%\nimprovement in accuracy, sensitivity, and specificity for stress\ndetection.\nIndex Terms—Photoplethysmography (PPG), heart rate vari-\nability (HRV), transfer learning, temporal convolutional networks\n(TCN)\nI. I NTRODUCTION\nStress is the body’s physical and emotional reaction in\nresponse to internal or external stressors. It is ubiquitous, with\nat least 1 in 2 Americans stressed during the day and around\n1 million workers missing work due to stress according to\nthe American Institute of Stress and American Psychological\nAssociation [1]. These numbers are higher than ever after\nthe COVID-19 pandemic, inflation, and global uncertainty.\nBeyond immediate symptoms such as sleep deprivation or\nheadaches, unchecked stress can lead to severe cardiovascular\nor neurological illness. Many individuals can be unaware of the\ntiming and extent of their stress episodes, making it challeng-\ning to utilize interventions such as meditation and mindfulness\nto alleviate stress. The efficiency of any stress management\nsolution would be greatly improved by continuous and real-\ntime detection of stress episodes over the course of each day.\nDigital health solutions, particularly wearable devices, offer\na convenient and low-cost avenue for detecting stress episodes.\nSeveral studies have shown that the sensor modalities in\nwearable devices are capable of automatically detecting stress.\nIn earlier works, built-in smartphone accelerometer sensors\nwere used to characterize the subject’s behavior which is\nsubsequently used to classify stress levels [2], [3], though this\ncan be prone to false positives and may not be discerning\nenough to specifically detect stress. In one previous work,\na smartphone and smartwatch were used to capture electro-\ndermal activity (EDA) to passively detect stress in field with\n75% accuracy [4]. Another study employed a custom-made\nwearable chest band for passive ECG sensing and detected\nstress with a 0.71 F1-score [5]. There has also been an\napproach that combined a commodity chestband to capture\nECG and a commodity wristband called Empatica for EDA\nsensor to detect stress with 0.94 F1-score [6]. Stress detection\nusing head-worn devices is relatively less common. Another\nrecent work demonstrated a head-neck device capable of\nsimultaneously capturing ECG and EEG, which can detect\n’stressed’ states with 75.8% accuracy [7]. While these results\nshow promise for the use of wearable devices in"
+      ],
+      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
+      "LLM": "deepseek/deepseek-chat-v3.1:free",
+      "finish_reason": "stop",
+      "total_len": 2568
+    },
+    {
+      "id": "Q12",
       "question": "Is the performance of the predictive models benchmarked or compared to a baseline?",
       "answer": "Yes, compared to HeartPy baseline.",
       "raw_answer": null,
@@ -241,7 +266,7 @@
       "total_len": 2554
     },
     {
-      "id": "Q12",
+      "id": "Q13",
       "question": "Which type of explainability techniques are used?",
       "answer": "Unknown from this paper.",
       "raw_answer": null,
@@ -263,9 +288,9 @@
       "total_len": 2551
     },
     {
-      "id": "Q13",
+      "id": "Q14",
       "question": "Which evaluation metrics or outcome measures are used to assess the predictive models?",
-      "answer": "Accuracy, Sensitivity, Specificity",
+      "answer": "Accuracy, Sensitivity, Specificity, MAE.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -282,12 +307,12 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2551
+      "total_len": 2555
     },
     {
-      "id": "Q14",
+      "id": "Q15",
       "question": "What considerations were given to selected evaluation metrics or outcome measures in this study?",
-      "answer": "Mean absolute error against Biopac ground truth.",
+      "answer": "Mean absolute error compared to Biopac ground truth.",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -304,10 +329,10 @@
       "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
       "LLM": "deepseek/deepseek-chat-v3.1:free",
       "finish_reason": "stop",
-      "total_len": 2551
+      "total_len": 2552
     },
     {
-      "id": "Q15",
+      "id": "Q16",
       "question": "How were robustness, confidence or statistical significance of the results assessed in this study?",
       "answer": "Accuracy, specificity, and sensitivity metrics.",
       "raw_answer": null,
@@ -329,9 +354,9 @@
       "total_len": 2570
     },
     {
-      "id": "Q16",
+      "id": "Q17",
       "question": "What limitations of the study were discussed?",
-      "answer": "Unknown from this paper.",
+      "answer": "Unknown from this paper",
       "raw_answer": null,
       "choices_ids": null,
       "answer_label": null,
@@ -345,10 +370,7 @@
         "Speech-PrepSpeech\nFig. 1: Plot showing the duration and sequence of tasks that are in the study. Tasks that induce stress are marked in red, while\nthe blue ones represent non-stressful tasks. We removed breaks in-between tasks for the sake of visualization. We also show\nhow heart rate varies over the study for a sample individual subject.\nUnlabeled \nBiopac-PPG Peak Detection\nEarbud-PPG\nHeart Rate Variability (HRV) \nFeature\nFig. 2: Transfer learning framework to predict HRV features\ninstead of standard convolutions and using a receptive field\nthat is exponential in network depth.\nB. Downstream HRV parameters estimation\nThe pre-trained TCN model from the previous step is fine-\ntuned to predict different HRV-based features from the earbud\nPPG signal. The trained TCN network is transferred here, with\nonly the final layer changed to predict various HRV parameters\ninstead of peaks. In our current work, we considered five\ndifferent features, including the mean heart rate (HR) and\nthe following HRV features: root mean square of successive\ndifferences between normal heartbeats (RMSSD), proportion\nof the number of pairs of successive NN (R-R) intervals\nthat differ by more than 50 ms (pNN50), standard deviation\nof normal to normal R-R intervals (SDNN), and normalized\nhigh frequency power (HFnorm). We fine-tuned the pre-trained\nmodel separately for each of these HRV parameters. As we\nconsidered features that are continuous values, this required\nchanging only the loss function from the pre-trained model.\nWhile our framework can be extended to predict any HRV-\nbased parameter, we chose these five as they were the most\npredictive of stress in our prior empirical analysis [16]. An\noverview of our framework is shown in Figure 2.\nIV. R ESULTS\nUsing the framework described in the previous section, we\ninitially trained the upstream model to predict the peaks of the\ninput Biopac signal. This upstream model was subsequently\nfine-tuned on earbud PPG signal to predict different features\nseparately: HR, RMSSD, pNN50, SDNN, and HFnorm. Ul-\ntimately, using these features, we predict whether the subject\nis feeling stress or not for each PPG signal window. We con-\nducted all our analysis using Leave-One-Subject-Out Cross-\nValidation (LOSOXV), where the data from a single subject\nwas held out for testing while the model was trained on the\nremaining subjects. This process was repeated until all subjects\nhad been tested.\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. \n\nHeartPy Our\nframework\nOur framework\nwithout pre-training\nHRV\nfeature MAE MAE MAE\nHR 5.9 ± 2.6 10.8 ± 3 10 ± 3.28\nRMSSD 16.7 ± 2.4 11.2 ± 2.9 14.74 ± 7.9\npNN50 0.17 ± 0.03 0.14 ± 0.02 0.15 ± 0.03\nSDNN 27.2 ± 8.1 17.3 ± 3.5 20.7 ± 7.9\nHFnorm 28.4 ± 5.8 23.2 ± 2.6 24.5 ± 4.3\nTABLE I: Comparison of HRV feature estimation\nA. Feature Estimation\nThe feature values predicted by our model are compared\nagainst HeartPy predictions. To the best of our",
         " for subsequent analysis. The PPG-\nwindowed signals with rSQI < 0 are removed. Finally, we\nstandardized the PPG signals of each subject to remove any\nsubject-dependent information. Due to poor contact on one\nor more of the earbuds or Biopac finger sensor resulting in\nsignals too noisy to be usable, we excluded PPG data from\nfour subjects.\nIII. T RANSFER LEARNING BASED FRAMEWORK FOR\nEXTRACTING HRV FEATURES\nTo extract HRV based features from the denoised earbud\nPPG signal, we design a framework based on transfer learning\nand using Temporal convolution network (TCN) [9]. The\nframework consists of two steps: In the first step we pre-train\na TCN model on Biopac PPG to detect position of peaks.\nFor the latter step, we use this pre-trained TCN model for the\ndownstream task of predicting different HRV parameters. We\nexplain these steps in detail below.\nA. Pre-training using Biopac PPG\nThe growing availability of ubiquitous and unobtrusive\nwearable devices has made the collection of continuous sensor\ndata more convenient and accessible than ever. However,\nlabeling this data requires significant effort and time. As a\nresult, the amount of labeled sensor data available is minimal\nin comparison to the unlabeled data that can be collected. We\nfirst pre-train a model with the reference PPG signals captured\nfrom the Biopac finger sensor to detect peak positions of this\ninput signal. We chose this task because all the HRV-related\nfeatures extracted from the PPG signal are derived from the\nposition of peaks. The primary motivation for pre-training a\nmodel on the PPG data is to increase data efficiency given the\nrelative scarcity of available earbud PPG data, and to acquaint\nthe model with the PPG signal. We use HeartPy [10], [11], an\nopen-source python library for extracting ground truth peak\npositions. The idea of initiating models on hand-designed tasks\nbefore deploying them for different downstream purposes is\nnot uncommon. In computer vision, models are often pre-\ntrained with image segmentation tasks [12], [13] and in natural\nlanguage processing to generate language models like BERT\n[14] and GPT-3 [15], models are pre-trained with tasks of pre-\ndicting of next word in a sentence. We used TCN as our choice\nof model, while there are several choices for modeling contin-\nuous time-series data TCNs are a type of convolution network\nthat convolve over a time-domain by combining properties of\nConvolutional Neural Networks (CNN) and Recurrent Neural\nNetworks (RNN). They overcome the problem of exploding\nand vanishing gradients by using causal dilated convolution\nAuthorized licensed use limited to: Universiteit Leiden. Downloaded on May 25,2025 at 18:50:53 UTC from IEEE Xplore.  Restrictions apply. \n\nBaseline-RecordingDot-trackingProgressive-Muscle relaxationCalm-MusicExciting-MusicReco-verySpeech-PrepSpeech\nFig. 1: Plot showing the duration and sequence of tasks that are in the study. Tasks that induce stress are marked in red, while\nthe blue ones represent non-stressful tasks. We removed breaks in-between tasks for the sake of visualization. We also show\nhow heart rate varies over the study for a sample individual subject.\nUnlabeled \nBiopac-PPG Peak Detection\nEarbud-PPG\nHeart Rate Variability (HRV) \nFeature\nFig. 2: Transfer learning framework to predict HRV features\ninstead of standard convolutions and using a receptive field\nthat is exponential in network depth.\nB. Downstream HRV parameters estimation\nThe pre-trained TCN model from the previous step is fine-\ntuned"
       ],
-      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
-      "LLM": "deepseek/deepseek-chat-v3.1:free",
-      "finish_reason": "stop",
-      "total_len": 2549
+      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE"
     }
   ]
 }

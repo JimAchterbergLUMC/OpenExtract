@@ -6,7 +6,7 @@
         },
         {
             "id": "Q2",
-            "text": "On what basis were eligible participants included in this study (symptons, previous tests, registry, etc.)?"
+            "text": "On what basis were eligible participants included in this study (symptoms, previous tests, registry, etc.)?"
         },
         {
             "id": "Q3",
@@ -42,26 +42,30 @@
         },
         {
             "id": "Q11",
-            "text": "Is the performance of the predictive models benchmarked or compared to a baseline?"
+            "text": "How was data augmentation or generation used in this study?"
         },
         {
             "id": "Q12",
-            "text": "Which type of explainability techniques are used?"
+            "text": "Is the performance of the predictive models benchmarked or compared to a baseline?"
         },
         {
             "id": "Q13",
-            "text": "Which evaluation metrics or outcome measures are used to assess the predictive models?"
+            "text": "Which type of explainability techniques are used?"
         },
         {
             "id": "Q14",
-            "text": "What considerations were given to selected evaluation metrics or outcome measures in this study?"
+            "text": "Which evaluation metrics or outcome measures are used to assess the predictive models?"
         },
         {
             "id": "Q15",
-            "text": "How were robustness, confidence or statistical significance of the results assessed in this study?"
+            "text": "What considerations were given to selected evaluation metrics or outcome measures in this study?"
         },
         {
             "id": "Q16",
+            "text": "How were robustness, confidence or statistical significance of the results assessed in this study?"
+        },
+        {
+            "id": "Q17",
             "text": "What limitations of the study were discussed?"
         }
     ]

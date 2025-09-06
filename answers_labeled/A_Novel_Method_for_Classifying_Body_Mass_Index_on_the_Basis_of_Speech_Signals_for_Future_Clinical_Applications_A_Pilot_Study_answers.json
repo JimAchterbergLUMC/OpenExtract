@@ -106,13 +106,13 @@
     {
       "id": "Q4",
       "question": "Does the predictive model perform regression or classification?",
-      "answer": "Classification",
-      "raw_answer": "Classification",
+      "answer": "Unknown from this paper",
+      "raw_answer": "Unknown from this paper",
       "choices_ids": [
         "Regression",
         "Classification"
       ],
-      "answer_label": "Classification",
+      "answer_label": null,
       "chunks_id": [
         6,
         17,
@@ -123,10 +123,7 @@
         " of broad range, rich\ndata,andamoreaccurateclassificationmodel.\nAcknowledgment\nThis work was supported by the National Research Founda-\ntion of Korea (NRF) Grant funded by the Korea government\n(MEST)(20120009001,2006-2005173).\nReferences\n[1] T. J. Parsons, O. Manor, and C. Power, “Physical activity\nand change in body mass index from adolescence to mid-\nadulthood in the 1958 British cohort,”International Journal of\nEpidemiology,vol.35,no .1,p p .197 –204,2006.\n[2] H. Hirose, T. Takayama, S. Hozawa, T. Hibi, and I. Saito, “Pre-\ndiction of metabolic syndrome using artificial neural network\nsystembasedonclinicaldataincludinginsulinresistanceindex\nand serum adiponectin,”Computers in Biology and Medicine,\nvol.41,pp.1051–1056,2011.\n[3] D. Gallagher, M. Visser, D. Sep´u l v e d a ,R.N .P i e r so n ,T .H a rri s ,\nand S. B. Heymsfieid, “How useful is body mass index for\ncomparisonofbodyfatnessacrossage,sex,andethnicgroups?”\nAmerican Journal of Epidemiology,v o l .1 4 3 ,n o .3 ,p p .2 2 8 – 2 3 9 ,\n1996.\n[ 4 ]E .A n u u r a d ,K .S h i w a k u ,A .N o g ie ta l . ,“Th en e wB M Ic r i t e r i a\nf o rA s i a n sb yt h er e g i o n a lo ffi c ef o rt h ew e s t e r np a c i fi cr e g i o n\nof WHO are suitable for screening of overweight to prevent\nmetabolic syndrome in elder Japanese workers,”Journal of\nOccupational Health,vol.45,no.6,pp.335–343,2003.\n[5]L.L.Y a n,M.L.Da vigl us,K.Li uetal.,“ BMIa ndheal th-r ela ted\nqualityoflifeinadults65yearsandolder,” ObesityResearch,vol.\n12,no .1,p p .69–7 6,2004.\n 4747, 2013, 1, Downloaded from https://onlinelibrary.wiley.com/doi/10.1155/2013/150265, Wiley Online Library on [23/05/2025]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License\n\n\nEvidence-BasedComplementaryandAlternativeMedicine 9\n[6] Asia Pacific Cohort Studies Collaboration, “Body mass index\nand cardiovascular disease in the Asia-Pacific Region: an\noverviewof33cohortsinvolving310000participants,” Interna-\ntional Journal of Epidemiology,vol.3 3,p p .7 51 –7 58,2004.\n[ 7 ]C .M .L e e ,S .C o l a g i u r i ,M .E z z a t i ,a n dM .W o o d w a r d ,“ Th e\nburden of cardiovascular disease associated with high body\nmass index in the Asia-Pacific region,”Obesity Reviews,v o l .12 ,\npp.e454–e459,2011.\n[8] L. Li, A. P. De Moira, and C. Power",
         " l .2 9 ,\np p .57 –6 2,2010.\n[42] World Health Organisation, The Asia-Pacific Perspective:\nRedefiningObesityandItsTreatment ,HealthCommunications,\nSydney,Australia,2000.\n[43] I. Guyon and A. Elisseeff, “An introduction to variable and\nfeature selection,”Journal of Machine Learning Research,v o l .3 ,\npp.1157–1182,2003.\n[44] R. Kohavi and G. H. John, “Wrappers for feature subset\nselection,” Artificial Intelligence,v o l .9 7 ,n o .1 - 2 ,p p .2 7 3 – 3 2 4 ,\n1997.\n[45] S. le Cessie and J. C. van Houwelingen, “Ridge estimators in\nlogistic regression,”Applied Statistics,v o l .4 1 ,n o .1 ,p p .1 9 1 – 2 0 1 ,\n1992.\n[46] H. Ian, Data Mining: Practical Machine Learning Tools and\nTechniques,MorganKaufmann,SanFrancisco,Calif,USA,2nd\nedition,2005.\n[47] J. Han and M. Kamber,Data Mining: Concepts and Techniques,\nMorgan Kaufmann, San Francisco, Calif, USA, 2nd edition,\n2006.\n[48] B. J. Lee, M. S. Shin, Y. J. Oh, H. S. Oh, and K. H. Ryu,\n“Identification of protein functions using a machine-learning\napproach based on sequence-derived properties,” Proteome\nScience,vol.7 ,article27 ,2009 .\n[49] P. N. Tan, M. Steinbach, and V. Kumar,Introduction to Data\nMining,AddisonWesley,Boston,Mass,USA,2006.\n[50] J.HuangandC.X.Ling,“UsingAUCandaccuracyinevaluating\nlearningalgorithms,”IEEETransactionsonKnowledgeandData\nEngineering,vol.17 ,p p .299–3 10,2005.\n[51] D.J.Hand,“Evaluatingdiagnostictests:theareaundertheROC\nc u r v ea n dt h eb a l a n c eo fe r r o r s , ”Statistics in Medicine,v o l .2 9 ,\nno .1 4,p p .150 2–1510,2010.\n[52] C.E.Metz,“ROCanalysisinmedicalimaging:atutorialreview\nof the literature,”Radiological physics and technology,v o l .1 ,n o .\n1,pp.2–12,2008.\n[53] R. Kumar and A. Indrayan, “Receiver operating characteristic\n(ROC)curveformedicalresearchers,” IndianPediatrics,vol.48,\nno.4,pp.277–287,2011.\n[54] D. Krieser, K. Nguyen, D. Kerr, D. Jolley, M. Clooney, and A.\nM. Kelly, “Parental weight estimation of their child’s weight\nis more accurate than other weight estimation methods for\ndetermining children’s weight in an emergency department?”\nEmergency Medicine Journal,vol.2 4,no .11,p p .7 56–7 59 ,2007 .\n[55] T. R. Coe, M. Halkes, K. Houghton, and D. Jefferson, “The\naccuracy of visual estimation of weight and height in pre-\noperative supine patients,”Anaesthesia,v o l .5 4 ,n o .6 ,p p .5 8 2 –\n586,1999.\n[56] S.Menon"
       ],
-      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
-      "LLM": "deepseek/deepseek-chat-v3.1:free",
-      "finish_reason": "stop",
-      "total_len": 2551
+      "sent_transformer": "kamalkraj/BioSimCSE-BioLinkBERT-BASE"
     }
   ]
 }
