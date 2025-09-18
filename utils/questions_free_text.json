@@ -18,7 +18,7 @@
         },
         {
             "id": "Q5",
-            "text": "What was the proedure for splitting the dataset into training, validation, and test sets in this study?"
+            "text": "What was the procedure for splitting the dataset into training, validation, and test sets in this study?"
         },
         {
             "id": "Q6",
@@ -50,7 +50,7 @@
         },
         {
             "id": "Q13",
-            "text": "Which type of explainability techniques are used?"
+            "text": "Which type of statistical and/or machine learning explainability techniques are used?"
         },
         {
             "id": "Q14",
