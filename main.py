@@ -34,6 +34,7 @@ import json
 import os
 import random
 from pathlib import Path
+from time import time
 
 from utils import answer_questions_for_paper, load_questions
 
@@ -166,7 +167,7 @@ def main() -> None:
     # Process each paper
     for pdf in papers:
         print(f"Processing: {pdf.name}")
-
+        start_time = time()
         answers = answer_questions_for_paper(
             pdf_path=pdf,
             questions=questions,
@@ -180,6 +181,8 @@ def main() -> None:
             dense_device=args.dense_device,
             dense_batch_size=args.dense_batch_size,
         )
+        runtime = time() - start_time
+        print(f"Time taken for {pdf.name}: {runtime} seconds")
 
         # Generate clean filename for output
         clean_name = pdf.stem.replace(" ", "_").replace("-", "_")
@@ -187,7 +190,7 @@ def main() -> None:
         output_file = args.output_dir / f"{clean_name}_answers.json"
 
         # Save results
-        result = {"paper": pdf.name, "answers": answers}
+        result = {"paper": pdf.name, "answers": answers, "runtime": runtime}
         with open(output_file, "w", encoding="utf-8") as f:
             json.dump(result, f, ensure_ascii=False, indent=2)
 
