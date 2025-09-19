@@ -1,6 +1,6 @@
 papers/
 api_keys/
-answers/
+answers**/
 #answers_free_text/
 #answers_labeled/
 .conda

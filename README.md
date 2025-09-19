@@ -7,7 +7,7 @@ Literature review on data analytics for digital health applications.
 - pip install -r requirements.txt
 - run main_dense.py with the following arguments (see argument description below):
   
-python main_dense.py --papers-dir {PAPERS_DIR} --output-dir {OUTPUT_DIR} --questions-file {QUESTIONS_FILE} --model {LLM} --top-k {K} --chunk-tokens {N_TOKENS_PER_CHUNK} --api-key-file {API_KEY_FILEPATH} --dense-model {SENTENCE_EMBEDDER} --dense-batch-size {BATCH_SIZE}
+python main.py --papers-dir {PAPERS_DIR} --output-dir {OUTPUT_DIR} --questions-file {QUESTIONS_FILE} --model {LLM} --top-k {K} --chunk-tokens {N_TOKENS_PER_CHUNK} --api-key-file {API_KEY_FILEPATH} --dense-model {SENTENCE_EMBEDDER} --dense-batch-size {BATCH_SIZE}
 
 
 - PAPERS_DIR: directory containing the papers in pdf format (e.g. ./papers/).

@@ -26,46 +26,50 @@
         },
         {
             "id": "Q7",
-            "text": "How is missing data handled in this study?"
+            "text": "What techniques were used to ensure privacy of the participants in this study?"
         },
         {
             "id": "Q8",
-            "text": "How are outliers handled in this study?"
+            "text": "How is missing data handled in this study?"
         },
         {
             "id": "Q9",
-            "text": "Which prediction models were used in this study?"
+            "text": "How are outliers handled in this study?"
         },
         {
             "id": "Q10",
-            "text": "What considerations were given to model selection and hyperparameter tuning in this study?"
+            "text": "Which prediction models were used in this study?"
         },
         {
             "id": "Q11",
-            "text": "How was data augmentation or generation used in this study?"
+            "text": "What considerations were given to model selection and hyperparameter tuning in this study?"
         },
         {
             "id": "Q12",
-            "text": "Is the performance of the predictive models benchmarked or compared to a baseline?"
+            "text": "How was data augmentation or generation used in this study?"
         },
         {
             "id": "Q13",
-            "text": "Which type of statistical and/or machine learning explainability techniques are used?"
+            "text": "Is the performance of the predictive models benchmarked or compared to a baseline?"
         },
         {
             "id": "Q14",
-            "text": "Which evaluation metrics or outcome measures are used to assess the predictive models?"
+            "text": "Which type of statistical and/or machine learning explainability techniques are used?"
         },
         {
             "id": "Q15",
-            "text": "What considerations were given to selected evaluation metrics or outcome measures in this study?"
+            "text": "Which evaluation metrics or outcome measures are used to assess the predictive models?"
         },
         {
             "id": "Q16",
-            "text": "How were robustness, confidence or statistical significance of the results assessed in this study?"
+            "text": "What considerations were given to selected evaluation metrics or outcome measures in this study?"
         },
         {
             "id": "Q17",
+            "text": "How were robustness, confidence or statistical significance of the results assessed in this study?"
+        },
+        {
+            "id": "Q18",
             "text": "What limitations of the study were discussed?"
         }
     ]
