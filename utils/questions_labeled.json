@@ -1,24 +1,324 @@
 {
-    "questions": [
-        {
-            "id": "Q1",
-            "text": "Which data type is used in this study?",
-            "choices": ["tabular", "time-series", "images", "text", "video", "audio"]
-          },
-          {
-            "id": "Q2",
-            "text": "Which type of digital health application is considered in this study?",
-            "choices": ["Precision Medicine", "Health IT", "Digital Medicine", "Telehealth", "Wellness"]
-          },
-          {
-            "id": "Q3",
-            "text": "To which ICD-10 code group does the digital health application in this study pertain?",
-            "choices": ["A00-B99", "C00-D48", "D50-D89", "E00-E90", "F00-F99", "G00-G99", "H00-H59", "I00-I99", "J00-J99", "K00-K93", "L00-L99", "M00-M99", "N00-N99", "O00-O99", "P00-P96", "Q00-Q99", "R00-R99", "S00-S99", "T00-T98", "U00-U99", "V01-Y98", "Z00-Z99"]
-          },
-          {
-            "id": "Q4",
-            "text": "Does the predictive model perform regression or classification?",
-            "choices": ["Regression", "Classification"]
-          }
-    ]
+  "questions": [
+    {
+      "id": "Q1",
+      "text": "Which data type is used in this study?",
+      "choices": [
+        "Tabular",
+        "Time-series",
+        "Images",
+        "Text",
+        "Video",
+        "Audio",
+        "Multi-modal"
+      ]
+    },
+    {
+      "id": "Q2",
+      "text": "Which type of digital health application is considered in this study?",
+      "choices": [
+        "Precision Medicine: technology that uses individual-level biological information to generate care insights",
+        "Health IT: technology that records, stores, protects, and/or retrieves clinical, administrative, or financial patient information",
+        "Digital Medicine: technology that support the practice of medicine, e.g. for measurement, tools for treatment, recovery, prevention, and health promotion",
+        "Telehealth: technology that enables care delivery without patient and care deliverer being at the same physical location",
+        "Wellness: technology that tracks and/or provides insights on personal fitness and wellbeing"
+      ]
+    },
+    {
+      "id": "Q3",
+      "text": "To which ICD-10 code group does the digital health application in this study pertain?",
+      "choices": [
+        "A00-B99: Infectious and parasitic diseases",
+        "C00-D48: Neoplasms",
+        "D50-D89: Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism",
+        "E00-E90: Endocrine, nutritional and metabolic diseases",
+        "F00-F99: Mental and behavioural disorders",
+        "G00-G99: Diseases of the nervous system",
+        "H00-H59: Diseases of the eye and adnexa",
+        "H60-H95: Diseases of the ear and mastoid process",
+        "I00-I99: Diseases of the circulatory system",
+        "J00-J99: Diseases of the respiratory system",
+        "K00-K93: Diseases of the digestive system",
+        "L00-L99: Diseases of the skin and subcutaneous tissue",
+        "M00-M99: Diseases of the musculoskeletal system and connective tissue",
+        "N00-N99: Diseases of the genitourinary system",
+        "O00-O99: Pregnancy, childbirth, and the puerperium",
+        "P00-P96: Certain conditions originating in the perinatal period",
+        "Q00-Q99: Congenital malformations, deformations and chromosomal abnormalities",
+        "R00-R99: Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified",
+        "S00-T98: Injury, poisoning and certain other consequences of external causes",
+        "U00-U99: Codes for special purposes",
+        "V01-Y98: External causes of morbidity and mortality",
+        "Z00-Z99: Factors influencing health status and contact with health services",
+        "Other: the disease or health condition does not fit any of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q4",
+      "text": "Is the aim of this study prognostic or diagnostic?",
+      "choices": [
+        "Prognostic: predicting future events",
+        "Diagnostic: predicting current disease status",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q7",
+      "text": "How did the study provide a description of or insight into the dataset?",
+      "choices": [
+        "Descriptive statistics",
+        "Data visualization",
+        "Clustering",
+        "Other: description or insight into the dataset was provided but fits none of the other categories",
+        "Not provided: no description or insight into the dataset",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q8",
+      "text": "What was the procedure for splitting the dataset into training and validation sets in this study?",
+      "choices": [
+        "Random",
+        "Stratified",
+        "Time-based",
+        "Cross-validation",
+        "Other: splitting procedure fits none of the other categories",
+        "No splitting: there was explicitly no splitting of the dataset performed",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q9",
+      "text": "How were numerical variables preprocessed in this study?",
+      "choices": [
+        "Z-score standardization",
+        "Min-max scaling: rescaling to fixed interval",
+        "Binning",
+        "Normalizing transformations: any operation intended to make data more gaussian-like",
+        "Other: numerical variables were preprocessed but fits none of the other categories",
+        "Irrelevant: no numerical variables included",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q10",
+      "text": "How were categorical variables preprocessed in this study?",
+      "choices": [
+        "One-hot encoding",
+        "Ordinal encoding",
+        "Frequency encoding",
+        "Target encoding",
+        "Embedding",
+        "Other: categorical variables were preprocessed but fits none of the other categories",
+        "Irrelevant: no categorical variables included",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q11",
+      "text": "Were any feature engineering techniques used in this study?",
+      "choices": [
+        "No feature engineering",
+        "Modality-specific feature engineering",
+        "Feature selection",
+        "Dimensionality reduction",
+        "Other: feature engineering was performed but fits none of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q12",
+      "text": "What techniques were used to ensure privacy of the participants in this study?",
+      "choices": [
+        "De-identification",
+        "Anonymization",
+        "Privacy-preserving synthetic data generation",
+        "No privacy-preserving techniques included",
+        "Irrelevant: data was not privacy-sensitive",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q13",
+      "text": "How is missing data handled in this study?",
+      "choices": [
+        "Irrelevant: there was no missing data",
+        "Removed",
+        "Simple Imputation: imputation with a fixed or otherwise simplistic value such as mean, mode, or forward-fill",
+        "Model-based Imputation: estimating and imputing missing values using a model",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q14",
+      "text": "How are outliers handled in this study?",
+      "choices": [
+        "Irrelevant: outlier detection was performed but no outliers were found",
+        "Removed",
+        "Transformed: outliers were transformed to a different value",
+        "Robustly modelled: robust modelling approaches were used due to presence of outliers",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q15",
+      "text": "Which prediction models were used in this study? Choose the best fitting category for each distinct model.",
+      "choices": [
+        "Naive Bayes",
+        "Generalized Linear Model: any specific version of a generalized linear model, with or without regularization",
+        "Discriminant Analysis",
+        "Support Vector Machine",
+        "Instance-based model",
+        "Fuzzy model",
+        "Hidden Markov Model",
+        "Gaussian Process",
+        "Decision Tree",
+        "Random Forest",
+        "Gradient Boosted Decision Trees",
+        "Bagging: other than Random Forest",
+        "Boosting: other than Gradient Boosted Decision Trees",
+        "Stacking",
+        "Ensemble: other than Bagging, Boosting, or Stacking",
+        "Artificial Neural Network",
+        "Convolutional Neural Network",
+        "Recurrent Neural Network",
+        "Transformer Neural Network",
+        "Graph Neural Network",
+        "Large Language Model",
+        "Other: model fits none of the other categories"
+      ]
+    },
+    {
+      "id": "Q16",
+      "text": "Which prediction model came out as best-performing in this study? Choose only one.",
+      "choices": [
+        "Naive Bayes",
+        "Generalized Linear Model: any specific version of a generalized linear model, with or without regularization",
+        "Discriminant Analysis",
+        "Support Vector Machine",
+        "Instance-based model",
+        "Fuzzy model",
+        "Hidden Markov Model",
+        "Gaussian Process",
+        "Decision Tree",
+        "Random Forest",
+        "Gradient Boosted Decision Trees",
+        "Bagging: other than Random Forest",
+        "Boosting: other than Gradient Boosted Decision Trees",
+        "Stacking",
+        "Ensemble: other than Bagging, Boosting, or Stacking",
+        "Artificial Neural Network",
+        "Convolutional Neural Network",
+        "Recurrent Neural Network",
+        "Transformer Neural Network",
+        "Graph Neural Network",
+        "Large Language Model",
+        "Other: model fits none of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q17",
+      "text": "How were hyperparameters tuned in this study?",
+      "choices": [
+        "Random search",
+        "Grid search",
+        "Bayesian optimization",
+        "Other: hyperparameter tuning was performed but the method fits none of the other categories",
+        "Irrelevant: no hyperparameter tuning performed",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q18",
+      "text": "Which methods for data augmentation and/or generation were used in this study?",
+      "choices": [
+        "SMOTE: or any variant of SMOTE",
+        "Generative model: a generative model was trained to generate new datapoints",
+        "Other: data augmentation or generation was performed but the method fits none of the other categories",
+        "Irrelevant: no data augmentation or generation performed",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q19",
+      "text": "Which type of statistical and/or machine learning explainability techniques are used?",
+      "choices": [
+        "Irrelevant: no explainability techniques used",
+        "Partial Dependence Plots",
+        "Surrogate model",
+        "Model coefficients: model coefficients are directly/intrinsically interpretable",
+        "Shapley values",
+        "Feature importances",
+        "LIME",
+        "Gradient-based interpretability methods",
+        "Other: explainability techniques were used but the method fits none of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q20",
+      "text": "Which evaluation metrics or outcome measures are used to assess the predictive models?",
+      "choices": [
+        "Error-based: includes metrics like RMSE, MSE, MAE, MAPE, etc.",
+        "R squared",
+        "Accuracy",
+        "Precision",
+        "Recall",
+        "Precision-Recall Curve",
+        "PR-AUC",
+        "ROC Curve",
+        "ROC-AUC",
+        "Sensitivity",
+        "Specificity",
+        "Positive/Negative Predictive Value",
+        "F1 score",
+        "Confusion matrix: also includes true/false positive rate as these can be directly derived from the confusion matrix",
+        "Other: evaluation metrics or outcome measures were used but the method fits none of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q21",
+      "text": "Which outcome measures were considered besides predictive performance-based metrics?",
+      "choices": [
+        "Irrelevant: no other outcome measures considered",
+        "Training time",
+        "Inference time and/or latency",
+        "Calibration",
+        "Other: outcome measures not relating to predictive performance were considered but fit none of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q22",
+      "text": "How were robustness, confidence or statistical significance of the results assessed in this study?",
+      "choices": [
+        "Irrelevant: no robustness, confidence or statistical significance assessment performed",
+        "Standard error, standard deviation, or variance",
+        "Confidence interval",
+        "Statistical significance testing",
+        "Other: robustness, confidence or statistical significance assessment was performed but the method fits none of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q23",
+      "text": "What limitations of the study were discussed?",
+      "choices": [
+        "Irrelevant: no limitations discussed",
+        "Sample size",
+        "Amount of features",
+        "Limited time",
+        "Limited computational resources",
+        "Generalization",
+        "Interpretability",
+        "Bias",
+        "Fairness",
+        "Other: limitations were discussed but fits none of the other categories",
+        "Unknown from this paper"
+      ]
+    }
+  ]
 }

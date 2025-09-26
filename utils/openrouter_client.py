@@ -56,8 +56,8 @@ def call_openrouter(
     base_rules = "You are a helpful and meticulous research assistant, that answers questions about study details carefully and adequately from context chunks of provided research papers."
 
     if choice_ids:
-        user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer only and exactly with the correct option from the list of answers. Never provide explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
-
+        # user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer only and exactly with the correct option from the list of answers. Never provide explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
+        user_suffix = ' Carefully read the QUESTION, ANSWERS, AND CONTEXT. If one or more options are correct, return ONLY a JSON array of the correct option IDs, e.g., ["A","C"]. Return the IDs exactly as provided in ANSWERS (case-sensitive). Do NOT include any text besides the JSON array.'
         user_prompt = (
             f"INSTRUCTIONS: {user_suffix}\n\n"
             f"QUESTION: {question}\n\n"
@@ -67,7 +67,7 @@ def call_openrouter(
         )
 
     else:
-        user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer in no more than 12 words and be concise. Never include explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
+        user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer in no more than 25 words and be concise. Never include explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
 
         user_prompt = (
             f"INSTRUCTIONS: {user_suffix}\n\n"
@@ -99,7 +99,7 @@ def call_openrouter(
     }
 
     # Retry logic with exponential backoff
-    for attempt in range(3):
+    for attempt in range(6):
         try:
             response = requests.post(
                 OPENROUTER_URL, headers=headers, json=payload, timeout=60

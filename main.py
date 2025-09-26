@@ -3,6 +3,8 @@
 Paper Q&A (per PDF) via OpenRouter — dense retrieval + per-question choices (ID-based)
 -------------------------------------------------------------------------------------
 
+python main.py --papers-dir papers --output-dir answers_labeled --questions-file utils/questions_labeled.json --api-key-file api_keys/openrouter.txt
+
 Behavior
 - If a question includes "choices", the model must output exactly one *choice ID* from that list.
   Supported forms:
@@ -27,6 +29,9 @@ Usage:
     --model "qwen/qwen2.5-vl-32b-instruct:free" \
     --chunk-tokens 800 --chunk-overlap 160 --top-k 3 \
     --dense-model "thenlper/gte-small" --dense-batch-size 8
+    --api-key-file ./api_keys/openrouter.txt \
+    --random-subset 10 \
+    --random-seed 42
 """
 
 import argparse
@@ -186,7 +191,9 @@ def main() -> None:
 
         # Generate clean filename for output
         clean_name = pdf.stem.replace(" ", "_").replace("-", "_")
-        clean_name = "".join(c for c in clean_name if c.isalnum() or c in "._-")
+        clean_name = "".join(c for c in clean_name if c.isalnum() or c in "._-")[
+            :50
+        ]  # ensure filenames are not too long
         output_file = args.output_dir / f"{clean_name}_answers.json"
 
         # Save results
