@@ -64,7 +64,7 @@
       ]
     },
     {
-      "id": "Q7",
+      "id": "Q5",
       "text": "How did the study provide a description of or insight into the dataset?",
       "choices": [
         "Descriptive statistics",
@@ -76,7 +76,20 @@
       ]
     },
     {
-      "id": "Q8",
+      "id": "Q6",
+      "text": "How many samples (participants) are included in the dataset considered in this study?",
+      "choices": [
+        "<100",
+        "100-1000",
+        "1000-10000",
+        "10000-100000",
+        "100000-1000000",
+        ">1000000",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q7",
       "text": "What was the procedure for splitting the dataset into training and validation sets in this study?",
       "choices": [
         "Random",
@@ -89,7 +102,7 @@
       ]
     },
     {
-      "id": "Q9",
+      "id": "Q8",
       "text": "How were numerical variables preprocessed in this study?",
       "choices": [
         "Z-score standardization",
@@ -102,7 +115,7 @@
       ]
     },
     {
-      "id": "Q10",
+      "id": "Q9",
       "text": "How were categorical variables preprocessed in this study?",
       "choices": [
         "One-hot encoding",
@@ -116,7 +129,7 @@
       ]
     },
     {
-      "id": "Q11",
+      "id": "Q10",
       "text": "Were any feature engineering techniques used in this study?",
       "choices": [
         "No feature engineering",
@@ -128,7 +141,7 @@
       ]
     },
     {
-      "id": "Q12",
+      "id": "Q11",
       "text": "What techniques were used to ensure privacy of the participants in this study?",
       "choices": [
         "De-identification",
@@ -140,7 +153,7 @@
       ]
     },
     {
-      "id": "Q13",
+      "id": "Q12",
       "text": "How is missing data handled in this study?",
       "choices": [
         "Irrelevant: there was no missing data",
@@ -151,7 +164,7 @@
       ]
     },
     {
-      "id": "Q14",
+      "id": "Q13",
       "text": "How are outliers handled in this study?",
       "choices": [
         "Irrelevant: outlier detection was performed but no outliers were found",
@@ -162,7 +175,7 @@
       ]
     },
     {
-      "id": "Q15",
+      "id": "Q14",
       "text": "Which prediction models were used in this study? Choose the best fitting category for each distinct model.",
       "choices": [
         "Naive Bayes",
@@ -190,7 +203,7 @@
       ]
     },
     {
-      "id": "Q16",
+      "id": "Q15",
       "text": "Which prediction model came out as best-performing in this study? Choose only one.",
       "choices": [
         "Naive Bayes",
@@ -219,7 +232,7 @@
       ]
     },
     {
-      "id": "Q17",
+      "id": "Q16",
       "text": "How were hyperparameters tuned in this study?",
       "choices": [
         "Random search",
@@ -231,7 +244,7 @@
       ]
     },
     {
-      "id": "Q18",
+      "id": "Q17",
       "text": "Which methods for data augmentation and/or generation were used in this study?",
       "choices": [
         "SMOTE: or any variant of SMOTE",
@@ -242,7 +255,7 @@
       ]
     },
     {
-      "id": "Q19",
+      "id": "Q18",
       "text": "Which type of statistical and/or machine learning explainability techniques are used?",
       "choices": [
         "Irrelevant: no explainability techniques used",
@@ -258,7 +271,7 @@
       ]
     },
     {
-      "id": "Q20",
+      "id": "Q19",
       "text": "Which evaluation metrics or outcome measures are used to assess the predictive models?",
       "choices": [
         "Error-based: includes metrics like RMSE, MSE, MAE, MAPE, etc.",
@@ -280,7 +293,7 @@
       ]
     },
     {
-      "id": "Q21",
+      "id": "Q20",
       "text": "Which outcome measures were considered besides predictive performance-based metrics?",
       "choices": [
         "Irrelevant: no other outcome measures considered",
@@ -292,7 +305,7 @@
       ]
     },
     {
-      "id": "Q22",
+      "id": "Q21",
       "text": "How were robustness, confidence or statistical significance of the results assessed in this study?",
       "choices": [
         "Irrelevant: no robustness, confidence or statistical significance assessment performed",
@@ -304,7 +317,7 @@
       ]
     },
     {
-      "id": "Q23",
+      "id": "Q22",
       "text": "What limitations of the study were discussed?",
       "choices": [
         "Irrelevant: no limitations discussed",
