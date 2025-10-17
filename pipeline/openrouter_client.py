@@ -7,6 +7,7 @@ to get responses from various language models for question-answering tasks.
 
 import time
 from typing import Any, Dict, List, Optional, Tuple
+import json
 
 import requests
 
@@ -24,6 +25,7 @@ def call_openrouter(
     x_title: Optional[str] = "Paper QA",
     choice_ids: Optional[List[str]] = None,
     id_to_label: Optional[Dict[str, str]] = None,
+    use_structured_output: Optional[bool] = False,
 ) -> Tuple[str, Optional[Dict[str, Any]]]:
     """
     Call the OpenRouter API to get an answer to a question based on context.
@@ -45,19 +47,22 @@ def call_openrouter(
         - full_api_response: Complete API response for logging (None if request failed)
 
     Note:
-        The function implements retry logic with exponential backoff (3 attempts).
-        If all attempts fail, returns "Unknown from this paper".
+        The function implements retry logic with exponential backoff (6 attempts).
     """
     # Format context with chunk numbers for better organization
     context = "\n\n\n".join(
         [f"CHUNK {i+1}: {chunk}" for i, chunk in enumerate(context_chunks)]
     )
 
-    base_rules = "You are a helpful and meticulous research assistant, that answers questions about study details carefully and adequately from context chunks of provided research papers."
+    with open("prompts.json", "r") as f:
+        prompts = json.load(f)
+
+    base_rules = prompts["base"]
+
+    user_suffix = prompts["user"]
 
     if choice_ids:
-        # user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer only and exactly with the correct option from the list of answers. Never provide explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
-        user_suffix = ' Carefully read the QUESTION, ANSWERS, AND CONTEXT. If one or more options are correct, return ONLY a JSON array of the correct option IDs, e.g., ["A","C"]. Return the IDs exactly as provided in ANSWERS (case-sensitive). Do NOT include any text besides the JSON array.'
+
         user_prompt = (
             f"INSTRUCTIONS: {user_suffix}\n\n"
             f"QUESTION: {question}\n\n"
@@ -67,7 +72,6 @@ def call_openrouter(
         )
 
     else:
-        user_suffix = " Carefully read the QUESTION, ANSWERS, AND CONTEXT. Answer in no more than 25 words and be concise. Never include explanations. If the answer is not present in the context, output exactly: Unknown from this paper."
 
         user_prompt = (
             f"INSTRUCTIONS: {user_suffix}\n\n"
@@ -93,10 +97,32 @@ def call_openrouter(
     ]
 
     # Prepare request payload
-    payload: Dict[str, Any] = {
-        "model": model,
-        "messages": messages,
-    }
+    if use_structured_output:
+        payload = {
+            "model": model,
+            "messages": messages,
+            "response_format": {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "answers_schema",
+                    "strict": True,
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "answers": {"type": "array", "items": {"type": "string"}}
+                        },
+                        "required": ["answers"],
+                        "additionalProperties": False,
+                    },
+                },
+            },
+            "provider": {"require_parameters": True},
+        }
+    else:
+        payload = {
+            "model": model,
+            "messages": messages,
+        }
 
     # Retry logic with exponential backoff
     for attempt in range(6):

@@ -41,7 +41,7 @@ import random
 from pathlib import Path
 from time import time
 
-from utils import answer_questions_for_paper, load_questions
+from pipeline import answer_questions_for_paper, load_questions
 
 
 def main() -> None:
@@ -52,19 +52,25 @@ def main() -> None:
 
     # Required arguments
     parser.add_argument(
-        "--papers-dir", required=True, type=Path, help="Directory with PDF files."
+        "--papers-dir", default="./papers", type=Path, help="Directory with PDF files."
     )
     parser.add_argument(
-        "--output-dir", required=True, type=Path, help="Directory to write answers."
+        "--output-dir",
+        default="./answers",
+        type=Path,
+        help="Directory to write answers.",
     )
     parser.add_argument(
-        "--questions-file", required=True, type=Path, help="JSON with questions."
+        "--questions-file",
+        default="./questions.json",
+        type=Path,
+        help="JSON with questions.",
     )
 
     # Model configuration
     parser.add_argument(
         "--model",
-        default="deepseek/deepseek-chat-v3.1:free",
+        default="qwen/qwen-2.5-7b-instruct",  # qwen/qwen-2.5-7b-instruct, #deepseek/deepseek-chat-v3.1
         help="OpenRouter model id.",
     )
 
@@ -75,11 +81,11 @@ def main() -> None:
     parser.add_argument(
         "--chunk-tokens",
         type=int,
-        default=800,
+        default=1000,
         help="Approx tokens per chunk (or char/4).",
     )
     parser.add_argument(
-        "--chunk-overlap", type=int, default=160, help="Overlap tokens between chunks."
+        "--chunk-overlap", type=int, default=500, help="Overlap tokens between chunks."
     )
 
     # API configuration
@@ -89,14 +95,14 @@ def main() -> None:
     parser.add_argument(
         "--api-key-file",
         type=Path,
-        default=None,
+        default="./api_keys/openrouter.txt",
         help="Optional file with the OpenRouter API key. If not provided, uses OPENROUTER_API_KEY env var.",
     )
 
     # Dense retrieval parameters
     parser.add_argument(
         "--dense-model",
-        default="kamalkraj/BioSimCSE-BioLinkBERT-BASE",
+        default="neuml/pubmedbert-base-embeddings",  # "thenlper/gte-large",  # "pritamdeka/S-PubMedBert-MS-MARCO",  # "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
         help="SentenceTransformers embedding model.",
     )
     parser.add_argument(
@@ -115,7 +121,7 @@ def main() -> None:
     parser.add_argument(
         "--random-subset",
         type=int,
-        default=None,
+        default=50,
         help="Randomly select this many papers from the papers directory. If not specified, use all papers.",
     )
     parser.add_argument(
@@ -123,6 +129,21 @@ def main() -> None:
         type=int,
         default=42,
         help="Random seed for reproducible paper selection (default: 42).",
+    )
+
+    # Structured output parameters
+    parser.add_argument(
+        "--use-structured-output",
+        type=bool,
+        default=False,
+        help="Force OpenRouter's structured output functionality. Not every model supports this.",
+    )
+
+    parser.add_argument(
+        "--stop-after-n-papers",
+        type=int,
+        default=10,
+        help="Stop after processing the first n papers.",
     )
 
     args = parser.parse_args()
@@ -145,9 +166,7 @@ def main() -> None:
     questions = load_questions(args.questions_file)
 
     # Get list of PDF papers
-    all_papers = sorted(
-        [p for p in args.papers_dir.iterdir() if p.suffix.lower() == ".pdf"]
-    )
+    all_papers = sorted(Path(args.papers_dir).glob("*.pdf"))
     if not all_papers:
         raise RuntimeError(f"No PDFs found in {args.papers_dir}")
 
@@ -170,7 +189,9 @@ def main() -> None:
         papers = all_papers
 
     # Process each paper
-    for pdf in papers:
+    for i, pdf in enumerate(papers):
+        if i >= args.stop_after_n_papers:
+            break
         print(f"Processing: {pdf.name}")
         start_time = time()
         answers = answer_questions_for_paper(
@@ -185,6 +206,7 @@ def main() -> None:
             dense_model=args.dense_model,
             dense_device=args.dense_device,
             dense_batch_size=args.dense_batch_size,
+            use_structured_output=args.use_structured_output,
         )
         runtime = time() - start_time
         print(f"Time taken for {pdf.name}: {runtime} seconds")

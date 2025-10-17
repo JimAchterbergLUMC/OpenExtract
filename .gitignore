@@ -1,13 +1,12 @@
 papers/
+selected_papers/
 api_keys/
-answers**/
-#answers_free_text/
-#answers_labeled/
 .conda
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
 *$py.class
+answers/
 
 # C extensions
 *.so

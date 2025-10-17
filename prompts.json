@@ -1,0 +1,4 @@
+{
+    "base": "You are a helpful and meticulous research assistant, that answers questions about study details carefully and adequately from context chunks of provided research papers.",
+    "user": "Carefully read the QUESTION, ANSWERS, AND CONTEXT. If one or more options are correct, return ONLY a JSON array of the correct option IDs, e.g., ['A','C']. Choose from the IDs exactly as provided in ANSWERS (case-sensitive). Do NOT include any text besides the JSON array."
+}

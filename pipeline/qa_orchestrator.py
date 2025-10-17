@@ -8,6 +8,7 @@ and answering questions using dense retrieval and language models.
 from pathlib import Path
 from typing import Dict, List, Optional
 import json
+import ast
 
 from .choice_utils import extract_choice_id, normalize_choices
 from .data_models import Question
@@ -78,6 +79,7 @@ def answer_questions_for_paper(
     dense_model: str,
     dense_device: Optional[str],
     dense_batch_size: int,
+    use_structured_output: Optional[bool] = False,
 ) -> List[Dict]:
     """
     Process a single PDF paper and answer all questions for it.
@@ -165,6 +167,7 @@ def answer_questions_for_paper(
             x_title="Paper QA",
             choice_ids=question_choice_ids,
             id_to_label=question_id_to_label,
+            use_structured_output=use_structured_output,
         )
 
         # Process the answer based on question type
@@ -182,29 +185,27 @@ def answer_questions_for_paper(
                         out.append(resolved)
                 return out
 
-            final_ids: Optional[List[str]] = None
+            print(f"raw_answer: {raw_answer}")
+
+            # extract the list of answers from the raw answer
+            raw_answer = raw_answer[raw_answer.find("[") : raw_answer.find("]") + 1]
+
+            # try to evaluate the string as a python list
+            try:
+                parsed = ast.literal_eval(raw_answer)
+            except:
+                parsed = raw_answer
+
+            print(f"parsed answer: {parsed}")
 
             if (
                 isinstance(raw_answer, str)
                 and raw_answer.strip() == "Unknown from this paper"
             ):
                 final_ids = None
-            else:
-                parsed = None
-                # Try to parse JSON array first
-                if isinstance(raw_answer, str):
-                    try:
-                        parsed = json.loads(raw_answer)
-                    except json.JSONDecodeError:
-                        parsed = None
 
-                if isinstance(parsed, list):
-                    final_ids = _normalize_many(parsed)
-                else:
-                    # Backward compatibility: single ID in free text
-                    extracted = extract_choice_id(raw_answer, question_choice_ids)
-                    if extracted is not None:
-                        final_ids = [extracted]
+            if isinstance(parsed, list):
+                final_ids = _normalize_many(parsed)
 
             if final_ids is None or len(final_ids) == 0:
                 final_answer = "Unknown from this paper"
