@@ -1,39 +1,3 @@
-#!/usr/bin/env python3
-"""
-Paper Q&A (per PDF) via OpenRouter — dense retrieval + per-question choices (ID-based)
--------------------------------------------------------------------------------------
-
-python main.py --papers-dir papers --output-dir answers_labeled --questions-file utils/questions_labeled.json --api-key-file api_keys/openrouter.txt
-
-Behavior
-- If a question includes "choices", the model must output exactly one *choice ID* from that list.
-  Supported forms:
-    1) ["tabular","time-series","images","text","video","audio"]   (IDs are the strings)
-    2) [{"id":"ts","label":"time-series"}, {"id":"img","label":"images"}, ...]
-- If a question has no "choices", the model answers in concise free text.
-- If evidence isn't in the retrieved context, the model must output: "Unknown from this paper".
-
-Retrieval
-- Dense semantic retrieval only (SentenceTransformers).
-- Cosine similarity via L2-normalized embeddings.
-
-Requirements:
-  pip install pypdf tiktoken requests sentence-transformers numpy
-
-Usage:
-  export OPENROUTER_API_KEY=...  # or use --api-key-file path/to/key.txt
-  python main.py \
-    --papers-dir ./papers \
-    --questions-file ./questions_free_text.json \
-    --output-dir ./answers_free_text \
-    --model "qwen/qwen2.5-vl-32b-instruct:free" \
-    --chunk-tokens 800 --chunk-overlap 160 --top-k 3 \
-    --dense-model "thenlper/gte-small" --dense-batch-size 8
-    --api-key-file ./api_keys/openrouter.txt \
-    --random-subset 10 \
-    --random-seed 42
-"""
-
 import argparse
 import json
 import os
@@ -95,15 +59,15 @@ def main() -> None:
     parser.add_argument(
         "--api-key-file",
         type=Path,
-        default="./api_keys/openrouter.txt",
+        default=None,
         help="Optional file with the OpenRouter API key. If not provided, uses OPENROUTER_API_KEY env var.",
     )
 
     # Dense retrieval parameters
     parser.add_argument(
         "--dense-model",
-        default="neuml/pubmedbert-base-embeddings",  # "thenlper/gte-large",  # "pritamdeka/S-PubMedBert-MS-MARCO",  # "kamalkraj/BioSimCSE-BioLinkBERT-BASE",
-        help="SentenceTransformers embedding model.",
+        default="neuml/pubmedbert-base-embeddings",
+        help="SentenceTransformers embedding model (from Hugging Face).",
     )
     parser.add_argument(
         "--dense-device",
@@ -121,7 +85,7 @@ def main() -> None:
     parser.add_argument(
         "--random-subset",
         type=int,
-        default=50,
+        default=None,
         help="Randomly select this many papers from the papers directory. If not specified, use all papers.",
     )
     parser.add_argument(
@@ -142,7 +106,7 @@ def main() -> None:
     parser.add_argument(
         "--stop-after-n-papers",
         type=int,
-        default=10,
+        default=None,
         help="Stop after processing the first n papers.",
     )
 
@@ -189,6 +153,9 @@ def main() -> None:
         papers = all_papers
 
     # Process each paper
+    args.stop_after_n_papers = (
+        len(papers) if args.stop_after_n_papers is None else args.stop_after_n_papers
+    )
     for i, pdf in enumerate(papers):
         if i >= args.stop_after_n_papers:
             break

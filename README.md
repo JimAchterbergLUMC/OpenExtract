@@ -1,21 +1,47 @@
-# ReviewAnalyticsDHA
-Literature review on data analytics for digital health applications.
+# OpenExtract
 
+OpenExtract is an open-source pipeline for structured data extraction from text. It uses Retrieval Augmented Generation (RAG) to select the most appropriate answers on questions based on relevant sections of PDF documents. 
+
+![Alt text](images/openextract.png)
+
+
+OpenExtract is built on the OpenRouter interface, which allows it to support a wide variety of Large Language Models. The RAG component uses dense retrieval with sentence embedders from Hugging Face.
 
 # Usage
+This repository already contains a sample use case to guide you in using OpenExtract. The use case pertains to data extraction for a systematic literature review in Digital Health. You can use OpenExtract for your own use case as follows:
 
-- pip install -r requirements.txt
-- run main_dense.py with the following arguments (see argument description below):
-  
-python main.py --papers-dir {PAPERS_DIR} --output-dir {OUTPUT_DIR} --questions-file {QUESTIONS_FILE} --model {LLM} --top-k {K} --chunk-tokens {N_TOKENS_PER_CHUNK} --api-key-file {API_KEY_FILEPATH} --dense-model {SENTENCE_EMBEDDER} --dense-batch-size {BATCH_SIZE}
+- **Generate API key**: make an account on [OpenRouter](https://openrouter.ai/) and generate an API key.
+- **Set prompts**: alter the prompts.json file to provide instructions for LLMs to answer your questions and/or extract data from documents.
+- **Define questions**: alter the questions.json file to extract data or information relevant to your use case. Note that we currently only support multiple-choice extraction. 
+- **Install dependencies and run OpenExtract as follows**:
+
+```bash
+pip install -r requirements.txt
+```
+
+```bash
+python main.py --papers-dir {PAPERS} --output-dir {OUTPUTS} --questions-file {QUESTIONS} --model {MODEL} --dense-model {DENSE} --top-k {K} --chunk-tokens {CHUNK} --chunk-overlap {OVERLAP} --api-key-file {KEY} 
+```
+
+- PAPERS: directory containing documents (pdf files) to extract information from.
+- OUTPUTS: output directory.
+- QUESTIONS: JSON file containing questions to be used for information extraction.
+- MODEL: Large Language Model as per OpenRouter model ID, e.g., qwen/qwen-2.5-7b-instruct.
+- DENSE: sentence embedder for dense retriever as per Hugging Face model ID, e.g., neuml/pubmedbert-base-embeddings. 
+- K: amount of most relevant chunks to pass to the Large Language Model.
+- CHUNK: amount of tokens per chunk.
+- OVERLAP: amount of overlapping tokens between chunks.
+- KEY: path to txt file containing OpenRouter API key. Can also omit, but then you need to set the API key as environment variable (OPENROUTER_API_KEY). 
 
 
-- PAPERS_DIR: directory containing the papers in pdf format (e.g. ./papers/).
-- OUTPUT_DIR: directory to output answers to.
-- QUESTIONS_FILE: JSON file containing the questions. Can be either e.g. utils/questions_free_text.json or utils/questions_labeled.json. Will automatically choose between free-text or structured extraction, dependent on whether labels are defined within the questions file.
-- LLM: the OpenRouter LLM to use. See the OpenRouter website for which LLMs are available. Defaults to DeepSeek.
-- K: number of most appropriate text chunks to put into LLM context. Defaults to 3.
-- N_TOKENS_PER_CHUNK: number of tokens to partition articles into. Defaults to 800.
-- API_KEY_FILEPATH: .txt file containing an OpenRouter API key. Note that even when using free tier LLMs, requests are heavily throttled if you're not putting at least 10$ worth of credits on your account.
-- SENTENCE-EMBEDDER: sentence embedding model to use from the transformers library. Defaults to kamalkraj/BioSimCSE-BioLinkBERT-BASE. 
-- BATCH_SIZE: batch size for sentence embedder. Defaults to 8.
+
+# Reproducing results from paper
+This repository was used for the paper entitled "OpenExtract: Automated Data Extraction for Systematic Reviews in Health". To reproduce the results from the paper, run the pipeline using the following arguments:
+
+```bash
+python main.py --papers-dir {PAPERS} --output-dir {OUTPUTS} --questions-file {QUESTIONS} --model {MODEL} --dense-model neuml/pubmedbert-base-embeddings --top-k 3 --chunk-tokens 1000 --chunk-overlap 500 --api-key-file {KEY} --random-subset 50 --random-seed 42 --stop-after-n-papers 10
+```
+
+To evaluate OpenExtract's results as compared to manual data extraction, we provide an Excel macro to perform manual data extraction. Follow the instructions in the [notebook](evaluation.ipynb). 
+
+The same notebook can also be used to calculate the scores as provided in the paper: inter-rater agreement (Cohen's kappa) and precision-recall scores.
