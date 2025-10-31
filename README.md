@@ -42,6 +42,6 @@ This repository was used for the paper entitled "OpenExtract: Automated Data Ext
 python main.py --papers-dir {PAPERS} --output-dir {OUTPUTS} --questions-file {QUESTIONS} --model {MODEL} --dense-model neuml/pubmedbert-base-embeddings --top-k 3 --chunk-tokens 1000 --chunk-overlap 500 --api-key-file {KEY} --random-subset 50 --random-seed 42 --stop-after-n-papers 10
 ```
 
-To evaluate OpenExtract's results as compared to manual data extraction, we provide an Excel macro to perform manual data extraction. Follow the instructions in the [notebook](evaluation.ipynb). 
+To evaluate OpenExtract's results as compared to manual data extraction, we provide an Excel macro to perform manual data extraction. Follow the instructions in the [notebook](evaluation.ipynb). This Excel macro also provides more insight into which data extraction is considered in the paper. This can also be investigated through the manual data extraction performed by the researchers [here](./manual_extraction/).
 
 The same notebook can also be used to calculate the scores as provided in the paper: inter-rater agreement (Cohen's kappa) and precision-recall scores.
