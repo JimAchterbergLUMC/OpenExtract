@@ -214,3 +214,6 @@ __marimo__/
 .DS_Store
 key.txt
 debugging.ipynb
+
+answers_labeled/
+answers_free_text/
