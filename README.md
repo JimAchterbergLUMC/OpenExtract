@@ -36,7 +36,7 @@ python main.py --papers-dir {PAPERS} --output-dir {OUTPUTS} --questions-file {QU
 
 
 # Reproducing results from paper
-This repository was used for the paper entitled "OpenExtract: Automated Data Extraction for Systematic Reviews in Health". To reproduce the results from the paper, run the pipeline using the following arguments:
+This repository was used for the paper entitled [OpenExtract: Automated Data Extraction for Systematic Reviews in Health](https://doi.org/10.3233/shti260316). To reproduce the results from the paper, run the pipeline using the following arguments:
 
 ```bash
 python main.py --papers-dir {PAPERS} --output-dir {OUTPUTS} --questions-file {QUESTIONS} --model {MODEL} --dense-model neuml/pubmedbert-base-embeddings --top-k 3 --chunk-tokens 1000 --chunk-overlap 500 --api-key-file {KEY} --random-subset 50 --random-seed 42 --stop-after-n-papers 10
