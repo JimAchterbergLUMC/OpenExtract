@@ -5,10 +5,10 @@ This module provides the main orchestration logic for processing papers
 and answering questions using dense retrieval and language models.
 """
 
+import ast
+import string
 from pathlib import Path
 from typing import Dict, List, Optional
-import json
-import ast
 
 from .choice_utils import extract_choice_id, normalize_choices
 from .data_models import Question
@@ -17,17 +17,20 @@ from .pdf_utils import extract_pdf_text
 from .retrieval import DenseRetriever
 from .text_chunking import chunk_text
 
-import string
+UNKNOWN_ANSWER = "Unknown from this paper"
 
 
 def _resolve_choice_id(candidate: str, valid_ids: List[str]) -> Optional[str]:
     """
     Map a model-emitted token (candidate) to a valid ID.
 
-    Rules:
+    Rules (in order):
     - Exact match (case-sensitive) or case-insensitive match.
     - If candidate has no colon, try matching against the prefix before ':' in valid IDs.
-    - If candidate is a letter (A, B, C, ...), map to the Nth valid_id in order.
+    - If candidate is a prefix of exactly one valid ID, use that ID
+      (e.g. 'C' -> 'C00-D48: Neoplasms', 'Random Forest' -> 'Random Forest: ...').
+    - As a last resort, if candidate is a letter (A, B, C, ...), map to the
+      Nth valid_id in order.
     - Return None if ambiguous or not found.
     """
     if not isinstance(candidate, str):
@@ -57,7 +60,16 @@ def _resolve_choice_id(candidate: str, valid_ids: List[str]) -> Optional[str]:
         if len(matches) == 1:
             return matches[0]
 
-    # 4) Single letter mapping (A, B, C...) -> index into valid_ids
+    # 4) Unique prefix match: candidate abbreviates exactly one valid ID.
+    # This must run before the positional letter mapping so that e.g. 'C'
+    # resolves to 'C00-D48: Neoplasms' instead of the third choice in the list.
+    prefix_matches = [
+        vid for vid in valid_ids if vid.casefold().startswith(cand.casefold())
+    ]
+    if len(prefix_matches) == 1:
+        return prefix_matches[0]
+
+    # 5) Last resort: single letter mapping (A, B, C...) -> index into valid_ids
     upper_cand = cand.upper()
     if len(upper_cand) == 1 and upper_cand in string.ascii_uppercase:
         idx = ord(upper_cand) - ord("A")
@@ -121,7 +133,7 @@ def answer_questions_for_paper(
     if not raw_text.strip():
         # Return default answers if no text could be extracted
         return [
-            {"id": q.id, "question": q.text, "answer": "Unknown from this paper"}
+            {"id": q.id, "question": q.text, "answer": UNKNOWN_ANSWER}
             for q in questions
         ]
 
@@ -170,10 +182,27 @@ def answer_questions_for_paper(
             use_structured_output=use_structured_output,
         )
 
+        # API failure: record it explicitly instead of parsing a pseudo-answer
+        if raw_answer is None:
+            answers.append(
+                {
+                    "id": question.id,
+                    "question": question.text,
+                    "answer": UNKNOWN_ANSWER,
+                    "error": "api_request_failed",
+                    "raw_answer": None,
+                    "choices_ids": question_choice_ids,
+                    "answer_label": None,
+                    "chunks_id": [idx for idx, _ in chunk_scores],
+                    "chunks_str": selected_chunks,
+                    "sent_transformer": dense_model,
+                }
+            )
+            continue
+
         # Process the answer based on question type
         if question_choice_ids:
             valid_list = list(question_choice_ids)  # preserve order
-            valid_set = set(valid_list)  # for quick exact-checks
 
             def _normalize_many(candidates: List[str]) -> List[str]:
                 seen = set()
@@ -187,28 +216,57 @@ def answer_questions_for_paper(
 
             print(f"raw_answer: {raw_answer}")
 
-            # extract the list of answers from the raw answer
-            raw_answer = raw_answer[raw_answer.find("[") : raw_answer.find("]") + 1]
+            # Must be reset for every question; otherwise an unparseable reply
+            # would silently reuse the previous question's answer.
+            final_ids: Optional[List[str]] = None
 
-            # try to evaluate the string as a python list
-            try:
-                parsed = ast.literal_eval(raw_answer)
-            except:
-                parsed = raw_answer
+            # Explicit abstention (check the original reply, before any slicing)
+            is_unknown = (
+                raw_answer.strip().rstrip(".").casefold() == UNKNOWN_ANSWER.casefold()
+            )
 
-            print(f"parsed answer: {parsed}")
+            if not is_unknown:
+                # Extract the array portion of the reply, e.g. '["A","C"]'
+                start = raw_answer.find("[")
+                end = raw_answer.find("]", start)
+                list_str = (
+                    raw_answer[start : end + 1] if start != -1 and end != -1 else ""
+                )
 
-            if (
-                isinstance(raw_answer, str)
-                and raw_answer.strip() == "Unknown from this paper"
-            ):
-                final_ids = None
+                parsed = None
+                if list_str:
+                    try:
+                        parsed = ast.literal_eval(list_str)
+                    except (ValueError, SyntaxError):
+                        parsed = None
 
-            if isinstance(parsed, list):
-                final_ids = _normalize_many(parsed)
+                if isinstance(parsed, list):
+                    final_ids = _normalize_many(parsed)
+                else:
+                    # Reply was not a list; look for a valid ID in the full reply
+                    # (handles prose like "The answer is Random Forest.")
+                    resolved = extract_choice_id(raw_answer, valid_list)
+                    if resolved is None:
+                        # Models often abbreviate 'Random Forest: ...' to just
+                        # 'Random Forest'; search for unambiguous pre-colon bases.
+                        base_to_full: Dict[str, str] = {}
+                        for vid in valid_list:
+                            base = vid.split(":", 1)[0].strip()
+                            # Keep only bases that map to a single full ID
+                            base_to_full[base] = (
+                                vid if base not in base_to_full else None
+                            )
+                        bases = [b for b, v in base_to_full.items() if v]
+                        base_match = extract_choice_id(raw_answer, bases)
+                        if base_match is not None:
+                            resolved = base_to_full[base_match]
+                    if resolved is not None:
+                        final_ids = [resolved]
 
-            if final_ids is None or len(final_ids) == 0:
-                final_answer = "Unknown from this paper"
+                print(f"parsed answer: {parsed}")
+
+            if not final_ids:
+                final_answer = UNKNOWN_ANSWER
                 answer_labels = None
             else:
                 final_answer = final_ids  # <-- list of IDs

@@ -1,4 +1,5 @@
 import argparse
+import hashlib
 import json
 import os
 import random
@@ -34,7 +35,7 @@ def main() -> None:
     # Model configuration
     parser.add_argument(
         "--model",
-        default="qwen/qwen-2.5-7b-instruct",  # qwen/qwen-2.5-7b-instruct, #deepseek/deepseek-chat-v3.1
+        default="openai/gpt-oss-120b:free",  # openai/gpt-oss-120b:free qwen/qwen-2.5-7b-instruct, #deepseek/deepseek-chat-v3.1
         help="OpenRouter model id.",
     )
 
@@ -45,11 +46,11 @@ def main() -> None:
     parser.add_argument(
         "--chunk-tokens",
         type=int,
-        default=1000,
+        default=300,
         help="Approx tokens per chunk (or char/4).",
     )
     parser.add_argument(
-        "--chunk-overlap", type=int, default=500, help="Overlap tokens between chunks."
+        "--chunk-overlap", type=int, default=50, help="Overlap tokens between chunks."
     )
 
     # API configuration
@@ -98,8 +99,7 @@ def main() -> None:
     # Structured output parameters
     parser.add_argument(
         "--use-structured-output",
-        type=bool,
-        default=False,
+        action="store_true",
         help="Force OpenRouter's structured output functionality. Not every model supports this.",
     )
 
@@ -180,9 +180,13 @@ def main() -> None:
 
         # Generate clean filename for output
         clean_name = pdf.stem.replace(" ", "_").replace("-", "_")
-        clean_name = "".join(c for c in clean_name if c.isalnum() or c in "._-")[
-            :50
-        ]  # ensure filenames are not too long
+        clean_name = "".join(c for c in clean_name if c.isalnum() or c in "._-")
+        if len(clean_name) > 50:
+            # Truncate long names, but append a short hash of the full name so
+            # two papers with the same first 50 characters don't overwrite
+            # each other's output files.
+            name_hash = hashlib.sha1(clean_name.encode("utf-8")).hexdigest()[:8]
+            clean_name = f"{clean_name[:50]}_{name_hash}"
         output_file = args.output_dir / f"{clean_name}_answers.json"
 
         # Save results

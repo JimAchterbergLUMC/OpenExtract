@@ -5,14 +5,29 @@ This module provides functionality for communicating with the OpenRouter API
 to get responses from various language models for question-answering tasks.
 """
 
-import time
-from typing import Any, Dict, List, Optional, Tuple
 import json
+import time
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 
 
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+
+# Resolve prompts.json relative to the repository root (parent of this package)
+# so the pipeline works regardless of the current working directory.
+_PROMPTS_PATH = Path(__file__).resolve().parent.parent / "prompts.json"
+_prompts_cache: Optional[Dict[str, str]] = None
+
+
+def _load_prompts() -> Dict[str, str]:
+    """Load prompts.json once and cache it for the rest of the run."""
+    global _prompts_cache
+    if _prompts_cache is None:
+        with open(_PROMPTS_PATH, "r", encoding="utf-8") as f:
+            _prompts_cache = json.load(f)
+    return _prompts_cache
 
 
 def call_openrouter(
@@ -43,19 +58,19 @@ def call_openrouter(
 
     Returns:
         Tuple of (answer_text, full_api_response)
-        - answer_text: The model's response text
+        - answer_text: The model's response text, or None if the request failed
         - full_api_response: Complete API response for logging (None if request failed)
 
     Note:
-        The function implements retry logic with exponential backoff (6 attempts).
+        Transient errors (429 and 5xx, network errors) are retried up to 6 times
+        with backoff. Permanent client errors (e.g. 401/400/402) fail immediately.
     """
     # Format context with chunk numbers for better organization
     context = "\n\n\n".join(
         [f"CHUNK {i+1}: {chunk}" for i, chunk in enumerate(context_chunks)]
     )
 
-    with open("prompts.json", "r") as f:
-        prompts = json.load(f)
+    prompts = _load_prompts()
 
     base_rules = prompts["base"]
 
@@ -124,27 +139,42 @@ def call_openrouter(
             "messages": messages,
         }
 
-    # Retry logic with exponential backoff
+    # Retry transient errors with backoff; fail fast on permanent client errors.
+    last_error = None
     for attempt in range(6):
         try:
             response = requests.post(
                 OPENROUTER_URL, headers=headers, json=payload, timeout=60
             )
-
-            if response.status_code == 200:
-                data = response.json()
-                try:
-                    answer_text = data["choices"][0]["message"]["content"].strip()
-                    return answer_text, data
-                except (KeyError, IndexError):
-                    return "Unknown from this paper", data
-
-            # If status code is not 200, wait before retrying
+        except requests.RequestException as exc:
+            # Network errors, timeouts, etc. are worth retrying
+            last_error = f"request error: {exc}"
             time.sleep(1.5 * (attempt + 1))
+            continue
 
-        except requests.RequestException:
-            # Handle network errors, timeouts, etc.
-            time.sleep(1.5 * (attempt + 1))
+        if response.status_code == 200:
+            data = response.json()
+            try:
+                answer_text = data["choices"][0]["message"]["content"].strip()
+                return answer_text, data
+            except (KeyError, IndexError, AttributeError):
+                last_error = f"malformed 200 response: {str(data)[:500]}"
+                return None, data
 
-    # All attempts failed
-    return "All Attempts Failed", None
+        last_error = f"HTTP {response.status_code}: {response.text[:500]}"
+
+        if response.status_code == 429 or response.status_code >= 500:
+            # Transient: honor Retry-After if the server provides one
+            retry_after = response.headers.get("Retry-After")
+            if retry_after and retry_after.isdigit():
+                delay = float(retry_after)
+            else:
+                delay = 1.5 * (attempt + 1)
+            time.sleep(delay)
+            continue
+
+        # Permanent client error (401 bad key, 400 bad request, 402 credits, ...)
+        break
+
+    print(f"OpenRouter request failed for model '{model}': {last_error}")
+    return None, None

@@ -21,14 +21,16 @@ except ImportError:
     SentenceTransformer = None
 
 
-# Global cache of models by name
+# Global cache of models by (name, device) so the embedder is loaded from
+# disk only once per run instead of once per paper.
 _model_cache = {}
 
 
 def get_sentence_transformer(model_name: str, device: str):
-    if model_name not in _model_cache:
-        _model_cache[model_name] = SentenceTransformer(model_name, device=device)
-    return _model_cache[model_name]
+    cache_key = (model_name, device)
+    if cache_key not in _model_cache:
+        _model_cache[cache_key] = SentenceTransformer(model_name, device=device)
+    return _model_cache[cache_key]
 
 
 class DenseRetriever:
@@ -70,7 +72,7 @@ class DenseRetriever:
                 device = "cpu"
 
         self.device = device
-        self.model = SentenceTransformer(model_name, device=device)
+        self.model = get_sentence_transformer(model_name, device)
         self.batch_size = int(batch_size)
         self.chunks = chunks
 

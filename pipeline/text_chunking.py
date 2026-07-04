@@ -50,7 +50,9 @@ def _split_by_tokens(
             chunks.append(text[i:end])
             if end == n:
                 break
-            i = max(i + approx_chars - approx_overlap, end)
+            # Advance by chunk size minus overlap, ensuring forward progress
+            next_i = i + approx_chars - approx_overlap
+            i = next_i if next_i > i else end
         return chunks
 
     # Use tiktoken for precise token-based chunking
