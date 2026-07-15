@@ -1,6 +1,5 @@
 pypdf
 scikit-learn
-tiktoken
 requests
 pandas
 sentence-transformers

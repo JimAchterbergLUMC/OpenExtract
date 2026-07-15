@@ -26,7 +26,21 @@ except ImportError:
 _model_cache = {}
 
 
+def resolve_device(device: Optional[str] = None) -> str:
+    """Return the requested device, or auto-detect ('cuda' if available)."""
+    if device is not None:
+        return device
+    if torch is not None and torch.cuda.is_available():
+        return "cuda"
+    return "cpu"
+
+
 def get_sentence_transformer(model_name: str, device: str):
+    if SentenceTransformer is None:
+        raise RuntimeError(
+            "sentence-transformers not installed. "
+            "Run: pip install sentence-transformers"
+        )
     cache_key = (model_name, device)
     if cache_key not in _model_cache:
         _model_cache[cache_key] = SentenceTransformer(model_name, device=device)
@@ -59,20 +73,8 @@ class DenseRetriever:
         Raises:
             RuntimeError: If sentence-transformers is not installed
         """
-        if SentenceTransformer is None:
-            raise RuntimeError(
-                "sentence-transformers not installed. "
-                "Run: pip install sentence-transformers"
-            )
-        # Auto-detect device if not specified
-        if device is None:
-            if torch is not None and torch.cuda.is_available():
-                device = "cuda"
-            else:
-                device = "cpu"
-
-        self.device = device
-        self.model = get_sentence_transformer(model_name, device)
+        self.device = resolve_device(device)
+        self.model = get_sentence_transformer(model_name, self.device)
         self.batch_size = int(batch_size)
         self.chunks = chunks
 

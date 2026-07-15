@@ -47,10 +47,15 @@ def main() -> None:
         "--chunk-tokens",
         type=int,
         default=300,
-        help="Approx tokens per chunk (or char/4).",
+        help="Max tokens per chunk, measured with the dense embedder's tokenizer "
+        "(automatically capped at the embedder's max sequence length).",
     )
     parser.add_argument(
-        "--chunk-overlap", type=int, default=50, help="Overlap tokens between chunks."
+        "--chunk-overlap",
+        type=int,
+        default=50,
+        help="Approx. overlap tokens between chunks (trailing sentences of the "
+        "previous chunk).",
     )
 
     # API configuration

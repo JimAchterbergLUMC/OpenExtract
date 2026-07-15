@@ -219,5 +219,12 @@ answers_labeled/
 answers_free_text/
 
 PROJECT_OVERVIEW.md
+IO_SPECIFICATION.md
 
 answers_test/
+
+papers2/
+
+devdocs/
+
+questions_brief.json

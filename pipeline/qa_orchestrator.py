@@ -14,7 +14,7 @@ from .choice_utils import extract_choice_id, normalize_choices
 from .data_models import Question
 from .openrouter_client import call_openrouter
 from .pdf_utils import extract_pdf_text
-from .retrieval import DenseRetriever
+from .retrieval import DenseRetriever, get_sentence_transformer, resolve_device
 from .text_chunking import chunk_text
 
 UNKNOWN_ANSWER = "Unknown from this paper"
@@ -101,7 +101,8 @@ def answer_questions_for_paper(
         questions: List of Question objects to answer
         model: Language model identifier for OpenRouter
         api_key: OpenRouter API key
-        chunk_tokens: Maximum tokens per text chunk
+        chunk_tokens: Maximum tokens per text chunk, measured with the dense
+            embedder's tokenizer (capped at the embedder's max sequence length)
         chunk_overlap: Token overlap between consecutive chunks
         top_k: Number of top chunks to retrieve for each question
         referer: Optional HTTP referer for API requests
@@ -137,14 +138,27 @@ def answer_questions_for_paper(
             for q in questions
         ]
 
-    # Split text into chunks
-    chunks = chunk_text(raw_text, chunk_tokens, chunk_overlap, model_name=model)
+    # Load the embedder first: its tokenizer measures chunk sizes and its
+    # max sequence length caps them, so chunks can never be silently
+    # truncated at encoding time. (The model is cached; DenseRetriever below
+    # reuses the same instance.)
+    device = resolve_device(dense_device)
+    embedder = get_sentence_transformer(dense_model, device)
+
+    # Split text into chunks on sentence/paragraph boundaries
+    chunks = chunk_text(
+        raw_text,
+        chunk_tokens=chunk_tokens,
+        chunk_overlap=chunk_overlap,
+        tokenizer=embedder.tokenizer,
+        max_tokens=getattr(embedder, "max_seq_length", None),
+    )
 
     # Initialize dense retriever once per paper
     retriever = DenseRetriever(
         chunks=chunks,
         model_name=dense_model,
-        device=dense_device,
+        device=device,
         batch_size=dense_batch_size,
     )
 
