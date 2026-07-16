@@ -39,6 +39,30 @@ def main() -> None:
         help="OpenRouter model id.",
     )
 
+    # Parsing / cache parameters
+    parser.add_argument(
+        "--parser",
+        default="pymupdf",
+        choices=["pymupdf", "docling", "pypdf"],
+        help="PDF parser backend: 'pymupdf' (default; layout-aware, Markdown "
+        "headings), 'docling' (high fidelity; requires `pip install docling`, "
+        "downloads model weights, slower), or 'pypdf' (plain text, last "
+        "resort). pypdf is also the automatic fallback when others fail.",
+    )
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=Path("./cache"),
+        help="Directory for the content-addressed paper cache (parsed text, "
+        "chunks.jsonl, embeddings). Inspect with `python -m pipeline.paper_store <cache-dir>`.",
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Ignore existing cache entries (recompute everything; artifacts "
+        "are still written).",
+    )
+
     # Retrieval parameters
     parser.add_argument(
         "--top-k", type=int, default=3, help="# of chunks to retrieve per question."
@@ -179,6 +203,9 @@ def main() -> None:
             dense_device=args.dense_device,
             dense_batch_size=args.dense_batch_size,
             use_structured_output=args.use_structured_output,
+            parser_backend=args.parser,
+            cache_dir=args.cache_dir,
+            use_cache=not args.no_cache,
         )
         runtime = time() - start_time
         print(f"Time taken for {pdf.name}: {runtime} seconds")

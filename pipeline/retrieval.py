@@ -61,6 +61,7 @@ class DenseRetriever:
         model_name: str = "thenlper/gte-small",
         device: Optional[str] = None,
         batch_size: int = 64,
+        embeddings: Optional[np.ndarray] = None,
     ) -> None:
         """
         Initialize the dense retriever with text chunks.
@@ -70,6 +71,9 @@ class DenseRetriever:
             model_name: Name of the sentence transformer model to use
             device: Device to run the model on ('cpu', 'cuda', or None for auto)
             batch_size: Batch size for encoding operations
+            embeddings: Optional precomputed chunk embeddings (e.g. loaded
+                from the paper cache), shape (len(chunks), dim). When given,
+                chunks are not re-encoded.
         Raises:
             RuntimeError: If sentence-transformers is not installed
         """
@@ -78,8 +82,16 @@ class DenseRetriever:
         self.batch_size = int(batch_size)
         self.chunks = chunks
 
-        # Encode all chunks once during initialization
-        self.embeddings = self._encode(chunks)
+        if embeddings is not None:
+            if embeddings.shape[0] != len(chunks):
+                raise ValueError(
+                    f"Precomputed embeddings rows ({embeddings.shape[0]}) do not "
+                    f"match number of chunks ({len(chunks)})."
+                )
+            self.embeddings = np.asarray(embeddings, dtype=np.float32)
+        else:
+            # Encode all chunks once during initialization
+            self.embeddings = self._encode(chunks)
         self.embeddings = self._l2_normalize(self.embeddings)
 
     def _encode(self, texts: List[str]) -> np.ndarray:

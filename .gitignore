@@ -228,3 +228,6 @@ papers2/
 devdocs/
 
 questions_brief.json
+
+# Content-addressed paper cache (parsed text, chunks, embeddings) — disposable
+cache/

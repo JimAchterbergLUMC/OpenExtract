@@ -1,5 +1,9 @@
 pypdf
+pymupdf4llm
 scikit-learn
 requests
 pandas
 sentence-transformers
+# Optional high-fidelity PDF parser (--parser docling). Heavy install:
+# downloads ~500 MB of layout-model weights on first use.
+# docling

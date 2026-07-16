@@ -13,9 +13,9 @@ from typing import Dict, List, Optional
 from .choice_utils import extract_choice_id, normalize_choices
 from .data_models import Question
 from .openrouter_client import call_openrouter
-from .pdf_utils import extract_pdf_text
+from .paper_store import PaperStore, build_or_load_paper_index
+from .pdf_parsing import DEFAULT_BACKEND
 from .retrieval import DenseRetriever, get_sentence_transformer, resolve_device
-from .text_chunking import chunk_text
 
 UNKNOWN_ANSWER = "Unknown from this paper"
 
@@ -92,6 +92,9 @@ def answer_questions_for_paper(
     dense_device: Optional[str],
     dense_batch_size: int,
     use_structured_output: Optional[bool] = False,
+    parser_backend: str = DEFAULT_BACKEND,
+    cache_dir: Path = Path("./cache"),
+    use_cache: bool = True,
 ) -> List[Dict]:
     """
     Process a single PDF paper and answer all questions for it.
@@ -109,6 +112,13 @@ def answer_questions_for_paper(
         dense_model: Sentence transformer model for dense retrieval
         dense_device: Device for dense model ('cpu', 'cuda', or None for auto)
         dense_batch_size: Batch size for encoding operations
+        parser_backend: PDF parser: 'pymupdf' (default), 'docling'
+            (high fidelity, optional install), or 'pypdf' (last resort;
+            also the automatic fallback when the others fail)
+        cache_dir: Directory for the content-addressed paper cache
+            (parsed text, chunks, embeddings)
+        use_cache: When False, ignore existing cache entries (artifacts are
+            still written for inspection)
 
     Returns:
         List of answer dictionaries, each containing:
@@ -118,8 +128,12 @@ def answer_questions_for_paper(
         - raw_answer: Raw model output (for choice questions)
         - choices_ids: Available choice IDs (for choice questions)
         - answer_label: Human-readable answer label (for choice questions)
-        - chunks_id: Indices of retrieved chunks
-        - chunks_str: Text of retrieved chunks
+        - chunks_id: Cache chunk_ids of retrieved chunks
+        - chunks_str: Text of retrieved chunks (section-prefixed)
+        - chunks_section: Section path of each retrieved chunk
+        - chunks_score: Retrieval (cosine) score of each retrieved chunk
+        - paper_id: Content hash identifying the paper in the cache
+        - parser: PDF parser backend that produced the text
         - sent_transformer: Dense retrieval model used
         - LLM: Language model used (if available in logs)
         - finish_reason: API response finish reason (if available)
@@ -129,15 +143,6 @@ def answer_questions_for_paper(
         If the PDF cannot be read or contains no text, returns "Unknown from this paper"
         for all questions.
     """
-    # Extract text from PDF
-    raw_text = extract_pdf_text(pdf_path)
-    if not raw_text.strip():
-        # Return default answers if no text could be extracted
-        return [
-            {"id": q.id, "question": q.text, "answer": UNKNOWN_ANSWER}
-            for q in questions
-        ]
-
     # Load the embedder first: its tokenizer measures chunk sizes and its
     # max sequence length caps them, so chunks can never be silently
     # truncated at encoding time. (The model is cached; DenseRetriever below
@@ -145,21 +150,42 @@ def answer_questions_for_paper(
     device = resolve_device(dense_device)
     embedder = get_sentence_transformer(dense_model, device)
 
-    # Split text into chunks on sentence/paragraph boundaries
-    chunks = chunk_text(
-        raw_text,
+    # Parse -> clean -> section-aware chunk -> embed, reusing cached
+    # artifacts (cache/{paper_id}/...) when the configuration matches.
+    store = PaperStore(cache_dir)
+    index = build_or_load_paper_index(
+        pdf_path=pdf_path,
+        store=store,
+        parser_backend=parser_backend,
         chunk_tokens=chunk_tokens,
         chunk_overlap=chunk_overlap,
-        tokenizer=embedder.tokenizer,
-        max_tokens=getattr(embedder, "max_seq_length", None),
+        embedder=embedder,
+        embedder_name=dense_model,
+        batch_size=dense_batch_size,
+        use_cache=use_cache,
+    )
+    print(
+        f"Paper {index.paper_id} ({index.parser_info['used']}): "
+        f"{len(index.chunks)} chunks "
+        f"[chunks {'cached' if index.chunks_from_cache else 'built'}, "
+        f"embeddings {'cached' if index.embeddings_from_cache else 'built'}]"
     )
 
-    # Initialize dense retriever once per paper
+    if not index.chunks:
+        # No usable text (e.g. scanned PDF): abstain on all questions.
+        return [
+            {"id": q.id, "question": q.text, "answer": UNKNOWN_ANSWER}
+            for q in questions
+        ]
+
+    # Retrieval and the LLM both see the section-prefixed chunk text.
+    chunks = [c.embed_text for c in index.chunks]
     retriever = DenseRetriever(
         chunks=chunks,
         model_name=dense_model,
         device=device,
         batch_size=dense_batch_size,
+        embeddings=index.embeddings,
     )
 
     answers = []
@@ -209,6 +235,12 @@ def answer_questions_for_paper(
                     "answer_label": None,
                     "chunks_id": [idx for idx, _ in chunk_scores],
                     "chunks_str": selected_chunks,
+                    "chunks_section": [
+                        index.chunks[idx].section for idx, _ in chunk_scores
+                    ],
+                    "chunks_score": [round(score, 4) for _, score in chunk_scores],
+                    "paper_id": index.paper_id,
+                    "parser": index.parser_info["used"],
                     "sent_transformer": dense_model,
                 }
             )
@@ -303,6 +335,10 @@ def answer_questions_for_paper(
             "answer_label": answer_labels,  # <-- now a list for MCQ, or None
             "chunks_id": [idx for idx, _ in chunk_scores],
             "chunks_str": [chunks[idx] for idx, _ in chunk_scores],
+            "chunks_section": [index.chunks[idx].section for idx, _ in chunk_scores],
+            "chunks_score": [round(score, 4) for _, score in chunk_scores],
+            "paper_id": index.paper_id,
+            "parser": index.parser_info["used"],
             "sent_transformer": dense_model,
         }
 
