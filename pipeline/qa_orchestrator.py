@@ -124,8 +124,8 @@ def answer_questions_for_paper(
         List of answer dictionaries, each containing:
         - id: Question ID
         - question: Question text
-        - answer: Final answer (choice ID or free text)
-        - raw_answer: Raw model output (for choice questions)
+        - answer: Final answer (list of choice IDs, or free text)
+        - raw_answer: Raw model output, kept verbatim for all question types
         - choices_ids: Available choice IDs (for choice questions)
         - answer_label: Human-readable answer label (for choice questions)
         - chunks_id: Cache chunk_ids of retrieved chunks
@@ -330,7 +330,7 @@ def answer_questions_for_paper(
             "id": question.id,
             "question": question.text,
             "answer": final_answer,
-            "raw_answer": raw_answer if question_choice_ids else None,
+            "raw_answer": raw_answer,
             "choices_ids": question_choice_ids if question_choice_ids else None,
             "answer_label": answer_labels,  # <-- now a list for MCQ, or None
             "chunks_id": [idx for idx, _ in chunk_scores],

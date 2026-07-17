@@ -74,9 +74,10 @@ def call_openrouter(
 
     base_rules = prompts["base"]
 
-    user_suffix = prompts["user"]
-
     if choice_ids:
+        # Multiple-choice: instruct the model to return a JSON array of
+        # option IDs, and include the valid IDs in an ANSWERS block.
+        user_suffix = prompts["user"]
 
         user_prompt = (
             f"INSTRUCTIONS: {user_suffix}\n\n"
@@ -87,6 +88,10 @@ def call_openrouter(
         )
 
     else:
+        # Open question: ask for a free-text answer. The multiple-choice
+        # instructions must not be used here, otherwise models invent
+        # option letters for questions that have no options.
+        user_suffix = prompts["user_open"]
 
         user_prompt = (
             f"INSTRUCTIONS: {user_suffix}\n\n"
@@ -111,8 +116,10 @@ def call_openrouter(
         {"role": "user", "content": user_prompt},
     ]
 
-    # Prepare request payload
-    if use_structured_output:
+    # Prepare request payload. The structured-output schema forces a JSON
+    # array of strings, which only makes sense for multiple-choice
+    # questions; open questions always get a plain text completion.
+    if use_structured_output and choice_ids:
         payload = {
             "model": model,
             "messages": messages,

@@ -1,0 +1,79 @@
+{
+  "questions": [
+    {
+      "id": "Q1",
+      "text": "What is the overall goal, purpose or aim of this study?",
+      "choices": [
+        "Diagnostic: estimating current disease status or distinguishing between patients with and without a disease",
+        "Screening: identifying asymptomatic or general-population individuals who are likely to have or develop a disease",
+        "Prognostic: predicting future clinical outcomes for patients with a particular disease",
+        "Etiologic: identifying factors associated with or causing disease or health outcomes",
+        "Treatment effect: evaluating the effect of an intervention or comparing interventions",
+        "Descriptive: describing disease prevalence, incidence, characteristics, or trends without primarily making predictions",
+        "Other: the goal of the study does not fit any of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q2",
+      "text": "What is the number of patients or cohort size included in this study?",
+      "choices": [
+        "<100",
+        "100-1000",
+        "1000-10000",
+        "10000-100000",
+        "100000-1000000",
+        ">1000000",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q3",
+      "text": "In what way is the cohort or sample of patients described in this study, for example regarding demographics, medical history, and so on?"
+    },
+    {
+      "id": "Q4",
+      "text": "What information about the dataset is provided in this study, for example regarding the features, provenance, data quality, missing values, and so on?"
+    },
+    {
+      "id": "Q5",
+      "text": "What type of data or data modalities are used in this study?",
+      "choices": [
+        "Tabular data: structured data represented as rows and columns",
+        "Time-series data: data points that have temporal relationships between them",
+        "Image data: data consisting of images",
+        "Text data: data consisting of (free) text",
+        "Audio data: data consisting of audio recordings",
+        "Video data: data consisting of video recordings",
+        "Multimodal data: data consisting of multiple modalities (e.g., tabular, text, image, audio)",
+        "Other: the data or data modalities do not fit any of the other categories",
+        "Unknown from this paper"
+      ]
+    },
+    {
+      "id": "Q6",
+      "text": "To which ICD-10 code group does the disease or health condition in this study pertain?",
+      "choices": [
+        "A00-B99: Infectious and parasitic diseases",
+        "C00-D48: Neoplasms",
+        "D50-D89: Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism",
+        "E00-E90: Endocrine, nutritional and metabolic diseases",
+        "F00-F99: Mental and behavioural disorders",
+        "G00-G99: Diseases of the nervous system",
+        "H00-H59: Diseases of the eye and adnexa",
+        "H60-H95: Diseases of the ear and mastoid process",
+        "I00-I99: Diseases of the circulatory system",
+        "J00-J99: Diseases of the respiratory system",
+        "K00-K93: Diseases of the digestive system",
+        "L00-L99: Diseases of the skin and subcutaneous tissue",
+        "M00-M99: Diseases of the musculoskeletal system and connective tissue",
+        "N00-N99: Diseases of the genitourinary system",
+        "O00-O99: Pregnancy, childbirth, and the puerperium",
+        "P00-P96: Certain conditions originating in the perinatal period",
+        "Q00-Q99: Congenital malformations, deformations and chromosomal abnormalities",
+        "S00-T98: Injury, poisoning and certain other consequences of external causes",
+        "Other: the disease or health condition does not fit any of the other categories"
+      ]
+    }
+  ]
+}

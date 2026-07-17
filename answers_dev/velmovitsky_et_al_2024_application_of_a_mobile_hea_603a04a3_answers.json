@@ -1,0 +1,275 @@
+{
+  "paper": "velmovitsky-et-al-2024-application-of-a-mobile-health-data-platform-for-public-health-surveillance-a-case-study-in.pdf",
+  "answers": [
+    {
+      "id": "Q1",
+      "question": "What is the overall goal, purpose or aim of this study?",
+      "answer": [
+        "Descriptive: describing disease prevalence, incidence, characteristics, or trends without primarily making predictions"
+      ],
+      "raw_answer": "[\"Descriptive\"]",
+      "choices_ids": [
+        "Diagnostic: estimating current disease status or distinguishing between patients with and without a disease",
+        "Screening: identifying asymptomatic or general-population individuals who are likely to have or develop a disease",
+        "Prognostic: predicting future clinical outcomes for patients with a particular disease",
+        "Etiologic: identifying factors associated with or causing disease or health outcomes",
+        "Treatment effect: evaluating the effect of an intervention or comparing interventions",
+        "Descriptive: describing disease prevalence, incidence, characteristics, or trends without primarily making predictions",
+        "Other: the goal of the study does not fit any of the other categories",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Descriptive: describing disease prevalence, incidence, characteristics, or trends without primarily making predictions"
+      ],
+      "chunks_id": [
+        64,
+        19,
+        20
+      ],
+      "chunks_str": [
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics. In particular, of the healthy participants in D, 63% were female, 50% were students and 56% were low income. This suggests that creating models for more than one stratification (e.g. healthy women) may lead to better results. On the other hand, it will reduce the dataset even further, which may affect the model’s effectiveness. Future work, with more purposeful sampling could lead to further insights into this avenue of research. DEmpatica is another dataset that had a large number of participants excluded, and similar observations to D can be made: results in the age stratifications were poor, with other stratifications performing better. Stratifying by profession fared better in this dataset, with a larger number of workers and students. The number of healthy participants also increased, leading to lower metrics – likely due to more heterogeneous participants.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Recruitment and study protocol] <!-- Start of picture text --> =aaSsSqxsspsmo SHH a—=as|eECqi\"eqo<br>13:25 7 ulsx> 13:25 7 al >a)<br>Apple Health Variables<br>The following variables are currently being<br>collected in this study:<br>Weight ®<br>Steps ce)<br>Workout e@<br>Please wait a moment while we connect the Heart Rate @<br>device to Apple Health<br>Blood Pressure e<br>‘ Sleep oO<br>Heart Rate Variability @<br>ECG (e)<br>@ Synced @ Error<br>~ 4 co)<br>SN ———o Aa SN ee Wu<br>i ———————— OR—————<br>13:25 7 ase 13:25 7 al ><br>Stress Questionnaires<br>Please fill out the questionnaire<br>approximately 3 hours throughout the day!<br>| found it difficult to relax.<br>Questionnaires Completed Today<br>OOOO0OOOO)<br>@O000000<br>@ = o € es o<br><!-- End of picture text",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Recruitment and study protocol] --> item measure that, while lacking validation in the literature, was successfully applied for stress quantification and is moderately correlated with robust stress questionnaires.<sup>55</sup> In our study, we used both questionnaires comprising the 8 questions that are asked to participants. Questions 1–7 are related to the DASS-21, and question 8 comprises the single-item measure used by Wang et al..<sup>55</sup> The stressrelated questions and respective questionnaires are shown in Table B1 in Appendix 2. Following DASS-21 guidelines, the score is multiplied by 2 and, if it is above 14, we consider users as stressed in that moment.<sup>56</sup> For the single-item measure, if the user answers ‘A little stressed’ or above, we consider users having stress. For each questionnaire filled, if the DASS-21 or the single-item measure (or both) show stress, that data collection period is marked as stress. In other words, if in the moment of data collection the DASS-21 score is marked as ‘stress’ and the single-item measure is marked as ‘no stress’, or vice versa, that data point will be labelled as ‘stress’."
+      ],
+      "chunks_section": [
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Recruitment and study protocol",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Recruitment and study protocol"
+      ],
+      "chunks_score": [
+        0.2501,
+        0.2136,
+        0.2086
+      ],
+      "paper_id": "079963644417db20",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 2624
+    },
+    {
+      "id": "Q2",
+      "question": "What is the number of patients or cohort size included in this study?",
+      "answer": [
+        "Unknown from this paper"
+      ],
+      "raw_answer": "[\"Unknown from this paper\"]",
+      "choices_ids": [
+        "<100",
+        "100-1000",
+        "1000-10000",
+        "10000-100000",
+        "100000-1000000",
+        ">1000000",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Unknown from this paper"
+      ],
+      "chunks_id": [
+        63,
+        64,
+        65
+      ],
+      "chunks_str": [
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] Given the different samples use for each dataset, it is worthwhile to look at how the datasets differ regarding these samples and how this may affect results (Table B3 in Appendix 2). D contains fewer participants in the 18–24, 25–34 and 35–44 ranges, which may account for this dataset generally having poor results in these stratifications when compared to others. However, D has good results on - the male/female and low/medium and high-income stratifi cations despite possessing half the number of men, women and participants in low to middle income (with high-income participants removed entirely). Therefore, it is likely that the division of fewer participants into three distinct age categories did not provide enough information to train the model, and future research collapsing the age category into fewer divisions (e.g. young vs. old) as opposed to the intervals presented here could lead to better results. D also has lower results than other datasets for profession, likely due to the removal of several workers from the dataset. Interestingly, while D has a 7% increase in the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics. In particular, of the healthy participants in D, 63% were female, 50% were students and 56% were low income. This suggests that creating models for more than one stratification (e.g. healthy women) may lead to better results. On the other hand, it will reduce the dataset even further, which may affect the model’s effectiveness. Future work, with more purposeful sampling could lead to further insights into this avenue of research. DEmpatica is another dataset that had a large number of participants excluded, and similar observations to D can be made: results in the age stratifications were poor, with other stratifications performing better. Stratifying by profession fared better in this dataset, with a larger number of workers and students. The number of healthy participants also increased, leading to lower metrics – likely due to more heterogeneous participants.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] Stratifying by profession fared better in this dataset, with a larger number of workers and students. The number of healthy participants also increased, leading to lower metrics – likely due to more heterogeneous participants. When looking at demographics, DEmpatica has a higher proportion of healthy females (65%), a slight decrease in healthy low-income participants (55%), and a higher decrease in students (40%), suggesting that future sampling of healthy participants by profession could lead to additional insights. DECG/DA contain the same sample of participants, with very similar proportions to the entire sample. These datasets did not generally perform as well as other models containing Withings features, likely due to lower predictive power in non-sleep related Apple features. Indeed, DAW – with 4 fewer participants than the total sample of 45 while still maintaining similar proportions – performed better, reflecting the higher feature importance of Withings features. DW has very similar proportions to DAW with only 1 participant removed from the total sample and, when comparing this dataset to DAW, we can see that using only Withings features led to good results, sometimes better than using Apple and Withings features combined. In general, regardless of how the samples varied – and indeed the sleep datasets had more users removed due to missing data – sleep datasets performed better than datasets without sleep features, highlighting their importance."
+      ],
+      "chunks_section": [
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets"
+      ],
+      "chunks_score": [
+        0.2368,
+        0.2235,
+        0.1604
+      ],
+      "paper_id": "079963644417db20",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 2039
+    },
+    {
+      "id": "Q3",
+      "question": "In what way is the cohort or sample of patients described in this study, for example regarding demographics, medical history, and so on?",
+      "answer": "The study's cohort, specifically dataset D, includes participants stratified by age, gender, income, and profession. It has fewer participants in the 18–24, 25–34, and 35–44 age ranges, which may impact model performance in these categories. The gender distribution shows 63% female in the healthy stratification, and income distribution includes 56% low-income participants. Profession stratifications were affected by the removal of several workers. The dataset also has a 7% higher proportion of unhealthy participants compared to the full sample, with the healthy group being more homogenized (e.g., 50% students). Medical history details (e.g., specific diagnoses) are not explicitly mentioned in the context.",
+      "raw_answer": "The study's cohort, specifically dataset D, includes participants stratified by age, gender, income, and profession. It has fewer participants in the 18–24, 25–34, and 35–44 age ranges, which may impact model performance in these categories. The gender distribution shows 63% female in the healthy stratification, and income distribution includes 56% low-income participants. Profession stratifications were affected by the removal of several workers. The dataset also has a 7% higher proportion of unhealthy participants compared to the full sample, with the healthy group being more homogenized (e.g., 50% students). Medical history details (e.g., specific diagnoses) are not explicitly mentioned in the context.",
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        63,
+        64,
+        7
+      ],
+      "chunks_str": [
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] Given the different samples use for each dataset, it is worthwhile to look at how the datasets differ regarding these samples and how this may affect results (Table B3 in Appendix 2). D contains fewer participants in the 18–24, 25–34 and 35–44 ranges, which may account for this dataset generally having poor results in these stratifications when compared to others. However, D has good results on - the male/female and low/medium and high-income stratifi cations despite possessing half the number of men, women and participants in low to middle income (with high-income participants removed entirely). Therefore, it is likely that the division of fewer participants into three distinct age categories did not provide enough information to train the model, and future research collapsing the age category into fewer divisions (e.g. young vs. old) as opposed to the intervals presented here could lead to better results. D also has lower results than other datasets for profession, likely due to the removal of several workers from the dataset. Interestingly, while D has a 7% increase in the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics. In particular, of the healthy participants in D, 63% were female, 50% were students and 56% were low income. This suggests that creating models for more than one stratification (e.g. healthy women) may lead to better results. On the other hand, it will reduce the dataset even further, which may affect the model’s effectiveness. Future work, with more purposeful sampling could lead to further insights into this avenue of research. DEmpatica is another dataset that had a large number of participants excluded, and similar observations to D can be made: results in the age stratifications were poor, with other stratifications performing better. Stratifying by profession fared better in this dataset, with a larger number of workers and students. The number of healthy participants also increased, leading to lower metrics – likely due to more heterogeneous participants.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Introduction] For instance, smartwatches typically collect heart rate and steps data from individuals wearing them throughout the day, without any action required on the user’s part. This could provide new and large sources of continuous, real-world data collected with relatively low effort that will allow scientists to conduct novel health research.<sup>5</sup> Indeed, many efforts are being put into place to create platforms that allow individuals to share their data for research. For example, the ecobee smart thermostat company has a program called Donate Your Data,<sup>27,28</sup> which enables the anonymous sharing of device information with researchers.<sup>29–31</sup> The Ubiquitous Health Technology Lab at the University of Waterloo has developed a web platform that enables the enrolment of personal Fitbit and ecobee devices for research: data from the devices is continuously collected once a day once enrolment is complete.<sup>32</sup> The Digital Epidemiology and Population Health Laboratory (DEPtH Lab) at Western University have developed the Smart Platform, which allows researchers to engage with personal devices of patients.<sup>33</sup> However, these mobile health datasets also bring new set of challenges. Larger datasets, generated at faster speeds than previous data collection efforts, with a variety of"
+      ],
+      "chunks_section": [
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Introduction"
+      ],
+      "chunks_score": [
+        0.3299,
+        0.3241,
+        0.2875
+      ],
+      "paper_id": "079963644417db20",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1653
+    },
+    {
+      "id": "Q4",
+      "question": "What information about the dataset is provided in this study, for example regarding the features, provenance, data quality, missing values, and so on?",
+      "answer": "The study provides the following dataset information:  \n- **Features**: Data includes variables from devices like Apple Watch (via HealthKit API) and Withings, with an exhaustive list of features detailed in Table B2 of Appendix 2. Features were retained if they had at least 30% of data for a participant to ensure sufficient coverage.  \n- **Missing Values**: Missing data points were handled using interpolation (averaging neighboring values for isolated gaps) or the KNN Imputer (for consecutive gaps, using 5 neighbors).  \n- **Data Quality**: Data quality was assessed through imputation methods and thresholds (30% data retention per feature).  \n- **Provenance**: Data was collected via HealthKit API, with Apple Watch and iPhone data distinguished to avoid duplication.  \n- **Stratifications**: Datasets varied in participant demographics (e.g., age ranges, gender, income, profession), which influenced model performance. For example, dataset D had fewer participants in certain age groups and excluded high-income individuals, affecting results.  \n\nNo specific details about the total number of participants, data sources beyond devices, or raw data characteristics (e.g., sampling frequency) are provided.",
+      "raw_answer": "The study provides the following dataset information:  \n- **Features**: Data includes variables from devices like Apple Watch (via HealthKit API) and Withings, with an exhaustive list of features detailed in Table B2 of Appendix 2. Features were retained if they had at least 30% of data for a participant to ensure sufficient coverage.  \n- **Missing Values**: Missing data points were handled using interpolation (averaging neighboring values for isolated gaps) or the KNN Imputer (for consecutive gaps, using 5 neighbors).  \n- **Data Quality**: Data quality was assessed through imputation methods and thresholds (30% data retention per feature).  \n- **Provenance**: Data was collected via HealthKit API, with Apple Watch and iPhone data distinguished to avoid duplication.  \n- **Stratifications**: Datasets varied in participant demographics (e.g., age ranges, gender, income, profession), which influenced model performance. For example, dataset D had fewer participants in certain age groups and excluded high-income individuals, affecting results.  \n\nNo specific details about the total number of participants, data sources beyond devices, or raw data characteristics (e.g., sampling frequency) are provided.",
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        22,
+        63,
+        39
+      ],
+      "chunks_str": [
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Data collection and pre-processing] For all variables and features, we evaluated if the participant had any data points missing. In the case of a missing data point, if that was an isolated event, that is if less than two data points were consecutively missed, we used the average between the next and previous data points for the participant. In case more than two data points were missing, that is two or more consecutive data points were missing, we used the k-nearest neighbors algorithm to estimate the value based on the proximity of features that are not missing. This was done using SciKit Learn’s KNN Imputer method with number of neighboring samples set to 5.<sup>57</sup> In addition, features were included if they had at least 30% of data for the specific user. This number was used to balance the amount of data used in the analyses while empirically assessing the KNNImputter behaviour and model performance for missing data. Next, we describe the processing of variables extracted from each device in Table 1. An exhaustive list and description of all features used in the study are shown in Table B2 in Appendix 2. Steps. For steps data, only Apple Watch information was used. Since data was collected through the HealthKit API differentiating between the Apple Watch and iPhone, it was not possible to integrate data from these two devices without avoiding duplication of information.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] Given the different samples use for each dataset, it is worthwhile to look at how the datasets differ regarding these samples and how this may affect results (Table B3 in Appendix 2). D contains fewer participants in the 18–24, 25–34 and 35–44 ranges, which may account for this dataset generally having poor results in these stratifications when compared to others. However, D has good results on - the male/female and low/medium and high-income stratifi cations despite possessing half the number of men, women and participants in low to middle income (with high-income participants removed entirely). Therefore, it is likely that the division of fewer participants into three distinct age categories did not provide enough information to train the model, and future research collapsing the age category into fewer divisions (e.g. young vs. old) as opposed to the intervals presented here could lead to better results. D also has lower results than other datasets for profession, likely due to the removal of several workers from the dataset. Interestingly, while D has a 7% increase in the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Analyses/experiments] <!-- Start of picture text --> Lo<br><!-- End of picture text --> Table 3. Results for generalised models. Table 3. Continued. Table 3. Continued. Table 3. Continued. Table 3. Continued. Table 3, which shows the results for each dataset, most contain results above 60% when considering all participants in the specific samples. In particular, D, DAW and DW results for all participants are above 65% for RF, indicating that Withings features seem to be good predictors and that RF generally works better than SVMs, which generally has lower results. Datasets containing only Apple features, and in particular only ECG, perform worse compared to others, although several results are still above 60%. Looking only at the healthy participants when compared to all, in most cases the f1-macro score varies slightly (e.g. dropping from 63% to 60% for RF in DA or improving from 66% to 68% for RF in D). In general, stratifying participants by gender and employment improves results, although that is also not always the case – especially with female participants. When stratifying according to income, the divisions with low-income participants typically perform worse, while divisions containing participants with medium to high-income show improvement, often with an f1-macro average above 70%."
+      ],
+      "chunks_section": [
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Data collection and pre-processing",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Analyses/experiments"
+      ],
+      "chunks_score": [
+        0.4553,
+        0.4404,
+        0.4273
+      ],
+      "paper_id": "079963644417db20",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1833
+    },
+    {
+      "id": "Q5",
+      "question": "What type of data or data modalities are used in this study?",
+      "answer": [
+        "Tabular data: structured data represented as rows and columns",
+        "Time-series data: data points that have temporal relationships between them"
+      ],
+      "raw_answer": "[\"Tabular data: structured data represented as rows and columns\", \"Time-series data: data points that have temporal relationships between them\"]",
+      "choices_ids": [
+        "Tabular data: structured data represented as rows and columns",
+        "Time-series data: data points that have temporal relationships between them",
+        "Image data: data consisting of images",
+        "Text data: data consisting of (free) text",
+        "Audio data: data consisting of audio recordings",
+        "Video data: data consisting of video recordings",
+        "Multimodal data: data consisting of multiple modalities (e.g., tabular, text, image, audio)",
+        "Other: the data or data modalities do not fit any of the other categories",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Tabular data: structured data represented as rows and columns",
+        "Time-series data: data points that have temporal relationships between them"
+      ],
+      "chunks_id": [
+        63,
+        7,
+        35
+      ],
+      "chunks_str": [
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] Given the different samples use for each dataset, it is worthwhile to look at how the datasets differ regarding these samples and how this may affect results (Table B3 in Appendix 2). D contains fewer participants in the 18–24, 25–34 and 35–44 ranges, which may account for this dataset generally having poor results in these stratifications when compared to others. However, D has good results on - the male/female and low/medium and high-income stratifi cations despite possessing half the number of men, women and participants in low to middle income (with high-income participants removed entirely). Therefore, it is likely that the division of fewer participants into three distinct age categories did not provide enough information to train the model, and future research collapsing the age category into fewer divisions (e.g. young vs. old) as opposed to the intervals presented here could lead to better results. D also has lower results than other datasets for profession, likely due to the removal of several workers from the dataset. Interestingly, while D has a 7% increase in the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Introduction] For instance, smartwatches typically collect heart rate and steps data from individuals wearing them throughout the day, without any action required on the user’s part. This could provide new and large sources of continuous, real-world data collected with relatively low effort that will allow scientists to conduct novel health research.<sup>5</sup> Indeed, many efforts are being put into place to create platforms that allow individuals to share their data for research. For example, the ecobee smart thermostat company has a program called Donate Your Data,<sup>27,28</sup> which enables the anonymous sharing of device information with researchers.<sup>29–31</sup> The Ubiquitous Health Technology Lab at the University of Waterloo has developed a web platform that enables the enrolment of personal Fitbit and ecobee devices for research: data from the devices is continuously collected once a day once enrolment is complete.<sup>32</sup> The Digital Epidemiology and Population Health Laboratory (DEPtH Lab) at Western University have developed the Smart Platform, which allows researchers to engage with personal devices of patients.<sup>33</sup> However, these mobile health datasets also bring new set of challenges. Larger datasets, generated at faster speeds than previous data collection efforts, with a variety of",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Analyses/experiments] DECG and DA contain the same participants, with different features. In case a participant possessed a feature with less than 30% of the data, this participant was removed from datasets using the feature. For example, if a user possesses less than 30% of the Empatica features, they were not included in the D or DEmpatica sets, and similarly for other features in each dataset. For the datasets including sleep features, we did not include Empatica data as this would result in very small datasets. Table B3 shows the participant characteristics for each dataset, and each separate sampling is further discussed in the ‘Results’ section. As mentioned in the ‘Related work’ section, there are many different ways to train, test and validate the models in the literature. For these analyses, given that in real-world deployment public health agencies would collect a large amount of data from populations, we elected to train generalised models, meaning using data from all participants. Randomly, 80% of the dataset is used for training/validation and hyper-parameter tuning with 10-fold crossvalidation, while 20% is used for testing."
+      ],
+      "chunks_section": [
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Introduction",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Analyses/experiments"
+      ],
+      "chunks_score": [
+        0.4564,
+        0.3983,
+        0.392
+      ],
+      "paper_id": "079963644417db20",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1901
+    },
+    {
+      "id": "Q6",
+      "question": "To which ICD-10 code group does the disease or health condition in this study pertain?",
+      "answer": [
+        "Other: the disease or health condition does not fit any of the other categories"
+      ],
+      "raw_answer": "[\"Other: the disease or health condition does not fit any of the other categories\"]",
+      "choices_ids": [
+        "A00-B99: Infectious and parasitic diseases",
+        "C00-D48: Neoplasms",
+        "D50-D89: Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism",
+        "E00-E90: Endocrine, nutritional and metabolic diseases",
+        "F00-F99: Mental and behavioural disorders",
+        "G00-G99: Diseases of the nervous system",
+        "H00-H59: Diseases of the eye and adnexa",
+        "H60-H95: Diseases of the ear and mastoid process",
+        "I00-I99: Diseases of the circulatory system",
+        "J00-J99: Diseases of the respiratory system",
+        "K00-K93: Diseases of the digestive system",
+        "L00-L99: Diseases of the skin and subcutaneous tissue",
+        "M00-M99: Diseases of the musculoskeletal system and connective tissue",
+        "N00-N99: Diseases of the genitourinary system",
+        "O00-O99: Pregnancy, childbirth, and the puerperium",
+        "P00-P96: Certain conditions originating in the perinatal period",
+        "Q00-Q99: Congenital malformations, deformations and chromosomal abnormalities",
+        "S00-T98: Injury, poisoning and certain other consequences of external causes",
+        "Other: the disease or health condition does not fit any of the other categories"
+      ],
+      "answer_label": [
+        "Other: the disease or health condition does not fit any of the other categories"
+      ],
+      "chunks_id": [
+        63,
+        0,
+        4
+      ],
+      "chunks_str": [
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets] Given the different samples use for each dataset, it is worthwhile to look at how the datasets differ regarding these samples and how this may affect results (Table B3 in Appendix 2). D contains fewer participants in the 18–24, 25–34 and 35–44 ranges, which may account for this dataset generally having poor results in these stratifications when compared to others. However, D has good results on - the male/female and low/medium and high-income stratifi cations despite possessing half the number of men, women and participants in low to middle income (with high-income participants removed entirely). Therefore, it is likely that the division of fewer participants into three distinct age categories did not provide enough information to train the model, and future research collapsing the age category into fewer divisions (e.g. young vs. old) as opposed to the intervals presented here could lead to better results. D also has lower results than other datasets for profession, likely due to the removal of several workers from the dataset. Interestingly, while D has a 7% increase in the proportion of unhealthy participants, it also has the highest non-sleep related metric for the healthy stratification. With a decrease from 36 healthy participants in the full sample to 16 in D, a higher homogenisation of participants likely led to better metrics.",
+        "[Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction] DIGITAL HEALTH Volume 10: 1–22 © The Author(s) 2024 Article reuse guidelines: sagepub.com/journals-permissions DOI: 10.1177/20552076241249931 journals.sagepub.com/home/dhj",
+        "[Pedro Elkind Velmovitsky<sup>1</sup> , Paulo Alencar<sup>2</sup> , Scott T Leatherdale<sup>1</sup> , Donald Cowan<sup>2</sup> and Plinio Pelegrini Morita<sup>1,3,4,5,6</sup> > Keywords] Corresponding author: Plinio Pelegrini Morita, School of Public Health Sciences, University of Waterloo, Waterloo, ON, Canada. Email: plinio.morita@uwaterloo.ca Creative Commons CC BY: This article is distributed under the terms of the Creative Commons Attribution 4.0 License (https://creativecommons. org/licenses/by/4.0/) which permits any use, reproduction and distribution of the work without further permission provided the original work is attributed as specified on the SAGE and Open Access page (https://us.sagepub.com/en-us/nam/open-access-at-sage)."
+      ],
+      "chunks_section": [
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Performances for different samples in datasets",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction",
+        "Application of a mobile health data platform for public health surveillance: A case study in stress monitoring and prediction > Pedro Elkind Velmovitsky<sup>1</sup> , Paulo Alencar<sup>2</sup> , Scott T Leatherdale<sup>1</sup> , Donald Cowan<sup>2</sup> and Plinio Pelegrini Morita<sup>1,3,4,5,6</sup> > Keywords"
+      ],
+      "chunks_score": [
+        0.3139,
+        0.3069,
+        0.2892
+      ],
+      "paper_id": "079963644417db20",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1778
+    }
+  ],
+  "runtime": 87.2619571685791
+}

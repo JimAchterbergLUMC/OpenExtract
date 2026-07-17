@@ -1,0 +1,273 @@
+{
+  "paper": "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases.pdf",
+  "answers": [
+    {
+      "id": "Q1",
+      "question": "What is the overall goal, purpose or aim of this study?",
+      "answer": [
+        "Diagnostic: estimating current disease status or distinguishing between patients with and without a disease"
+      ],
+      "raw_answer": "[\"Diagnostic: estimating current disease status or distinguishing between patients with and without a disease\"]",
+      "choices_ids": [
+        "Diagnostic: estimating current disease status or distinguishing between patients with and without a disease",
+        "Screening: identifying asymptomatic or general-population individuals who are likely to have or develop a disease",
+        "Prognostic: predicting future clinical outcomes for patients with a particular disease",
+        "Etiologic: identifying factors associated with or causing disease or health outcomes",
+        "Treatment effect: evaluating the effect of an intervention or comparing interventions",
+        "Descriptive: describing disease prevalence, incidence, characteristics, or trends without primarily making predictions",
+        "Other: the goal of the study does not fit any of the other categories",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Diagnostic: estimating current disease status or distinguishing between patients with and without a disease"
+      ],
+      "chunks_id": [
+        18,
+        31,
+        29
+      ],
+      "chunks_str": [
+        "[Material and methods > Clinical validation study] Figure 1 This flowchart depicts the different steps in data collection, algorithm generation, algorithm testing, app generation and app validation in clinical studies. Pangti et al.",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|36|Overall/Mean �<br>S.D./ 95% C.I.|4254|0.90 �0.07|75.07 (73.75–76.36)|89.62<br>(88.67–90.52)|99.11<br>(99.06–99.15)|61.46<br>(55.77–67.14)|99.35<br>(99.07–99.62)|",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|29|Tinea capitis|32|0.87|54.55 (36.35–71.89)|75.76|99.90|78.26|99.70|\n|30|Tinea cruris, corporis<br>or faciei|545|0.95|81.69 (78.18–84.84)|96.22|96.75|75.47|97.73|\n|31|Tinea pedis|10|0.75|40.00 (12.16–73.76)|50.00|99.90|44.44|99.88|\n|32|Tinea unguium|64|0.96|76.92 (64.1–86.47)|92.31|99.70|76.92|99.70|"
+      ],
+      "chunks_section": [
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study"
+      ],
+      "chunks_score": [
+        0.1826,
+        0.151,
+        0.1228
+      ],
+      "paper_id": "724c1d4e9d99350a",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1183
+    },
+    {
+      "id": "Q2",
+      "question": "What is the number of patients or cohort size included in this study?",
+      "answer": [
+        "1000-10000"
+      ],
+      "raw_answer": "[\"C\"]",
+      "choices_ids": [
+        "<100",
+        "100-1000",
+        "1000-10000",
+        "10000-100000",
+        "100000-1000000",
+        ">1000000",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "1000-10000"
+      ],
+      "chunks_id": [
+        31,
+        29,
+        18
+      ],
+      "chunks_str": [
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|36|Overall/Mean �<br>S.D./ 95% C.I.|4254|0.90 �0.07|75.07 (73.75–76.36)|89.62<br>(88.67–90.52)|99.11<br>(99.06–99.15)|61.46<br>(55.77–67.14)|99.35<br>(99.07–99.62)|",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|29|Tinea capitis|32|0.87|54.55 (36.35–71.89)|75.76|99.90|78.26|99.70|\n|30|Tinea cruris, corporis<br>or faciei|545|0.95|81.69 (78.18–84.84)|96.22|96.75|75.47|97.73|\n|31|Tinea pedis|10|0.75|40.00 (12.16–73.76)|50.00|99.90|44.44|99.88|\n|32|Tinea unguium|64|0.96|76.92 (64.1–86.47)|92.31|99.70|76.92|99.70|",
+        "[Material and methods > Clinical validation study] Figure 1 This flowchart depicts the different steps in data collection, algorithm generation, algorithm testing, app generation and app validation in clinical studies. Pangti et al."
+      ],
+      "chunks_section": [
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study"
+      ],
+      "chunks_score": [
+        0.2649,
+        0.2118,
+        0.1928
+      ],
+      "paper_id": "724c1d4e9d99350a",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1488
+    },
+    {
+      "id": "Q3",
+      "question": "In what way is the cohort or sample of patients described in this study, for example regarding demographics, medical history, and so on?",
+      "answer": "Unknown from this paper.",
+      "raw_answer": "Unknown from this paper.",
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        29,
+        31,
+        23
+      ],
+      "chunks_str": [
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|29|Tinea capitis|32|0.87|54.55 (36.35–71.89)|75.76|99.90|78.26|99.70|\n|30|Tinea cruris, corporis<br>or faciei|545|0.95|81.69 (78.18–84.84)|96.22|96.75|75.47|97.73|\n|31|Tinea pedis|10|0.75|40.00 (12.16–73.76)|50.00|99.90|44.44|99.88|\n|32|Tinea unguium|64|0.96|76.92 (64.1–86.47)|92.31|99.70|76.92|99.70|",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|36|Overall/Mean �<br>S.D./ 95% C.I.|4254|0.90 �0.07|75.07 (73.75–76.36)|89.62<br>(88.67–90.52)|99.11<br>(99.06–99.15)|61.46<br>(55.77–67.14)|99.35<br>(99.07–99.62)|",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|5|Bowen’s disease|11|0.77|45.45 (16.75–76.62)|54.54|99.90|50.00|99.88|\n|6|Bullous pemphigoid|16|0.73|35.29 (14.21–61.67)|47.06|100.00|100.00|99.78|\n|7|Candidiasis|16|0.81|41.18 (18.44–67.10)|64.71|99.80|41.18|99.80|\n|8|Discoid lupus<br>erythematosus|47|0.90|60.42 (45.27–74.23)|83.33|99.20|42.03|99.61|"
+      ],
+      "chunks_section": [
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study"
+      ],
+      "chunks_score": [
+        0.2592,
+        0.2566,
+        0.2532
+      ],
+      "paper_id": "724c1d4e9d99350a",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1364
+    },
+    {
+      "id": "Q4",
+      "question": "What information about the dataset is provided in this study, for example regarding the features, provenance, data quality, missing values, and so on?",
+      "answer": "The study provides the following dataset information:  \n- **Provenance**: Images were sourced from public databases (Hellenic Dermatology Atlas, Danderm.dk) with permission, as well as from dermatologists in India.  \n- **Data quality**: 17,718 raw images were initially collected, but 310 were discarded during preprocessing due to poor resolution or multiple lesions.  \n- **Data split**: Of the remaining 17,408 images, 12,350 were used for training and 3,068 for testing.  \n- **Imbalance handling**: The dataset included 1,990 non-specific images and 15,418 images across 40 disease categories. A weighted focal loss function was employed to address class imbalance.  \n- **Preprocessing**: Images were annotated, segmented, and processed to isolate lesions, removing irrelevant features like rulers or surgical markings.  \n\nMissing values or specific feature details (e.g., metadata) are not explicitly mentioned.",
+      "raw_answer": "The study provides the following dataset information:  \n- **Provenance**: Images were sourced from public databases (Hellenic Dermatology Atlas, Danderm.dk) with permission, as well as from dermatologists in India.  \n- **Data quality**: 17,718 raw images were initially collected, but 310 were discarded during preprocessing due to poor resolution or multiple lesions.  \n- **Data split**: Of the remaining 17,408 images, 12,350 were used for training and 3,068 for testing.  \n- **Imbalance handling**: The dataset included 1,990 non-specific images and 15,418 images across 40 disease categories. A weighted focal loss function was employed to address class imbalance.  \n- **Preprocessing**: Images were annotated, segmented, and processed to isolate lesions, removing irrelevant features like rulers or surgical markings.  \n\nMissing values or specific feature details (e.g., metadata) are not explicitly mentioned.",
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        18,
+        34,
+        10
+      ],
+      "chunks_str": [
+        "[Material and methods > Clinical validation study] Figure 1 This flowchart depicts the different steps in data collection, algorithm generation, algorithm testing, app generation and app validation in clinical studies. Pangti et al.",
+        "[A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Results] erapiion: Se Ce<br>Candidiagis eee eeeee .<br>Bullous pemphigoidTinea pedis o--2eves :\"<br>ss gee F&F FCF FE<br><!-- End of picture text -->",
+        "[Material and methods > Generation of the CNN-based algorithm] The CNN architecture used was a modified version of Densenet161 with optimized augmentation and inference pipelines.<sup>16</sup> These optimizations were derived through rigorous experiments and were attuned to clinical skin images. All training and testing images were annotated and segmented so a bounding box surrounded lesion of interest and irrelevant features such as rulers and surgical markings were discarded. The 17 718 raw images were sourced from public databases (http://www.hellenicderma tlas.com/en and http://www.danderm.dk/atlas), after obtaining permission from them, as well as images from dermatologists in India. Of these, 310 images were discarded during the preprocessing stage due to poor resolution or multiple lesions. Out of the remaining 17 408 images, 1990 images belonged to the non-specific category and 15 418 images were within the 40 selected disease categories (Table 1). These images were split into five equal parts (folds) and five iterations of training and validation were performed in a manner so that within each iteration, a different fold of the data was held-out for validation while the remaining fourfolds were used for learning. The training images were 12 350 and testing images were 3068. Since the dataset was imbalanced, a custom modified version of the weighted focal loss function was used to train the network."
+      ],
+      "chunks_section": [
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Results",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Generation of the CNN-based algorithm"
+      ],
+      "chunks_score": [
+        0.2999,
+        0.2954,
+        0.2656
+      ],
+      "paper_id": "724c1d4e9d99350a",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1217
+    },
+    {
+      "id": "Q5",
+      "question": "What type of data or data modalities are used in this study?",
+      "answer": [
+        "Image data: data consisting of images"
+      ],
+      "raw_answer": "[\"C\"]",
+      "choices_ids": [
+        "Tabular data: structured data represented as rows and columns",
+        "Time-series data: data points that have temporal relationships between them",
+        "Image data: data consisting of images",
+        "Text data: data consisting of (free) text",
+        "Audio data: data consisting of audio recordings",
+        "Video data: data consisting of video recordings",
+        "Multimodal data: data consisting of multiple modalities (e.g., tabular, text, image, audio)",
+        "Other: the data or data modalities do not fit any of the other categories",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Image data: data consisting of images"
+      ],
+      "chunks_id": [
+        18,
+        48,
+        31
+      ],
+      "chunks_str": [
+        "[Material and methods > Clinical validation study] Figure 1 This flowchart depicts the different steps in data collection, algorithm generation, algorithm testing, app generation and app validation in clinical studies. Pangti et al.",
+        "[A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Results] In this work, clinical images of the patients’ lesions were taken by seven different dermatologists in primary, tertiary and urban practice in settings of varying lighting conditions, backgrounds, with mobile phones having different camera settings, resolution, zoom and focus. However, there was not much difference in the accuracy of the app in three different settings suggesting that such an app can be a robust clinician-friendly technology under varying conditions. The scarcity of training data, especially clinical images from different ethnicities, is considered the biggest challenge in developing optimal deep learning-based skin disease classifiers. The public dermatology archives like ISIC largely contain skin cancer dermoscopic images rather than clinical images of common diseases and are highly skewed in terms of image numbers for different diseases. With the use of locally generated data, we were able to counter the issue of class imbalance to some degree by selective collection from patients. Also, dataset bias and racial bias have been described, arising from the reuse of the same public datasets from white-skinned individuals for training, evaluating or comparing models in nearly all studies.<sup>30</sup> Therefore, we used several thousand new patient images for training and all distinct images for validation. To enable our app to make decisions on clinically relevant features, we also trained our model on images of normal skin from individuals as a control.",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|36|Overall/Mean �<br>S.D./ 95% C.I.|4254|0.90 �0.07|75.07 (73.75–76.36)|89.62<br>(88.67–90.52)|99.11<br>(99.06–99.15)|61.46<br>(55.77–67.14)|99.35<br>(99.07–99.62)|"
+      ],
+      "chunks_section": [
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Results",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study"
+      ],
+      "chunks_score": [
+        0.2474,
+        0.1808,
+        0.1745
+      ],
+      "paper_id": "724c1d4e9d99350a",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1311
+    },
+    {
+      "id": "Q6",
+      "question": "To which ICD-10 code group does the disease or health condition in this study pertain?",
+      "answer": [
+        "L00-L99: Diseases of the skin and subcutaneous tissue"
+      ],
+      "raw_answer": "[\"L00-L99: Diseases of the skin and subcutaneous tissue\"]",
+      "choices_ids": [
+        "A00-B99: Infectious and parasitic diseases",
+        "C00-D48: Neoplasms",
+        "D50-D89: Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism",
+        "E00-E90: Endocrine, nutritional and metabolic diseases",
+        "F00-F99: Mental and behavioural disorders",
+        "G00-G99: Diseases of the nervous system",
+        "H00-H59: Diseases of the eye and adnexa",
+        "H60-H95: Diseases of the ear and mastoid process",
+        "I00-I99: Diseases of the circulatory system",
+        "J00-J99: Diseases of the respiratory system",
+        "K00-K93: Diseases of the digestive system",
+        "L00-L99: Diseases of the skin and subcutaneous tissue",
+        "M00-M99: Diseases of the musculoskeletal system and connective tissue",
+        "N00-N99: Diseases of the genitourinary system",
+        "O00-O99: Pregnancy, childbirth, and the puerperium",
+        "P00-P96: Certain conditions originating in the perinatal period",
+        "Q00-Q99: Congenital malformations, deformations and chromosomal abnormalities",
+        "S00-T98: Injury, poisoning and certain other consequences of external causes",
+        "Other: the disease or health condition does not fit any of the other categories"
+      ],
+      "answer_label": [
+        "L00-L99: Diseases of the skin and subcutaneous tissue"
+      ],
+      "chunks_id": [
+        31,
+        23,
+        25
+      ],
+      "chunks_str": [
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|36|Overall/Mean �<br>S.D./ 95% C.I.|4254|0.90 �0.07|75.07 (73.75–76.36)|89.62<br>(88.67–90.52)|99.11<br>(99.06–99.15)|61.46<br>(55.77–67.14)|99.35<br>(99.07–99.62)|",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|5|Bowen’s disease|11|0.77|45.45 (16.75–76.62)|54.54|99.90|50.00|99.88|\n|6|Bullous pemphigoid|16|0.73|35.29 (14.21–61.67)|47.06|100.00|100.00|99.78|\n|7|Candidiasis|16|0.81|41.18 (18.44–67.10)|64.71|99.80|41.18|99.80|\n|8|Discoid lupus<br>erythematosus|47|0.90|60.42 (45.27–74.23)|83.33|99.20|42.03|99.61|",
+        "[Material and methods > Clinical validation study] |S.no.|Disease class|Number<br>of patients|AUC-<br>clinic|Top-1 sensitivity<br>% (CI)|Top-3<br>sensitivity %|Top-1<br>specifcity %|Top-1 PPV|Top-1 NPV|\n|---|---|---|---|---|---|---|---|---|\n|13|Ichthyosis|21|0.93|81.81 (59.72–94.81)|86.36|99.78|62.07|99.92|\n|14|Impetigo and Pyodermas|109|0.89|57.27 (47.48–66.66)|82.72|99.04|57.27|99.04|\n|15|Keloids/Hypertrophic scar|128|0.91|73.64 (65.16–81.00)|84.50|99.44|77.87|99.30|\n|16|Lichen planus|170|0.88|69.59 (62.10–76.38)|84.80|95.66|36.17|98.89|"
+      ],
+      "chunks_section": [
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study",
+        "A machine learning-based, decision support, mobile phone application for diagnosis of common dermatological diseases > Material and methods > Clinical validation study"
+      ],
+      "chunks_score": [
+        0.2769,
+        0.2708,
+        0.2655
+      ],
+      "paper_id": "724c1d4e9d99350a",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1760
+    }
+  ],
+  "runtime": 55.8488450050354
+}

@@ -1,0 +1,277 @@
+{
+  "paper": "fdgth-04-861808.pdf",
+  "answers": [
+    {
+      "id": "Q1",
+      "question": "What is the overall goal, purpose or aim of this study?",
+      "answer": [
+        "Screening: identifying asymptomatic or general-population individuals who are likely to have or develop a disease"
+      ],
+      "raw_answer": "[\"B\"]",
+      "choices_ids": [
+        "Diagnostic: estimating current disease status or distinguishing between patients with and without a disease",
+        "Screening: identifying asymptomatic or general-population individuals who are likely to have or develop a disease",
+        "Prognostic: predicting future clinical outcomes for patients with a particular disease",
+        "Etiologic: identifying factors associated with or causing disease or health outcomes",
+        "Treatment effect: evaluating the effect of an intervention or comparing interventions",
+        "Descriptive: describing disease prevalence, incidence, characteristics, or trends without primarily making predictions",
+        "Other: the goal of the study does not fit any of the other categories",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Screening: identifying asymptomatic or general-population individuals who are likely to have or develop a disease"
+      ],
+      "chunks_id": [
+        0,
+        10,
+        24
+      ],
+      "chunks_str": [
+        "ORIGINAL RESEARCH published: 14 April 2022 doi: 10.3389/fdgth.2022.861808",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Study Design and Dataset] Thus, to strictly determine that the administration was connected to a mental illness, we chose the initiation of both “administration of hypnotics, anxiolytics, or antidepressants” and “psychiatric visits” as the qualifying outcome. Henceforth, this combined outcome is referred to as “mental illness onset”. Although this study did not target a specific type of mental illness, this definition approximately narrows the range of the targets to people with depression or anxiety symptoms.",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation] |Feature name|Unit|Description|Feature name<br>Unit|Description|\n|---|---|---|---|---|\n|Steps|steps|monthly average of daily steps measured||whiskey (60 ml), two glasses of wine<br>|\n|log_count.active|days|monthly number of days for activity data||(240 ml)<br>|\n|||<br>linkage||(1=<1 go, 2=1 go to<2 go, 3=2 go to<br>3 o 4 3 o or more)|\n|Wearable data [slee|p]||FITNESS<br>-|<g,=g<br>Do ou exercise more than 30 min more|\n|notMainSleep.minutes|min|monthly average of daily minutes of sleep<br>determined to be “isMainSleep=False”||y ,<br>than twice in a week and continue this<br>exercise habit more than 1 year?|\n|notMainSleep.counts|times|monthly counts of sleep determined to be||<br>(1=Yes, 2=No)|"
+      ],
+      "chunks_section": [
+        "",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Study Design and Dataset",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation"
+      ],
+      "chunks_score": [
+        0.1988,
+        0.1002,
+        0.0557
+      ],
+      "paper_id": "1331f148efe768d0",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 2108
+    },
+    {
+      "id": "Q2",
+      "question": "What is the number of patients or cohort size included in this study?",
+      "answer": [
+        "Unknown from this paper"
+      ],
+      "raw_answer": "['Unknown from this paper']",
+      "choices_ids": [
+        "<100",
+        "100-1000",
+        "1000-10000",
+        "10000-100000",
+        "100000-1000000",
+        ">1000000",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Unknown from this paper"
+      ],
+      "chunks_id": [
+        0,
+        51,
+        49
+      ],
+      "chunks_str": [
+        "ORIGINAL RESEARCH published: 14 April 2022 doi: 10.3389/fdgth.2022.861808",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT] The datasets presented in this article are not readily available because the data were used under license for the current study. JMDC makes the database widely available, on a fee-paying basis, for use in surveys, research, and commercial purposes. Requests to access the datasets should be directed to JMDC’s website (https://www.jmdc.co.jp/en/bigdata/).",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Limitations] However, medical examination data generally do not change abruptly in such a short period (∼several months), which should support the validity of our study design. Biases associated with wearable data linkages should also be noted. This was an observational study, and it is always an individual’s choice to attach and use wearable devices for any reason. Therefore, there is the possibility that a person who feels physically and mentally fulfilled will continue to wear the device and link multiple time-series records. Conversely, those who feel mentally offset may discontinue wearing the device. Hence, the onset probability predicted by the model is likely lower than that actually found in society as a whole. Nevertheless, there is some value in considering the utilization of a model that focuses on the magnitude of predictive probability and conducting preventive interventions based on a given threshold value."
+      ],
+      "chunks_section": [
+        "",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Limitations"
+      ],
+      "chunks_score": [
+        0.151,
+        0.1132,
+        0.0767
+      ],
+      "paper_id": "1331f148efe768d0",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 869
+    },
+    {
+      "id": "Q3",
+      "question": "In what way is the cohort or sample of patients described in this study, for example regarding demographics, medical history, and so on?",
+      "answer": "Unknown from this paper.",
+      "raw_answer": "Unknown from this paper.",
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        51,
+        30,
+        48
+      ],
+      "chunks_str": [
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT] The datasets presented in this article are not readily available because the data were used under license for the current study. JMDC makes the database widely available, on a fee-paying basis, for use in surveys, research, and commercial purposes. Requests to access the datasets should be directed to JMDC’s website (https://www.jmdc.co.jp/en/bigdata/).",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation] |Feature name|Unit|Description|Feature name<br>Unit|Description|\n|---|---|---|---|---|\n|SMOKE|-|Do you habitually smoke?|person partition division w|as conducted to avoid including the|\n|||<br>You habitually smoke if you have ever<br>smoked over 100 cigarettes in total or for 6<br>|,<br>same person in the model <br>fold (group CV) (35). The v|<br> training and testing data in each<br>alidation data from each fold were|\n|||months or more and have also smoked in<br>the last month|merged, and the AUC for CV|was evaluated for the entire training|\n|||.<br>(1=Yes, 2=No)|data set. This method is us|ed for datasets having few positive|",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Limitations] Clinically, onset is synonymous with confirmed diagnosis. Thus, for this study, the insurance paradigm was acceptable. Mental illness generally shows high variance in symptoms as well as underlying causes. As most of the positive cases in this study are thought to be people with depression and anxiety symptoms, the cases can be used to construct disease-specific predictive models in future studies. This study used values measured by a specific device (i.e., Fitbit); the measurement items may not provide sufficient accuracy or may have proprietary/unclear features. This would not be a problem if we were to restrict our scope to Fitbit wearers. However, when comparing these results to those obtained using other wearable devices, appliance differences must be taken into account. Although there are limits to the generalizability of the results in this study, they are compelling in that they demonstrate the possibility of predicting illness onset using wearable data. The period of the wearable data analyzed had to be restricted to three continuous months to secure a reasonable amount of data. The closest annual medical examination data to the mental illness onset was used in the analyses, which means that the timing of the medical examination was not the same as that of the wearable data. However, medical examination data generally do not change abruptly in such a short period (∼several months), which should support the validity of our study design."
+      ],
+      "chunks_section": [
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Limitations"
+      ],
+      "chunks_score": [
+        0.2634,
+        0.2559,
+        0.2535
+      ],
+      "paper_id": "1331f148efe768d0",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1115
+    },
+    {
+      "id": "Q4",
+      "question": "What information about the dataset is provided in this study, for example regarding the features, provenance, data quality, missing values, and so on?",
+      "answer": "The study mentions the following dataset information:  \n- **Features**: A feature named \"SMOKE\" is described as a binary variable (1=Yes, 2=No) indicating habitual smoking. Other features are implied but not fully detailed in the provided context.  \n- **Provenance**: The dataset is sourced from JMDC (Japanese Medical Data Center), which offers the database for fee-based access for research and commercial purposes.  \n- **Data Handling**: The dataset includes time series data from individuals, and partitioning was conducted to avoid including the same person in both training and testing folds (group cross-validation).  \n- **Data Quality/Imbalance**: The text notes that the method is used for datasets with few positive examples, suggesting potential class imbalance, but no explicit details on data quality or missing values are provided.  \n\nOther aspects like missing values, data collection methods, or detailed data quality metrics are not explicitly addressed in the context.",
+      "raw_answer": "The study mentions the following dataset information:  \n- **Features**: A feature named \"SMOKE\" is described as a binary variable (1=Yes, 2=No) indicating habitual smoking. Other features are implied but not fully detailed in the provided context.  \n- **Provenance**: The dataset is sourced from JMDC (Japanese Medical Data Center), which offers the database for fee-based access for research and commercial purposes.  \n- **Data Handling**: The dataset includes time series data from individuals, and partitioning was conducted to avoid including the same person in both training and testing folds (group cross-validation).  \n- **Data Quality/Imbalance**: The text notes that the method is used for datasets with few positive examples, suggesting potential class imbalance, but no explicit details on data quality or missing values are provided.  \n\nOther aspects like missing values, data collection methods, or detailed data quality metrics are not explicitly addressed in the context.",
+      "choices_ids": null,
+      "answer_label": null,
+      "chunks_id": [
+        51,
+        30,
+        20
+      ],
+      "chunks_str": [
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT] The datasets presented in this article are not readily available because the data were used under license for the current study. JMDC makes the database widely available, on a fee-paying basis, for use in surveys, research, and commercial purposes. Requests to access the datasets should be directed to JMDC’s website (https://www.jmdc.co.jp/en/bigdata/).",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation] |Feature name|Unit|Description|Feature name<br>Unit|Description|\n|---|---|---|---|---|\n|SMOKE|-|Do you habitually smoke?|person partition division w|as conducted to avoid including the|\n|||<br>You habitually smoke if you have ever<br>smoked over 100 cigarettes in total or for 6<br>|,<br>same person in the model <br>fold (group CV) (35). The v|<br> training and testing data in each<br>alidation data from each fold were|\n|||months or more and have also smoked in<br>the last month|merged, and the AUC for CV|was evaluated for the entire training|\n|||.<br>(1=Yes, 2=No)|data set. This method is us|ed for datasets having few positive|",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation] Because the dataset included different time series from a single person, partition division was conducted to avoid including the same person in the model training and testing data in each fold (group CV) (35). The validation data from each fold were merged, and the AUC for CV was evaluated for the entire training data set. This method is used for datasets having few positive examples, but it has been shown that it may underestimate performance as a classifier (36). Furthermore, the robustness of"
+      ],
+      "chunks_section": [
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation"
+      ],
+      "chunks_score": [
+        0.4918,
+        0.3684,
+        0.3566
+      ],
+      "paper_id": "1331f148efe768d0",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1253
+    },
+    {
+      "id": "Q5",
+      "question": "What type of data or data modalities are used in this study?",
+      "answer": [
+        "Audio data: data consisting of audio recordings",
+        "Time-series data: data points that have temporal relationships between them",
+        "Multimodal data: data consisting of multiple modalities (e.g., tabular, text, image, audio)"
+      ],
+      "raw_answer": "[\"A\", \"B\", \"G\"]",
+      "choices_ids": [
+        "Tabular data: structured data represented as rows and columns",
+        "Time-series data: data points that have temporal relationships between them",
+        "Image data: data consisting of images",
+        "Text data: data consisting of (free) text",
+        "Audio data: data consisting of audio recordings",
+        "Video data: data consisting of video recordings",
+        "Multimodal data: data consisting of multiple modalities (e.g., tabular, text, image, audio)",
+        "Other: the data or data modalities do not fit any of the other categories",
+        "Unknown from this paper"
+      ],
+      "answer_label": [
+        "Audio data: data consisting of audio recordings",
+        "Time-series data: data points that have temporal relationships between them",
+        "Multimodal data: data consisting of multiple modalities (e.g., tabular, text, image, audio)"
+      ],
+      "chunks_id": [
+        51,
+        11,
+        8
+      ],
+      "chunks_str": [
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT] The datasets presented in this article are not readily available because the data were used under license for the current study. JMDC makes the database widely available, on a fee-paying basis, for use in surveys, research, and commercial purposes. Requests to access the datasets should be directed to JMDC’s website (https://www.jmdc.co.jp/en/bigdata/).",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Exclusion Criteria] Potential subjects who met the following conditions were excluded from the subject data of this study: - Individuals with mental illness onset prior to linking wearable data, during discontinued linking of data, or within 3 months after starting data linking; and - Individuals with different months of meeting the qualifying outcomes listed above.",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Study Design and Dataset] We conducted analyses of a database constructed by JMDC Inc. (21), which includes information on more than seven million society-managed health insurance members in Japan (insured individuals and dependents). This was comprised of our subject base, which is on large-scale and includes insurance claims (e.g., outpatient, hospitalization, and dispensary) and medical examination results. Notably, it also includes a trove of wearable data. The subjects in this study were chosen from those satisfying the following conditions: - Society-managed health insurance member; - Individual whose wearable data are linked to PHRs [service name: Pep Up (https://pepup.life)], which is an ICT service by JMDC Inc. for society-managed health insurance members; - Individual having a history of continuously linking wearable data for more than 3 months (15+ days per month); and - Individual undergoing regular medical examinations. The survey period ran from August 2016 to January 2020. The data were anonymized. Written informed consent was waived owing to the retrospective nature of this study while the subjects agreed to have their data analyzed when linking their data to PHRs. The ethical review of this study was performed by the Ethics Committee of the Research Institute of Healthcare Data Science (RIHDS)."
+      ],
+      "chunks_section": [
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Exclusion Criteria",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Study Design and Dataset"
+      ],
+      "chunks_score": [
+        0.3646,
+        0.2781,
+        0.2755
+      ],
+      "paper_id": "1331f148efe768d0",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 2362
+    },
+    {
+      "id": "Q6",
+      "question": "To which ICD-10 code group does the disease or health condition in this study pertain?",
+      "answer": [
+        "F00-F99: Mental and behavioural disorders"
+      ],
+      "raw_answer": "[\"F\"]",
+      "choices_ids": [
+        "A00-B99: Infectious and parasitic diseases",
+        "C00-D48: Neoplasms",
+        "D50-D89: Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism",
+        "E00-E90: Endocrine, nutritional and metabolic diseases",
+        "F00-F99: Mental and behavioural disorders",
+        "G00-G99: Diseases of the nervous system",
+        "H00-H59: Diseases of the eye and adnexa",
+        "H60-H95: Diseases of the ear and mastoid process",
+        "I00-I99: Diseases of the circulatory system",
+        "J00-J99: Diseases of the respiratory system",
+        "K00-K93: Diseases of the digestive system",
+        "L00-L99: Diseases of the skin and subcutaneous tissue",
+        "M00-M99: Diseases of the musculoskeletal system and connective tissue",
+        "N00-N99: Diseases of the genitourinary system",
+        "O00-O99: Pregnancy, childbirth, and the puerperium",
+        "P00-P96: Certain conditions originating in the perinatal period",
+        "Q00-Q99: Congenital malformations, deformations and chromosomal abnormalities",
+        "S00-T98: Injury, poisoning and certain other consequences of external causes",
+        "Other: the disease or health condition does not fit any of the other categories"
+      ],
+      "answer_label": [
+        "F00-F99: Mental and behavioural disorders"
+      ],
+      "chunks_id": [
+        51,
+        9,
+        26
+      ],
+      "chunks_str": [
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT] The datasets presented in this article are not readily available because the data were used under license for the current study. JMDC makes the database widely available, on a fee-paying basis, for use in surveys, research, and commercial purposes. Requests to access the datasets should be directed to JMDC’s website (https://www.jmdc.co.jp/en/bigdata/).",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Study Design and Dataset] The ethical review of this study was performed by the Ethics Committee of the Research Institute of Healthcare Data Science (RIHDS). Date of approval: October 26, 2020; Approval number: RI2020013. The procedures were carried out in accordance with the approved guidelines. #### Mental illness differs by individual in its duration from onset to hospitalization. However, as taken from the insurance claim data, the start of the onset was unclear. Hence, we based the onset period on the time of the first mental illness consultation. Relevant insurance claim information included the following qualifying criteria: - Administration of hypnotics, anxiolytics, or antidepressants: prescription of medicine corresponding to Anatomical Therapeutic Chemical (ATC) Classification System codes - (i.e., N05B, N05C, and N06A) as defined by the European Pharmaceutical Market Research Association (EphMRA); - Psychiatric visits: calculation of medical practices corresponding to the Quick Reference Table of Medical Because hypnotics and anxiolytics are effective treatments for mental illness, they are frequently prescribed as a temporarily treatment for surgical hospitalization. Thus, to strictly determine that the administration was connected to a mental illness, we chose the initiation of both “administration of hypnotics, anxiolytics, or antidepressants” and “psychiatric visits” as the qualifying outcome.",
+        "[Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation] |Feature name|Unit|Description|Feature name<br>Unit|Description|\n|---|---|---|---|---|\n|deepMinutes|min|monthly average of daily deepMinutes|YEAR<br>-|the Year of YM|\n|remMinutes|min|monthly average of daily remMinutes|MONTH<br>-|the Month of YM|\n|lightMinutes|min|monthly average of daily lightMinutes|||\n|wakeMinutes|min|monthly average of daily wakeMinutes|||\n|startTime.sleep|[hhmmss]|monthly average of daily bedtime|||\n|SC_lag|min|monthly social jetlag|||\n|chronotype|[hhmmss]|monthly chronotype|particularly suitable for cases|where a strong correlation between|\n|SRI|-|<br>monthly Sleep Regularity Index|features and/or a non-linea|r relationship between features and|\n|Health Examination|Data||targets is assumed, as in|this dataset. The outline of the|"
+      ],
+      "chunks_section": [
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > DATA AVAILABILITY STATEMENT",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Study Design and Dataset",
+        "Predictive Modeling of Mental Illness Onset Using Wearable Devices and Medical Examination Data: Machine Learning Approach > Machine Learning and Validation"
+      ],
+      "chunks_score": [
+        0.3305,
+        0.3053,
+        0.266
+      ],
+      "paper_id": "1331f148efe768d0",
+      "parser": "pymupdf4llm",
+      "sent_transformer": "neuml/pubmedbert-base-embeddings",
+      "LLM": "qwen/qwen3-8b",
+      "finish_reason": "stop",
+      "total_len": 1493
+    }
+  ],
+  "runtime": 90.13204407691956
+}

@@ -23,7 +23,7 @@ cd OpenExtract
 git checkout openextract-mie-2025
 ```
 
-Paper reproduction instructions for that snapshot are in its own [README](https://github.com/JimAchterbergLUMC/OpenExtract/blob/openextract-mie-2025/README.md) and are summarized again in [Reproducing the paper results](#reproducing-the-paper-results) below.
+Paper reproduction instructions for that snapshot are in its own [README](https://github.com/JimAchterbergLUMC/OpenExtract/blob/openextract-mie-2025/README.md).
 
 ---
 
@@ -95,6 +95,21 @@ python main.py \
 
 Each paper produces `{paper_stem}_answers.json` in the output directory, containing the paper name, answers, and runtime.
 
+### Try it with bundled dev examples
+
+The repository ships a small shared corpus and pre-run outputs so you can inspect the pipeline without preparing your own PDFs first:
+
+```bash
+python main.py \
+  --papers-dir ./papers_dev \
+  --output-dir ./answers \
+  --questions-file ./questions_uncan.json \
+  --model qwen/qwen-2.5-7b-instruct \
+  --api-key-file ./key.txt
+```
+
+Compare your fresh output against the reference files in `answers_dev/` (see [Development and troubleshooting](#development-and-troubleshooting)).
+
 ---
 
 ## Configuring a use case
@@ -103,8 +118,8 @@ Each paper produces `{paper_stem}_answers.json` in the output directory, contain
 
 Questions are a JSON object with a `"questions"` array. Each item has `id` and `text`. A `choices` array is optional:
 
-- **Closed (multiple-choice):** include `"choices"`. The model returns option IDs / labels from that list.
-- **Open (free-text):** omit `"choices"`. The model returns a free-text answer.
+- **Closed (multiple-choice):** include `"choices"`. The model is instructed to return a JSON array of option IDs from that list (e.g. `["Descriptive: ..."]`). Answers are normalized to valid choice IDs; unparseable replies become `"Unknown from this paper"`.
+- **Open (free-text):** omit `"choices"`. The model returns an answer based only on the retrieved context.
 
 Example:
 
@@ -128,13 +143,31 @@ Bundled question sets:
 
 | File | Role |
 | --- | --- |
-| `questions.json` | Full digital-health SLR extraction schema (paper use case) |
-| `questions_brief.json` | Shorter variant for quicker runs |
-| `questions_uncan.json` | Mixed closed/open questions for experimentation |
+| `questions.json` | Full digital-health SLR extraction schema (MIE2026 paper use case) |
+| `questions_dev.json` | Mixed closed/open questions for experimentation |
+
+#### How open and closed questions differ at runtime
+
+Both question types share the same retrieval step (top-k dense similarity over section-aware chunks). They diverge only in the LLM call and post-processing:
+
+| Aspect | Closed (with `choices`) | Open (no `choices`) |
+| --- | --- | --- |
+| Prompt | `prompts.json` → `user` | `prompts.json` → `user_open` |
+| Expected model output | JSON array of choice IDs | Plain prose |
+| `answer` field in output JSON | List of resolved choice IDs | Free-text string |
+| `answer_label` | Human-readable labels for chosen IDs | `null` |
+| `choices_ids` | The valid option list | `null` |
+| Structured output (`--use-structured-output`) | Supported (model-dependent) | Not used |
+
+For open questions, `raw_answer` is kept verbatim (same as `answer` unless you post-process externally). The open prompt explicitly tells the model not to invent option letters and to reply `Unknown from this paper` when the context is insufficient.
 
 ### Prompts (`prompts.json`)
 
-Edit `prompts.json` to change the system (`base`) and user instructions the LLM sees. Defaults steer the model toward careful, context-only answers and JSON-shaped choice lists for closed questions.
+Edit `prompts.json` to change the system (`base`) and user instructions the LLM sees:
+
+- `base` — shared system prompt for all questions
+- `user` — instructions for closed questions (JSON array of choice IDs)
+- `user_open` — instructions for open questions (concise prose, context-only)
 
 ---
 
@@ -162,14 +195,35 @@ Edit `prompts.json` to change the system (`base`) and user instructions the LLM 
 | `--random-seed` | `42` | Seed for `--random-subset` |
 | `--stop-after-n-papers` | — | Process at most N papers (after selection) |
 
-Inspect the cache:
+### Cache (`cache/`)
+
+Parsing, chunking, and embedding are the slow steps. OpenExtract caches their results under `--cache-dir` (default `./cache`) so re-runs with the same PDF and configuration skip recompute. The cache is **disposable**: delete it anytime; the next run will rebuild what it needs.
+
+**What is cached**
+
+| Artifact | Purpose |
+| --- | --- |
+| `meta.json` | Provenance: source filename, content hash, parser metadata |
+| `text.{parser}.md` | Cleaned Markdown/plain text after PDF parsing |
+| `chunks.jsonl` | One JSON object per line — the best file to inspect chunk quality |
+| `embeddings.npy` | Float32 matrix; row *i* corresponds to chunk *i* |
+| `config.json` | Exact chunk/parser/embedder settings that produced the index |
+
+**How keys work**
+
+- **`paper_id`** — first 16 hex characters of the SHA-256 hash of the PDF bytes. Renaming a file does not change its cache entry; changing the file content does.
+- **`index_key`** — human-readable directory name encoding parser version, chunk token/overlap settings, and embedder name (e.g. `pymupdf4llm-1.28.0_t300_o50_neuml-pubmedbert-base-embeddings`). A config change creates a new subdirectory instead of silently reusing stale chunks or embeddings.
+
+**Inspecting the cache**
 
 ```bash
-python -m pipeline.paper_store ./cache
-python -m pipeline.paper_store ./cache/{paper_id}
+python -m pipeline.paper_store ./cache              # list cached papers
+python -m pipeline.paper_store ./cache/{paper_id}   # detail + chunk preview
 ```
 
-Cache layout (one directory per PDF content hash):
+Each answer JSON also records `paper_id`, `chunks_id`, `chunks_str`, `chunks_section`, and `chunks_score`, so you can trace a given answer back to the exact cached chunks that were retrieved.
+
+Cache layout:
 
 ```
 cache/
@@ -182,72 +236,28 @@ cache/
         └── embeddings.npy
 ```
 
-The index key encodes parser version, chunk settings, and embedder name, so config changes never silently reuse stale embeddings.
+Use `--no-cache` to force a full rebuild while still writing fresh artifacts (useful when debugging parsing or chunking). The `cache/` directory itself is gitignored; only your local runs populate it.
 
 ---
 
-## Reproducing the paper results
+## Development and troubleshooting
 
-Use the **frozen** tag, not necessarily current `main`:
+Two tracked directories provide a shared mini-corpus and reference outputs for local development:
 
-```bash
-git checkout openextract-mie-2025
-pip install -r requirements.txt
-```
+| Directory | Contents |
+| --- | --- |
+| `papers_dev/` | Three example PDFs (digital-health papers used during 2.0 development) |
+| `answers_dev/` | Reference `{paper_stem}_answers.json` files produced from those PDFs with `questions_uncan.json` |
 
-Then run with the paper settings (chunk sizes and defaults differ from 2.0):
+**Typical workflow**
 
-```bash
-python main.py \
-  --papers-dir {PAPERS} \
-  --output-dir {OUTPUTS} \
-  --questions-file {QUESTIONS} \
-  --model {MODEL} \
-  --dense-model neuml/pubmedbert-base-embeddings \
-  --top-k 3 \
-  --chunk-tokens 1000 \
-  --chunk-overlap 500 \
-  --api-key-file {KEY} \
-  --random-subset 50 \
-  --random-seed 42 \
-  --stop-after-n-papers 10
-```
+1. Run against `papers_dev/` and `questions_uncan.json` (see [Quick start](#try-it-with-bundled-dev-examples)).
+2. Open the matching file in `answers_dev/` and compare answers, retrieved chunks (`chunks_str`), and scores (`chunks_score`).
+3. If retrieval looks wrong, inspect `cache/{paper_id}/…/chunks.jsonl` to judge whether the problem is parsing, chunking, or the retriever/LLM.
+4. If parsing or chunking is the issue, adjust `--parser`, `--chunk-tokens`, or `--chunk-overlap`, or use `--no-cache` and re-run.
 
-Replace `{MODEL}` with an OpenRouter model used in the paper (e.g. larger Qwen or DeepSeek variants). See the paper for reported precision/recall.
+The dev answer files include both closed questions (lists in `answer`, populated `choices_ids`) and open questions (prose in `answer`, `choices_ids: null`), making them useful for validating either path.
 
-### Manual extraction and evaluation
-
-- Excel macros and researcher annotations: [`manual_extraction/`](manual_extraction/)
-- Scoring notebook (Cohen’s kappa, precision/recall): [`evaluation.ipynb`](evaluation.ipynb)
-
-Follow the notebook to build a manual-extraction workbook and to compare OpenExtract outputs to human labels as described in the paper.
-
----
-
-## Repository layout
-
-```
-OpenExtract/
-├── main.py                 # CLI entry point
-├── pipeline/               # Parse → clean → chunk → retrieve → answer
-│   ├── pdf_parsing.py
-│   ├── text_cleaning.py
-│   ├── section_chunking.py
-│   ├── paper_store.py
-│   ├── retrieval.py
-│   ├── qa_orchestrator.py
-│   └── ...
-├── questions.json          # Example closed-question SLR schema
-├── prompts.json            # LLM system/user prompts
-├── evaluation.ipynb        # Manual extraction + paper metrics
-├── manual_extraction/      # Human labels and Excel macros
-├── papers/                 # Sample / working PDF corpus (local)
-├── cache/                  # Disposable parse/chunk/embedding cache
-├── answers_*/              # Example or run outputs
-└── devdocs/                # Design notes for 2.0 work
-```
-
----
 
 ## Citation
 
@@ -272,4 +282,4 @@ If you use OpenExtract in academic work, please cite:
 
 ## License and acknowledgements
 
-OpenExtract is developed in the context of digital-health systematic review research (Leiden University Medical Center and collaborators). The default embedding model and LLMs are third-party services/models subject to their own terms. Note that **pymupdf** is AGPL-licensed; that is fine for research and open-source use—check licensing if you redistribute commercially.
+OpenExtract is developed in the context of digital-health systematic review research (Leiden University Medical Center and collaborators). Some components like the embedding model and LLM API are third-party services/models subject to their own terms.
